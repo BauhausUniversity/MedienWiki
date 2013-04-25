@@ -28,6 +28,7 @@ $wgShowExceptionDetails = true;
 
 
 
+
 ################ PRIVATE SETTINGS ####################
 
 
@@ -202,10 +203,18 @@ $wgGroupPermissions['*']['edit'] = false;
 
 
 
+
+
+
+
 ################ ADDITIONAL SETTINGS ####################
 
 #set default favicon
 $wgFavicon = '/medien/wiki/skins/bauhausmedien/favicon_m.ico';
+
+
+
+
 
 
 
@@ -311,7 +320,11 @@ $wgNamespacesToBeSearchedDefault = array(
 
 
 
-################ EXTENSIONS ####################
+
+
+
+
+################ BUNDLED EXTENSIONS ####################
 
 # Enabled Extensions. Most extensions are enabled by including the base extension file here
 # but check specific extension documentation for more details
@@ -325,6 +338,56 @@ require_once( "$IP/extensions/Vector/Vector.php" );
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 
 
-# End of automatically generated settings.
-# Add more configuration options below.
+
+###### Bundled Extions Setup
+
+# ConfirmEdit
+$wgCaptchaClass = 'ReCaptcha';	// Sign up for keys: http://recaptcha.net/api/getkey
+$wgReCaptchaPublicKey = '';								# +++++ defined in Private Settings
+$wgReCaptchaPrivateKey = '';							# +++++ defined in Private Settings
+// no captcha for confirmed users
+$wgGroupPermissions['emailconfirmed']['skipcaptcha'] = true;
+$ceAllowConfirmedEmail = true;
+// no captcha for edits within university IP range
+#$wgCaptchaWhitelistIP
+
+# ParserFunctions
+# http://www.mediawiki.org/wiki/Extension:ParserFunctions
+$wgPFEnableStringFunctions = true;
+
+# Vector provides enhancements to the Vector skin
+# see Vector.php: $wgVectorFeatures configuration
+# "global" indicates that it should be turned on for everyone always, while
+# "user" indicates that users should be allowed to turn it on or off in their user preferences
+$wgDefaultUserOptions['useeditwarning'] = 1;
+$wgDefaultUserOptions['vector-collapsiblenav'] = 1;
+$wgVectorFeatures['collapsibletabs']['user'] = true;
+$wgVectorFeatures['editwarning']['user'] = true;
+$wgVectorUseSimpleSearch = true;
+
+# Wiki Editor
+# http://www.mediawiki.org/wiki/Extension:WikiEditor
+$wgDefaultUserOptions['usebetatoolbar'] = 1;
+$wgDefaultUserOptions['usebetatoolbar-cgd'] = 1;
+$wgDefaultUserOptions['wikieditor-preview'] = 1;
+
+
+
+
+
+
+################ DEFAULT EXTENSIONS ####################
+
+
+# Addtional Extensions here:
+
+# Maps
+#require_once( "$IP/extensions/Maps/Maps.php" );
+# API keys configuration
+# Your Google Maps API key. Required for displaying Google Maps, and using the Google Geocoder services
+$egGoogleMapsKey = ""; 									# +++++ defined in Private Settings
+# Your Yahoo! Maps API key. Required for displaying Yahoo! Maps
+$egYahooMapsKey = "";									# +++++ defined in Private Settings
+# Public Transport OSM layer for OpenLayers
+$egMapsOLAvailableLayers['osm-oepnv'] = array('OpenLayers.Layer.OSM("ÖPNV Deutschland", "http://tile.xn--pnvkarte-m4a.de/tilegen/${z}/${x}/${y}.png", {numZoomLevels: 19,buffer:0})');
 
