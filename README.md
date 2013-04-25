@@ -1,5 +1,5 @@
 #MedienWiki#
-##Media Wiki Installation for Bauhaus-University Weimar##
+##Media Wiki Installation for Bauhaus-Universität Weimar##
 
 ##About##
 **MedienWiki** is a grassroots MediaWiki initiative at the Bauhaus-Universität Weimar. It is supposed to be an easy and instant way to share and collaborate on course contents and student works. The MedienWiki is a unique and open platform where we accumulate the common knowledge of staff and students alike, preserving it for future generations at the Bauhaus-Universität and beyond. This becomes more and more crucial since Bachelors and Masters have less time to pass on their knowledge to younger students and faculty staff is hired on a short term basis. Redundant class preparation of similar or identical content in reoccurring subjects like Processing, Arduino and Pure Data can be avoided, freeing time for innovation and research. We like to share and reuse content amongst classes, chairs and faculty. (uni-weimar.de/medien/wiki/About)
