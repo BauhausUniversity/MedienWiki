@@ -1,0 +1,154 @@
+/* @override http://www.uni-weimar.de/cms/fileadmin/medien/templates/_ext.css */
+
+/*######################################tt_news LATEST view #############################################*/
+
+.news-latest-container {
+	font-size:16px;
+	line-height: 12px;
+}
+
+
+
+.news-latest-container H2, .news-latest-gotoarchive {
+	color:#ccc;
+	padding:3px;
+	margin:3px;
+	/*border:1px solid #666;
+	background-color:#efefef;*/
+}
+
+.news-latest-container H3 {
+	color:#ccc;
+	padding:0px;
+	margin:0px;
+}
+
+.news-latest-gotoarchive {
+	font-weight:bold;
+	margin-top:5px;
+}
+.news-latest-gotoarchive A:LINK, .news-latest-gotoarchive A:VISITED, .news-latest-gotoarchive A:HOVER {
+	color:#036;
+}
+.news-latest-gotoarchive A {
+	color:#036;
+}
+
+.news-latest-item {
+	font-size:12px;
+	font-weight:normal;
+	border-top: 1px dotted black;
+	padding: 4px 0px 0px 0px;
+}
+
+.news-latest-item IMG {
+	margin-bottom:5px;
+	margin-right:5px;
+	border:1px solid #666;
+	float:left;
+}
+
+.news-latest-category IMG {
+	float: none;
+	border:none;
+	margin:0px;
+}
+
+.news-latest-date, .news-latest-morelink, .news-latest-category {
+	font-size:12px;
+	margin: 0px;
+}
+
+.news-latest-morelink {
+	margin-bottom: 20px;
+	height: 10px;
+}
+
+.news-latest-morelink A {
+	float:left;
+}
+
+/*########################################tt_news SINGLE view #####################################*/
+.news-single-item-subheader{
+	margin-bottom: 10px;
+}
+
+.news-single-item {
+}
+
+.news-single-item H2 {
+	font-size: 16px;
+	font-weight:bold;
+	color: #85A600;
+	margin-bottom: 0px;
+}
+.news-single-item H3 {
+	margin-bottom: 5px;
+}
+
+.news-single-img {
+	float: right;
+	margin-left:5px;
+}
+
+.news-single-imgcaption {
+	padding:3px;
+	clear:both;
+}
+.news-single-category {
+	float: right;
+}
+.news-single-backlink, .news-single-backlink a {
+	margin-bottom: 15px;
+	margin-top: 10px;
+}
+.news-single-timedata {
+	text-align: left;
+}
+.news-single-timedata, .news-single-author,.news-single-imgcaption {
+	font-size: 12px;
+}
+.news-single-author {
+	padding-bottom: 3px;
+	height: 10px;
+}
+.news-single-additional-info {
+	background-color: #ffffff;
+  /*clear: both; */
+	margin-top: 25px;
+	/*border: 1px solid #666;*/
+	padding:2px;
+	padding-bottom:3px;
+}
+.news-single-related,.news-single-files,.news-single-links  {
+	/*border: 1px solid #666;*/
+	margin:0px;
+	margin-bottom: 3px;
+	padding:3px;
+	/*background-color:#f6f6f6;*/
+}
+
+.news-single-related DD, .news-single-links DD, .news-single-files DD {
+	margin-left:0px;
+}
+
+.news-single-related DT, .news-single-links DT, .news-single-files DT {
+	font-weight: bold;
+	font-size: 11px;
+	margin-left:0px;
+	margin-bottom: 5px;
+	width:90%;
+}
+
+.news_title{
+	font-weight: bold;
+}
+
+.clearer {
+	height: 0px;
+	width: 0px;
+}
+
+.news-amenu-item-year dd {
+	text-align: left;
+}

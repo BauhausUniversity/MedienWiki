@@ -1,0 +1,85 @@
+{{Extension
+|name        = SidebarEx
+|status      = stable
+|type        = mywiki
+|author      = [[user:jldupont|Jean-Lou Dupont]]
+|image       =
+|version     = 1.1.0
+|update      =
+|mediawiki   = 1.82, 1.93, 1.10, 1.11, 1.12
+|download    = [http://mediawiki.googlecode.com/svn/tags/SidebarEx SVN]
+|readme      =
+|changelog   = See SVN ($Id: SidebarEx.doc.wikitext 1185 2008-06-17 20:08:20Z jeanlou.dupont $)
+|description = Provides customizable sidebars.
+|parameters  =
+|rights      =
+|example     =
+}}
+== Purpose ==
+Provides a means of adding page links to the 'sidebar' based on group membership & per-user basis.
+
+== Features ==
+* Integration with [[Extension:PageSidebar]]
+* Can be used independantly of BizzWiki environment
+* all defined groups are supported (standard MW and ones defined in installation)
+* sidebar page name corresponds to 'group' name
+* No patches to standard MW installation for MW version >= 1.10
+* Group name prioritization
+* Per-User sidebars using 'username/Sidebar' page
+* Per-Namespace sidebars using 'MediaWiki:Sidebar/Ns/...namespace name here...'
+
+== Usage Note ==
+This extension replaces to the standard sidebar defined at [[MediaWiki:Sidebar]]. The new default sidebar
+is located at [[MediaWiki:Sidebar/*]].
+
+=== Parameters ===
+<source lang='php'>
+//Define (if desired) the base namespace where the pages will be fetched:
+$bwSidebarNs = NS_ADMIN;  // must be defined prior, defaults to 'NS_MEDIAWIKI'
+ 
+//Define (if desired) the base page where the 'sidebar' pages will be fetched:
+$bwSidebarPage = 'Sidebars';
+
+// Define the priority list i.e. group membership search order.
+$bwSidebarSearch = array ('somegroup', 'sysop', 'user', '*' );
+</source>
+
+== CONFIGURATION NOTES ==
+=== Group membership based sidebars ===
+<pre>
+ 1) Define (if desired) the base namespace where the pages will be fetched:
+    $bwSidebarNs = NS_ADMIN;  // must be defined prior
+ 
+ 2) Define (if desired) the base page where the 'sidebar' pages will be fetched:
+    $bwSidebarPage = 'Sidebars';
+ 
+ 3) Define the priority list i.e. group membership search order.
+    $bwSidebarSearch = array ('somegroup', 'sysop', 'user', '*' );
+ 
+    Corresponding sidebar pages:
+		MediaWiki:Sidebar/somegroup
+		MediaWiki:Sidebar/sysop
+		MediaWiki:Sidebar/user
+		MediaWiki:Sidebar/*
+</pre>
+=== Per-User sidebars ===
+Edit the page 'User:username/Sidebar'.
+
+=== Per-Namespace sidebars ===
+Examples:
+* MediaWiki:Sidebar/Ns/Main
+* MediaWiki:Sidebar/Ns/Category
+* ...
+
+{{Pear|SidebarEx}}
+
+== History ==
+{|border=1
+! Release !! Notes
+|-
+| 1.0.0 || Initial Release
+|-
+| 1.0.1 || Removed integration of default sidebar
+|-
+| 1.1.0 || Added Integration with [[Extension:PageSidebar]]
+|}

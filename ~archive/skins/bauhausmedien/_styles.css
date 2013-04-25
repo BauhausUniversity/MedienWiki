@@ -1,0 +1,514 @@
+/* @override 
+	http://www.uni-weimar.de/cms/fileadmin/medien/templates/_styles.css
+	http://localhost:8888/medien/wiki/skins/bauhausmedien/_styles.css?207
+*/
+
+/* @group Body */
+
+body {
+    margin: 0px 0px 0px 0px;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 19px;
+    color: #000;
+}
+	
+#content {
+    position: absolute;
+    margin-left: 270px;
+    margin-top: 90px;
+}
+
+/* @end */
+
+/* @group Links */
+
+#content a, a:link, a:visited, a:active {
+	color: #003366;text-decoration: none; 
+}
+#content p a{ text-decoration: underline;} 
+#content ul a{ text-decoration: underline;} 
+#content a:hover {color: #999999;}
+ 
+.csc-textpic-caption {
+   font-size: 10px;
+   line-height: 12px;
+}
+
+/* @end */
+
+/* @group Headings */
+
+h1 {
+    border-bottom: none;
+    color: #333333;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0px 0px 20px 0px;
+    }
+
+h2 {
+    color: #222222;
+    font-weight: bold; 
+    font-size: 13px;
+    margin: 30px 0px 4px 0px;
+    padding: 2px 8px;
+	background-color: #d0d0d0;
+}
+
+h3 {
+	font-weight: bold;
+	font-size: 12px;
+   }
+
+.csc-subheader {
+  font-weight: bold; 
+  margin: -30px 0px 0px 0px; 
+  padding: 0px 0px 5px 24px; 
+  color:#666;
+}
+	 
+.contenttable
+.td-0 {
+	border-collapse: collapse;
+	vertical-align:top;
+	text-align:right;
+	padding: 0px 5px 0px 0px;
+}
+
+/* @end */
+
+/* @group Logo */
+
+#logo1 {
+    position: absolute;
+    margin-left: 0px;
+    margin-top: 0px;
+    line-height: 14px;
+    border: 0px solid black;
+}
+
+#logo2 {
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 0px;
+    vertical-align: top;
+}
+
+#logo3 {
+    position: absolute;
+    margin-left: 40px;
+    top: 53px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* @end */
+
+/* @group Global Navigation */
+
+#globalnav {
+    background-image: url("../../skins/bauhausmedien/dots_horizontal.gif");
+    background-repeat: no-repeat;
+    position: absolute;
+    margin-left: 7px;
+    top: 139px;
+}
+
+#globalnav a:link, a:active, a:visited {
+	color:#5D5247; text-decoration: none;
+}
+#globalnav a:hover {
+	text-decoration: underline;
+}
+#globalnav ul { 
+	list-style: none; padding: 0px 0px 2px;	margin: 0px 0px 0px 14px;
+}
+
+#globalnav li.level1 {
+	padding-left: 15px; 
+	background-image: url("../../skins/bauhausmedien/dots.gif");
+	background-repeat: no-repeat;	
+	background-position: 8px 4px; 
+	margin-bottom: 5px;
+}
+#globalnav li.level2
+#p-personal.portlet li.level2 {
+	padding: 5px 0px 0px 5px; 
+	margin-bottom: 0px;
+}
+#globalnav li.level3 {
+	font-size: 9px; padding: 0 0px 0px 16px; margin-bottom: 6px;
+	line-height: 8px;
+}
+
+/* @end */
+
+/* @group Fusszeile Signatur */
+
+#signature {
+  color:#666666; font-size:10px; line-height:14px; 
+  margin-top:30px; 
+  margin-bottom:20px;
+  height:15px;
+}
+
+/*Links wie Impressum | Kontakt | Suche */
+
+#services    {position: absolute; right: 18px; top: 2px;border:0px;}
+
+/*
+#services ul { margin: 0; padding: 0; text-align: right;}
+#services li  { color: #999;list-style: none; display: inline;}
+#services a:link, a:active, a:visited  { color: #333;text-decoration: none;}
+#services a:hover{text-decoration: underline; }
+*/
+
+
+
+/* @end */
+
+/* @group Drucker Icon */
+
+#printer    {position: absolute; left: auto; right: 0px; top: 34px; }
+
+
+
+/* @end */
+
+/* @group Sprachelemente */
+
+#services{
+	color:#666; 
+	font-size:10px; 
+	font-weight:normal;
+	text-decoration:none; 
+	position:absolute; 
+	right:40px; 
+	top:50px;
+}
+#sprache{
+	font-size:10px;
+	position: absolute; 
+	right: 18px; 
+	top: 2px;
+	border:0px;
+}
+
+#sprache a.lang_avail_active{
+	color:#666; 
+	font-weight:bold; 
+}
+
+#sprache a.lang_avail{
+	font-weight:normal;
+}
+
+#sprache a:link{
+	color:#666; 
+	text-decoration:none; 
+}
+
+#sprache a:hover{
+	text-decoration:underline; 
+}
+
+/* @end */
+
+/* @group Top Navigation (Where Am I) */
+
+#yah, #globalWrapper div.yah {
+   font-size: 10px;
+   position: absolute;
+   margin-left: 8px;
+   top: 0px;
+	width: 49%;
+}
+#yah a:link, a:visited, a:active,
+#globalWrapper div.yah a:link, a:visited, a:active {
+	color:#333333; text-decoration:none;
+	}
+#yah a:hover,
+#globalWrapper div.yah a:hover {
+	text-decoration:underline;
+}
+
+/* @end */
+
+/* @group Sitemap */
+
+.csc-sitemap-level1 {
+    border-bottom: 1px dotted #cccccc;
+    padding: 4px;
+    font-weight: bold;
+    margin-top: 26px;
+    text-decoration:none;
+    }
+    
+.csc-sitemap-level2 {
+    line-height: 13px;
+    padding: 2px;
+    font-weight: normal;
+    margin-left: 120px;
+    text-decoration:none;
+    }
+
+.csc-sitemap-level3 {
+    font-weight: normal;
+    margin-left: 160px;
+    text-decoration:none;
+}
+
+.csc-sitemap-level4 {
+    line-height: 12px;
+    font-size:10px;
+    font-weight: normal;
+    margin-left: 180px;
+    }
+
+/* @group Local Sitemap at the top */
+
+/*local sitemap at the top of some pages
+.csc-section {
+  background-image: url("http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/arrow_down.gif"); 
+  background-repeat: no-repeat; 
+  background-position: 0px 6px; 
+  padding-left: 20px ;
+  line-height: 24px;
+  margin-left: 10px;
+  text-decoration:none;
+}
+*/
+
+
+/*local sitemap at the top of some pages*/
+p.csc-section  {
+/*   background-image: url("../../skins/bauhausmedien/arrow_down.gif");  */
+  background-repeat: no-repeat; 
+  background-position: 0px 6px; 
+  padding-left: 20px;
+  line-height: 15px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+
+ul.csc-menu{
+/*   list-style-image:url("data_/arrow_down.gif"); */
+  padding-left: 18px;
+  margin-left: 10px;
+  text-decoration: none;     
+  margin-bottom:31px;
+}
+
+li.csc-section{
+  height: 22px;
+}
+
+/* @end */
+
+/* @end */
+
+/* @group Helper */
+
+img {border: 0px;}
+.clear { clear: both;}
+  
+#up {
+ width:20px;
+ height:40px;
+/*  background-image: url("http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/arrow_up.gif");
+ background-repeat: no-repeat;*/
+ cursor:pointer;  
+}
+
+#bodytext .imgright {
+    float: right;
+    margin-bottom: 1.0em;
+    margin-left: 16px;
+    }
+
+#bodytext .imgleft {
+    float: left;
+    margin-bottom: 1.0em;
+    margin-right: 16px;
+    }
+
+/* @end */
+
+/* @group Listen */
+
+#bodytext ol { margin: 0 0 8px 32px; padding: 0;}	 
+#bodytext ul {}
+#bodytext ul li { list-style-type: square; line-height: 16px; padding: 2px 0px 3px 0px;}
+
+/* @end */
+
+/* @group Rahmen */
+
+/*
+.csc-frame-frame1{font-size:11px; line-height:15px; background-color:#ffffff;  width:800px;  border: 1px dotted#000000; color: #003366; padding:8px; margin-bottom:10px;}
+.csc-frame-frame1 p {background-image: url(http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/arrow_right.png); background-repeat: no-repeat;  padding: 0 0 10px 16px;}
+
+.csc-frame-frame2{font-size:11px; line-height:15px; background-color:#ffcccc;  width:90%;  border: 1px solid #000000; color: #003366; padding:8px;margin-bottom:10px;}
+.csc-frame-frame2 p {background-image: url(http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/arrow_right.png); background-repeat: no-repeat;  padding: 0 0 10px 16px;}
+
+.csc-frame-indent  {line-height: 18px; background-color: rgb(247, 169, 0); color: rgb(255, 255, 255); width: 90%; margin-bottom: 40px; padding: 10px;}
+.csc-frame-indent p {background-image: url(http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/arrow_right.png); background-repeat: no-repeat;  padding: 0 0 10px 16px;}
+*/
+
+/* @end */
+
+/* @group Header Startseite */
+
+.medien { color:#000066;  font-size: 50px; margin-bottom: 20px; font-weight: bold; padding-bottom:40px; }
+
+.pdf {
+  background-image: url("../../skins/bauhausmedien/icons/pdf.gif"); 
+  background-repeat: no-repeat; 
+  background-position: 0 0px; 
+  padding-left: 17px;
+  margin-bottom: 10px;
+  line-height: 16px;	
+  }
+
+/* @end */
+
+/* @group Styles for tx_croncssstyledimgtext */
+
+/**********************************************************/
+/* default styles for extension "tx_croncssstyledimgtext" */
+/*
+ * css-styled-imgtext
+ *
+ *
+  Licensed under the GPL, see http://www.gnu.org/copyleft/gpl.html
+  (c) the TYPO3 content rendering group
+  (c) Ernesto Baschny (ernst@cron-it.de)
+*/
+
+/* Captions */
+P.csc-caption { margin: 0; }
+P.csc-caption {
+  font-size: 80%; /* Customize me */
+}
+DIV.csi-caption-c .csi-caption { text-align: center; }
+DIV.csi-caption-r .csi-caption { text-align: right; }
+DIV.csi-caption-l .csi-caption { text-align: left; }
+
+/* Needed for noRows setting */
+DIV.csi-textpic DIV.csi-imagecolumn { float: left; display: inline; }
+
+/* Border just around the image */
+DIV.csi-border DIV.csi-imagewrap .csi-image IMG {
+  border: 2px solid black;
+  padding: 0px 0px;
+}
+
+DIV.csi-imagewrap { padding: 0; }
+
+DIV.csi-textpic IMG { border: none; }
+
+/* DIV: This will place the images side by side */
+DIV.csi-textpic DIV.csi-imagewrap DIV.csi-image { float: left; }
+
+/* UL: This will place the images side by side */
+DIV.csi-textpic DIV.csi-imagewrap UL { list-style: none; margin: 0; padding: 0; }
+DIV.csi-textpic DIV.csi-imagewrap UL LI { float: left; margin: 0; padding: 0; }
+
+/* DL: This will place the images side by side */
+DIV.csi-textpic DIV.csi-imagewrap DL.csi-image { float: left; }
+DIV.csi-textpic DIV.csi-imagewrap DL.csi-image DT { float: none; }
+DIV.csi-textpic DIV.csi-imagewrap DL.csi-image DD { float: none; }
+DIV.csi-textpic DIV.csi-imagewrap DL.csi-image DD IMG { border: none; } /* FE-Editing Icons */
+DL.csi-image { margin: 0; }
+DL.csi-image DT { margin: 0; display: inline; }
+DL.csi-image DD { margin: 0; }
+
+/* Clearer */
+
+
+
+
+
+
+
+
+
+DIV.csi-clear { clear: both; }
+
+
+
+
+/* Margins around images: */
+
+/* Pictures on left, add padding on right */
+DIV.csi-left DIV.csi-imagewrap .csi-image,
+DIV.csi-intext-left-nowrap DIV.csi-imagewrap .csi-image,
+DIV.csi-intext-left DIV.csi-imagewrap .csi-image {
+  display: inline; /* IE fix for double-margin bug */
+  margin-right: 10px;
+}
+
+/* Pictures on right, add padding on left */
+DIV.csi-right DIV.csi-imagewrap .csi-image,
+DIV.csi-intext-right-nowrap DIV.csi-imagewrap .csi-image,
+DIV.csi-intext-right DIV.csi-imagewrap .csi-image {
+  display: inline; /* IE fix for double-margin bug */
+  margin-left: 10px;
+}
+
+/* Pictures centered, add padding left and right */
+DIV.csi-center DIV.csi-imagewrap .csi-image {
+  display: inline; /* IE fix for double-margin bug */
+  margin-left: 5px;
+  margin-right: 5px;
+}
+DIV.csi-textpic DIV.csi-imagewrap .csi-image .csi-caption { margin: 0; }
+DIV.csi-textpic DIV.csi-imagewrap .csi-image IMG { margin: 0; }
+
+/* Space below each image (also in-between rows) */
+DIV.csi-textpic DIV.csi-imagewrap .csi-image { margin-bottom: 5px; }
+DIV.csi-equalheight DIV.csi-imagerow { margin-bottom: 5px; display: block; }
+
+/* Positioning of images: */
+
+/* Above */
+DIV.csi-above DIV.csi-text { clear: both; }
+
+/* Center (above or below) */
+DIV.csi-center { text-align: center; /* IE-hack */ }
+DIV.csi-center DIV.csi-imagewrap { margin: 0 auto; }
+DIV.csi-center DIV.csi-imagewrap .csi-image { text-align: left; /* Remove IE-hack */ }
+DIV.csi-center DIV.csi-text { text-align: left; /* Remove IE-hack */ }
+
+/* Right (above or below) */
+DIV.csi-right DIV.csi-imagewrap { float: right; }
+DIV.csi-right DIV.csi-text { clear: right; }
+
+/* Left (above or below) */
+DIV.csi-left DIV.csi-imagewrap { float: left; }
+DIV.csi-left DIV.csi-text { clear: left; }
+
+/* Left (in text) */
+DIV.csi-intext-left DIV.csi-imagewrap { float: left; }
+
+/* Right (in text) */
+DIV.csi-intext-right DIV.csi-imagewrap { float: right; }
+
+/* Right (in text, no wrap around) */
+DIV.csi-intext-right-nowrap DIV.csi-imagewrap { float: right; clear: both; }
+/* Hide from IE5-mac. Only IE-win sees this. \*/
+* html DIV.csi-intext-right-nowrap .csi-text { height: 1%; }
+/* End hide from IE5/mac */ 
+
+/* Left (in text, no wrap around) */
+DIV.csi-intext-left-nowrap DIV.csi-imagewrap { float: left; clear: both; }
+/* Hide from IE5-mac. Only IE-win sees this. \*/
+* html DIV.csi-intext-left-nowrap .csi-text { height: 1%; }
+/* End hide from IE5/mac */
+
+/* @end */
+</li>

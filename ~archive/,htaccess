@@ -1,0 +1,12 @@
+# http://www.mediawiki.org/wiki/Manual:Short_URL/Apache_Rewrite_rules
+# enable the rewriter
+RewriteEngine On
+
+# rewrite subdomain web to www
+RewriteCond %{HTTP_HOST} ^web\.uni\-weimar\.de$ [NC]
+RewriteRule ^(.*)$ http://www.uni-weimar.de/medien/wiki/$1 [R=301,L]
+
+# anything under /wiki is treated as an article title
+RewriteRule ^(extensions|images|skins)/ - [L] # so skins and images work
+RewriteRule ^/*$ index.php5?title=Main_Page [L,QSA]
+RewriteRule ^(.+)$ index.php5?title=$1 [PT,L,QSA]

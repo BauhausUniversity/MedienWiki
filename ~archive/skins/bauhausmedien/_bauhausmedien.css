@@ -1,0 +1,1028 @@
+/* @override 
+	http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/_bauhausmedien.css?207
+	http://localhost:8888/medien/wiki/skins/bauhausmedien/_bauhausmedien.css?207
+	http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/_bauhausmedien.css?269
+	http://www.uni-weimar.de/medien/wiki/skins/bauhausmedien/_bauhausmedien.css?270
+*/
+
+/*
+** Bauhaus-Uni Weimar Interface Design 'bauhausmedien' style sheet for CSS2-capable browsers.
+** For more icons see: http://commons.wikimedia.org/wiki/Crystal_Clear
+*/
+
+/* @group Layers */
+
+/* prepare to toggle visibility of sidebar for small screens? * /
+#globalnav {
+	visibility: visible;
+}
+#content {
+	left: 35px;
+}*/
+
+body {
+	background-color: white;
+}
+
+#footer, #bodyContent div.printfooter {
+	position: relative;
+	top: 35px;
+	font-size: 80%;
+	line-height: 125%;
+	margin: 0;
+	padding: 0;
+	left: 4px;
+}
+
+#footer {
+	top: 2px;
+}
+
+#catlinks {
+	margin-left: 4px;
+	margin-bottom: 12px;
+}
+
+#footer, #footer a:link, #footer a:visited {
+	color: gray;
+}
+
+#footer ul, #footer li {
+	list-style-type: none;
+	float: left;
+	margin: 0;
+	padding: 0;
+	list-style-position: outside;
+	line-height: 140%;
+}
+
+#footer img {
+	border: none;
+	position: relative;
+	float: left;
+	margin: 0px 5px 5px 0px;
+}
+
+#signature {
+	line-height: 140%;
+}
+#signature p {
+	display: block;
+	clear: left;
+	float: left;
+	line-height: 140%;
+	margin: 0;
+	padding: 0;
+}
+
+/* @end */
+
+/* @group Searchform */
+
+#searchform {
+	width: 164px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	float: right;
+	clear: both;
+	padding: 0;
+	margin: 0;
+	height: 0;
+	list-style-image: none;
+	list-style-type: none;
+}
+
+#searchform input {
+	background-color: #eee;
+	height: 22px;
+	width: 104px;
+	padding: 0 5px 0 0;
+	font-family: Courier, mono;
+	color: #4c4c4c;
+	
+
+/*text-align: right;*/
+	margin-right: 0;
+	float: right;
+	clear: left;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	border-style: none;
+}
+
+#searchform input#searchInput {
+	-webkit-box-shadow: inset 1px 1px 2px rgba(0,0,0,.5);
+	-moz-box-shadow: inset 1px 1px 2px rgba(0,0,0,.5);
+	font-size: 110%;
+	line-height: 150%;
+	height: 16px;
+	padding-top: 4px;
+	padding-left: 4px;
+	padding-bottom: 2px;
+}
+
+#searchform div input#searchGoButton {
+	visibility: hidden;
+}
+
+#searchform div input#mw-searchButton {
+	position: absolute;
+	top: 0;
+	right: 118px;
+	background: url("../../skins/bauhausmedien/icons/search.gif") no-repeat;
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+
+#searchform div input.searchButton {
+	border-style: none;
+	list-style-image: none;
+	color: #909090;
+	height: 15px;
+	float: right;
+	clear: none;
+	display: compact;
+	position: relative;
+	right: 0;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	width: auto;
+	padding-right: 8px;
+	padding-left: 8px;
+	background-color: white;
+	margin-top: 3px;
+}
+
+#searchform div input.searchButton:active {
+	background-color: orange;
+	color: white;
+}
+
+/* @end */
+
+/* @group Buttons */
+
+#editform div.editButtons input {
+	font-size: 110%;
+	background: #aaa;
+	color: #fff;
+	border: 0;
+	margin-top: 8px;
+	cursor: pointer;
+	text-shadow: 0 -1px 1px rgba(0,0,0,.25);
+	-moz-text-shadow: 0 -1px 1px rgba(0,0,0,.25);
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-box-shadow: 2px 2px 2px rgba(0,0,0,.5);
+	-moz-box-shadow: 2px 2px 2px black;
+}
+
+#editform div.editButtons input:hover {
+	background: #00608B;
+	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.75);
+	-moz-box-shadow: 1px 1px 1px black;
+}
+
+#editform div.editButtons input#wpPreview:hover {
+	background: green;
+}
+
+#editform div.editButtons input#wpSave:hover {
+	background: red;
+}
+
+#editform div.editButtons input:active {
+	-webkit-box-shadow: 0px 0px 4px rgba(0,0,0,.95);
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,.95);
+}
+
+#toolbar img {
+	opacity: 0.25;
+	-moz-opacity: 0.25;
+	-webkit-box-shadow: 0px 0px 2px rgba(0,0,0,.5);
+	-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+	cursor: pointer;
+}
+
+#toolbar img:hover {
+	opacity: 0.9;
+	-moz-opacity: 0.9;
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.75);
+	-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.75);
+}
+
+#toolbar img:active {
+	opacity: 1.0;
+	-moz-opacity: 1.0;
+	-webkit-box-shadow: 0px 0px 2px rgba(0,0,0,.95);
+	-moz-box-shadow: 0 0 2px rgba(0,0,0,.95);
+}
+
+#toggleSidebarButton {
+	position: fixed;
+	top: 136px;
+	display: block;
+	left: 6px;
+	z-index: 999;
+}
+
+li.level1 span {			cursor:s-resize; }
+.pBody { 					cursor:default;  }
+#toggleSidebarButton a { 	cursor:w-resize; }
+
+/* @end */
+
+/* @group EditForm */
+
+#editform span.editHelp {
+	float: right;
+	position: relative;
+	top: 9px;
+}
+
+#editform .mw-summary-preview {
+	position: relative;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+#mw-upload-form,
+#mw-upload-table {
+	width: 100%;
+	overflow: auto;
+}
+#mw-upload-form p {
+	width: 50%;
+}
+
+
+/* @end */
+
+/* @group TOC */
+
+
+#toc {
+	display: inline;
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+	max-width: 250px;
+	max-height: 600px;
+	overflow: auto;
+	white-space: normal;
+}
+
+#toc,
+.toc {
+	border: 1px solid #aaa;
+	background-color: #ffffff;
+	padding: 5px 0 5px 5px;
+	position: fixed;
+	top: 47px;
+	right: 0;
+	width: auto;
+	float: right;
+	clear: right;
+	z-index: 999;
+}
+
+#toc, #toc ul, #toc li, #toc a:link {
+	width: auto;
+	margin: 0;
+	padding: 0 3px 0 4px;
+	line-height: 135%;
+	font-size: 95%;
+	text-decoration: none;
+	list-style-image: none;
+	list-style-type: none;
+}
+
+#toc:hover,
+.toc:hover {
+	opacity: 0.95;
+	-moz-opacity: 0.95;
+}
+
+#toc td a:link, #toc td a:visited,
+#toc ul li a:link, #toc ul li a:visited,
+#toc ul li ul li a:link, #toc ul li ul li a:visited {
+	text-decoration: none;
+	color: black;
+	opacity: 1.0;
+	-moz-opacity: 1.0;
+	padding-left: 2px;
+}
+
+#toc ul li a:visited,
+#toc ul li ul li a:visited {
+	color: #004069;
+}
+
+#toc td a:hover,
+#toc ul li a:hover,
+#toc ul li ul li a:hover {
+	color: #00608B;
+	text-decoration: underline;
+	opacity: 1.0;
+	-moz-opacity: 1.0;
+}
+
+#toc h2,
+.toc h2 {
+	display: inline;
+	border: none;
+	padding: 0;
+	font-size: 100%;
+	font-weight: bold;
+	cursor: move;
+}
+
+#toc #toctitle,
+.toc #toctitle,
+#toc .toctitle,
+.toc .toctitle,
+#toc h2 {
+	text-align: center;
+	background-color: transparent;
+	padding-left: 8px;
+}
+
+#toc ul,
+.toc ul {
+	list-style-type: none;
+	list-style-image: none;
+	margin-left: 0;
+	padding-left: 0;
+	text-align: left;
+}
+
+#toc ul ul,
+.toc ul ul {
+	margin: 0 0 0 1em;
+}
+
+#toc .toctoggle,
+.toc .toctoggle {
+	position: relative;
+}
+
+.mw-warning {
+	margin-left: 50px;
+	margin-right: 50px;
+	text-align: center;
+}
+.usermessage {
+	background-color: yellow;
+}
+
+.toccolours {
+	border: 1px solid #aaa;
+	background-color: #eee;
+	padding: 5px;
+}
+
+#tocresetimg {
+	float: right;
+	padding-top: 3px;
+	width: 8px;
+}
+
+
+
+/* @end */
+
+/* @group Images */
+
+div.floatright, table.floatright {
+	clear: right;
+	float: right;
+	position: relative;
+	margin: 0 0 .5em .5em;
+	border: 0;
+}
+
+div.floatright p {
+	font-style: italic;
+}
+
+div.floatleft, table.floatleft {
+	float: left;
+	clear: left;
+	position: relative;
+	margin: 0 .5em .5em 0;
+	border: 0;
+}
+
+div.floatleft p {
+	font-style: italic;
+}
+
+/* @group Thumbs */
+
+div.thumb,
+table.gallery {
+	margin-bottom: .5em;
+	border-style: solid;
+	border-color: white;
+	width: auto;
+	position: relative;
+	z-index: 10 !important;
+}
+
+#bodyContent .thumbinner, div.thumbinner,
+table.gallery div.thumb, div.gallerybox {
+	border: 1px none #ccc;
+	padding: 3px !important;
+	background-color: #eee;
+	font-size: 94%;
+	text-align: center;
+	overflow: hidden;
+	position: relative;
+	z-index: 10;
+}
+
+html .thumbimage,
+html div.thumb img {
+	border-style: none;
+}
+
+html .thumbcaption,
+table.gallery, div.gallerybox {
+	border: none;
+	line-height: 140%;
+	padding: 3px 6px !important;
+	font-size: 90%;
+	font-style: italic;
+}
+
+
+table.gallery,
+div.thumb, div.thumb, div.gallerybox {
+	width: auto !important;
+}
+
+table.gallery,
+div.thumb, div.thumb div, div.gallerybox {	
+	margin: 0 !important;
+	padding: 1px !important;
+	float: none;
+	clear: left;
+	display: block;
+}
+div.gallerytext {
+	margin: 0 !important;
+	padding: 4px !important;
+}
+
+table.gallery td {
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+div.thumb div {
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+
+div.magnify {
+	float: right;
+	border: none !important;
+	background: none !important;
+}
+
+div.magnify a, div.magnify img {
+	display: block;
+	border: none !important;
+	background: none !important;
+}
+
+div.tright {
+	clear: right;
+	float: right;
+	border-width: .5em 0 .8em 1.4em;
+}
+
+div.tleft {
+	float: left;
+	margin-right: .5em;
+	border-width: .5em 1.4em .8em 0;
+	clear: none;
+	display: block;
+	position: relative;
+}
+
+img.thumbborder {
+	border: 1px solid #dddddd;
+}
+
+.hiddenStructure {
+	display: none;
+}
+
+table.rimage {
+	float: right;
+	position: relative;
+	margin-left: 1em;
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+/* @end */
+
+a[rel^="lightbox"] img,
+a[rel^="group"] img {
+	cursor: -webkit-zoom-in;
+	cursor: -moz-zoom-in;
+}
+/*img[id^="lightboxImage"] { */
+#overlay, #lightbox,
+#fancybox-overlay {
+	cursor: -webkit-zoom-out !important;
+	cursor: -moz-zoom-out !important;
+}
+#hoverNav {
+	cursor: default;
+}
+
+#panorama,
+.panorama {
+	width: 800px;
+	overflow: scroll;
+}
+
+/* @end */
+
+/* @group Lists */
+
+#bodyContent ul, 
+#bodyContent ol {
+	top: -8px;
+	position: relative;
+	font-size: 100%;
+	line-height: 150%;
+}
+
+#bodyContent ul ul,
+#bodyContent ul ul ul, 
+#footer ul {
+	top: 0px;
+}
+
+#content ul li {
+	list-style-type: square;
+	list-style-position: outside;
+	position: relative;
+	left: -18px;
+}
+#content ol li {
+	list-style-position: outside;
+	position: relative;
+	left: -18px;
+}
+#content ol li ul li,
+#content ol li ol li {
+	position: relative;
+	left: -24px;
+	top: 8px;
+}
+
+#content ul ul li,
+#content ol ul li {
+	color: #555;
+	font-size: 100%;
+	line-height: 150%;
+	left: -20px;
+}
+/* special cases */
+#content ol li ol li ol li {
+	left: -24px;
+	top: 8px;
+}
+/* ATTENTION: Don't move this to TOC, it must override ul ul li...*/
+#toc ul ul li {
+	left: 0;
+}
+
+#toc ul li, #footer ul li {
+	list-style-type: none;
+	top: 0px;
+	left: 0px;
+}
+#footer ul {
+	margin-top: 10px;
+	position: relative;
+}
+
+#toc ul {
+	margin-top: 10px;
+}
+
+div.search-types,
+.results-info {
+	position: relative;
+	top: 10px;
+	left: 25px;
+	margin-bottom: 5px;
+	padding: 2px;
+	margin: 2px;
+}
+.results-info {
+	margin-right: 10px;
+}
+#powersearch ul li,
+#search ul li {
+	list-style-type: none;
+}
+#powersearch ul li a:after,
+#search ul li a:after {
+	content: ":";
+}
+#powersearch ul li.normal a,
+#powersearch ul li.current a,
+#search ul li.normal a,
+#search ul li.current a {
+	background: none;
+	padding: 2px;
+	margin: 2px;
+}
+#powersearch ul li.current a,
+#search ul li.current a {
+	background-color: #00608B;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
+/* @end */
+
+/* @group Tables */
+
+/*table {
+	width: 100%;
+	display: compact;
+}*/
+
+#bpdyContent table, #bodyContent table td, #bodyContent table {
+	align: left;
+	vertical-align: top;
+	text-align: left;
+}
+
+table.filehistory {
+	font-size: 80%;
+	background-color: #eee;
+}
+
+/* @end */
+
+/* @group Typo */
+
+p, pre, code, table, tr, td {
+	line-height: 150%;
+	padding-left: 2px;
+}
+
+
+h1 {
+	font-size: 145%;
+	margin-top: 8px;
+}
+h2 {
+	font-size: 120%;
+	margin-left: -6px;
+	background-color: #d0d0d0;
+}
+h3 {
+	font-size: 115%;
+	font-weight: bold;
+}
+h4 {
+	font-size: 110%;
+	font-weight: bold;
+	color: gray;
+}
+h5 {
+	font-size: 110%;
+	font-weight: bold;
+	font-style: italic;
+	text-decoration: underline;
+}
+
+h2 .editsection, #content .editsection a:link,
+h3 .editsection, #content .editsection a:link {
+	color: gray;
+	text-decoration: none;
+	text-align: right;
+	font-style: normal;
+	font-size: 90%;
+	font-weight: normal;
+	text-transform: capitalize;
+}
+.editsection:after {
+	content: url(../../skins/bauhausmedien/icons/edit.gif);
+	padding: 2px;
+	visibility: visible;
+}
+
+h3 .editsection {
+	margin-right: 7px;
+}
+
+.editsectionIcon {
+	float: right;
+	padding-top: 3px;
+}
+
+h3 .editsectionIcon {
+	padding-right: 9px;
+}
+
+#content .editsection a:hover, a:active {
+	color: black;
+	text-decoration: none;
+}
+#contentSub {
+	font-size: 70%;
+	margin-top: -30px;
+	margin-bottom: 30px;
+}
+/*#contentSub:before {
+	content: "→ ";
+}*/
+
+pre, code {
+	overflow: visible;
+	text-overflow: clip;
+	padding: 4px !important;
+	width: 99%;
+	background-color: #eee;
+	text-align: left;
+	/*white-space: normal;*/
+	border-style: none;
+	font-family: mono, Courier, "Courier New";
+	border-left: 2px solid #00608B;
+}
+
+blockquote {
+	line-height: 150%;
+}
+
+#bodyContent div.printfooter,
+#bodyContent ul ul, #bodyContent ul ul ul, #footer ul {
+	font-size: 100%;
+	line-height: 115%;
+	margin-bottom: 0;
+}
+
+#bodyContent div.printfooter, 
+#bodyContent div.printfooter a:link,
+#bodyContent div.printfooter a:visited {
+	/*font-size: 100%;
+	color: #888888;*/
+	display: none;
+}
+
+.mw-warning,
+#mw-read-only-warning {
+	color: red;
+	background-color: yellow;
+}
+
+/* @end */
+
+/* @group Links */
+
+#logo3 a:link, #logo3 a:visited {
+	color: #333;
+}
+
+a:link,
+#content a:link {
+	color: #00608B;
+	text-decoration: none;
+}
+#content a:visited,
+#bodyContent a:visited {
+	color: #293562;
+	text-decoration: none;
+}
+a:hover, #content a:hover, #globalnav a:hover, #logo3 a:hover {
+	color: #00608B;
+	text-decoration: underline;
+}
+
+a.new, #globalnav a.new, #globalWrapper a.new, #footer a.new {
+	color: #8a9090;
+	text-decoration: none;
+}
+
+a.new, #globalnav a.new:hover, #globalWrapper a.new:hover, #footer a.new:hover {
+	color: silver;
+	text-decoration: underline;
+}
+
+#globalWrapper div.yah a:link[href*="redlink=1"] {
+	color: silver;
+}
+/*#globalWrapper div.yah a:link[href*="talk:"] {
+	background: url("../../skins/bauhausmedien/icons/discussion.gif") center right no-repeat;
+	padding-right: 18px;
+}*/
+
+
+a.external.text, a.external.free,
+#content a.external.text, #content a.external.free,
+#content a[href^="http://"] {
+	background: url("../../skins/bauhausmedien/icons/link.gif") center right no-repeat;
+	padding-right: 14px;
+	padding-top: 1px;
+	padding-bottom: 0;
+	color: #3954dd;
+}
+a.external.text:visited, a.external.free:visited,
+#content a.external.text:visited, #content a.external.free:visited,
+#content a[href^="http://"]:visited {
+	color: #293562;
+}
+
+#signature p a:link, #signature p a:visited,
+#footer a:link {
+	background: none;
+	padding: 0;
+}
+
+a.internal.text,
+a[title*="web.uni-weimar.de/medien/wiki"],
+a.external.text[title*="web.uni-weimar.de/medien/wiki"],
+#content a.external.text[title*="web.uni-weimar.de/medien/wiki"],
+#content a[title*="web.uni-weimar.de/medien/wiki"],
+#bodyContent div.printfooter a,
+#signature p a:link, #signature p a:visited {
+	background: none;
+	color: #00608B;
+	padding-right: 0;
+}
+
+a[href^="https://"],
+a[href^="https://"].external.text,
+.link-https,
+#content a[href^="https://"],
+#content a[href^="https://"].external.text,
+#content .link-https {
+	background: url("../../skins/bauhausmedien/icons/lock.gif") center right no-repeat;
+	padding-right: 18px;
+}
+a[href^="ftp://"],
+a[href^="ftp://"].external.text,
+#content a[href^="ftp://"],
+#content a[href^="ftp://"].external.text,
+#content .link-ftp {
+	background: url("../../skins/bauhausmedien/icons/ftp.gif") center right no-repeat;
+	padding-right: 20px;
+}
+a[href^="mailto:"],
+a[href^="mailto:"].external.text,
+#content a[href^="mailto:"],
+#content a[href^="mailto:"].external.text,
+#content .link-mailto {
+	background: url("../../skins/bauhausmedien/icons/mail.gif") center right no-repeat;
+	padding-right: 20px;
+}
+a[href^="news://"],
+a[href^="news://"].external.text,
+#content a[href^="news://"],
+#content a[href^="news://"].external.text,
+#content .link-mailto {
+	background: url("../../skins/bauhausmedien/icons/news.gif") center right no-repeat;
+	padding-right: 20px;
+}
+
+#content a[href$=".doc"],
+#content a[href$=".doc"].external.text,
+#content a[href$=".pd"],
+#content a[href$=".pd"].external.text,
+#content a[href$=".rtf"],
+#content a[href$=".rtf"].external.text,
+#content a[href$=".txt"],
+#content a[href$=".txt"].external.text {
+	background: url("../../skins/bauhausmedien/icons/file.gif") center right no-repeat;
+	padding-right: 18px;
+}
+#content a[href$=".aac"],
+#content a[href$=".aac"].external.text,
+#content a[href$=".mp3"],
+#content a[href$=".mp3"].external.text,
+#content a[href*="itunes"],
+#content a[href*="itunes"].external.text {
+	background: url("../../skins/bauhausmedien/icons/audio.gif") center right no-repeat;
+	padding-right: 18px;
+}
+#content a[href*="youtube"],
+#content a[href*="youtube"].external.text,
+#content a[href*="vimeo"],
+#content a[href*="vimeo"].external.text,
+#content a[href*="myvideo"],
+#content a[href*="myvideo"].external.text {
+	background: url("../../skins/bauhausmedien/icons/video.gif") center right no-repeat;
+	padding-right: 18px;
+}
+#content a[href$=".pdf"],
+#content a[href$=".pdf"].external.text {
+	background: url("../../skins/bauhausmedien/icons/pdf.gif") center right no-repeat;
+	padding-right: 18px;
+}
+#content a[href$=".zip"],
+#content a[href$=".zip"].external.text {
+	background: url("../../skins/bauhausmedien/icons/zip.gif") center right no-repeat;
+	padding-right: 18px;
+}
+
+/*
+
+ @end */
+
+/* @group Category Tag Selector */
+
+#categoryselectmaster {
+	height: 150px;
+	width: auto;
+	overflow: auto;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+}
+
+#categoryselectmaster input#txtSelectedCategories {
+	width: 96%;
+	margin-left: 5px;
+}
+
+#tagcloud {
+	left: 2px;
+	font-size: 82%;
+	line-height: 100%;
+	background-color: white;
+	display: compact;
+	position: relative;
+}
+
+#tagcloud.divForTabbing.tagcloud {
+	width: 96%;
+	margin-left: 2px;
+	margin-right: 4px;
+	top: 0px;
+	margin-bottom: 8px;
+	float: left;
+	clear: left;
+	display: inline-block;
+	padding: 4px;
+	height: auto;
+}
+
+#button1.buttonhighlight, #button2.buttonunhighlight {
+	display: none;
+	visibility: hidden;
+}
+
+#categoryselectmaster table,
+#categoryselectmaster .buttonspacewide {
+	display: none;
+	visibility: hidden;
+	width: auto;
+}
+
+#categoryselectmaster {
+	font-size: 100%;
+	line-height: 150%;
+	margin-bottom: 10px;
+}
+
+/* @end */
+
+/* @group Terminology Tooltip */
+
+.tooltip {
+	color: #003a5e;
+	text-decoration:none !important;
+}
+.tooltip_abbr,
+.tooltip_abbr {
+	border-bottom-color: #999999;
+	text-decoration: none !important;
+}
+.tooltip_tip {
+	text-decoration: none;
+	border-bottom-style: none !important;
+}
+
+/* @end */
+
+/* TEST for hidden Sidebar
+#content {
+	background-color: yellow;
+	display: block;
+	position: relative;
+	left: -249px;
+	width: 96%;
+}
+*/
+

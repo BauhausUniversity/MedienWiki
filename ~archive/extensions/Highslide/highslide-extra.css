@@ -1,0 +1,11 @@
+.highslide-controls .highslide-move {
+	display: none;
+}
+.highslide-controls .highslide-full-expand {
+	display: none;
+}
+.highslide-controls {
+	position: static !important;
+	margin-bottom: 0;
+	width: 100px !important;
+}

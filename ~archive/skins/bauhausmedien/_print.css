@@ -1,0 +1,146 @@
+/* @override 
+	http://web.uni-weimar.de/medien/wiki/index.php5?title=MediaWiki:Print.css&usemsgcache=yes&ctype=text%2Fcss&smaxage=18000&action=raw&maxage=18000
+	http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/_print.css?207
+	http://localhost:8888/medien/wiki/skins/bauhausmedien/_print.css?207
+*/
+
+/* CSS placed here will affect the print output */
+
+/* @group Layout */
+
+body {
+	color: black;
+	font: 0.8em/140% Verdana, Helvetica, sans-serif;
+	margin: 2mm 40mm 8mm 4mm;
+}
+
+/*#bodyContent {
+	padding-right: 24px;
+	border-right: 1px dashed black;
+}*/
+
+#globalnav, 
+#search, #searchform, #searchBody,
+div.yah,
+#toc, 
+#editform, #toolbar {
+	display: none;
+	visibility: hidden;
+}
+
+#logo1 {
+	display: relative;
+	width: 10cm;
+	/*left: 20mm;*/
+	position: relative;
+}
+#logo2 {
+	display: none;
+}
+
+#logo3, #logo3 a {
+	display: block;
+	font: bold 1em/140% Verdana, Helvetica, sans-serif;
+	position: absolute;
+	text-align: right;
+	top: 0mm;
+	right: 0mm;
+	width: 50mm;
+	height: auto;
+}
+
+#footer {
+	border: 0;
+}
+
+div.catlinks {
+	margin-bottom: 4mm;
+}
+div.printfooter {
+	border-top: 1px solid black;
+	padding-bottom: 0;
+	margin-bottom: -40px;
+	margin-top: 30px;
+	padding-top: 7px;
+}
+
+.editsectionIcon {
+	visibility: hidden;
+	display: none;
+}
+
+/* @end */
+
+/* @group Text */
+
+h1, h2, h3, h4, h5, h6, big, p big {
+	margin: 0;
+	padding-bottom: 2mm;
+}
+
+h1, big {
+	font-size: 140%;
+	line-height: 140%;
+	padding-top: 1cm;
+}
+
+h2 {
+	font-size: 120%;
+	line-height: 140%;
+	padding-top: 1cm;
+	width: 100%;
+	border-bottom: 1px solid silver;
+}
+
+h3 {
+	font-size: 110%;
+	line-height: 140%;
+	padding-top: 0.75cm;
+}
+
+h4 {
+	font-size: 100%;
+	line-height: 140%;
+	padding-top: 0.5cm;
+	font-weight: bold;
+}
+
+p, i, em, b, strong, li, ul li, ol li, td {
+	font-size: 100%;
+	line-height: 140%;
+}
+
+#content ul, ol
+#content ul li, ol li,
+#content ul li ul li,
+#content ol li ol li {
+	margin-left: 0;
+	padding-left: 4mm;
+	font-size: 100%;
+	line-height: 140%;
+}
+
+pre, code {
+	overflow: visible;
+	text-overflow: clip;
+}
+
+div[class*="source"] {
+	font-size: 120%;
+	white-space: normal;
+	overflow: visible;
+	text-overflow: clip;
+}
+
+#footer,
+#footer ul li,
+#signature p,
+small,
+div.catlinks,
+div.printfooter {
+	font-size: 70%;
+	line-height: 140%;
+}
+
+
+/* @end */

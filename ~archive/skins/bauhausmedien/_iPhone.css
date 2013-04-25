@@ -1,0 +1,18 @@
+/* CSS FOR iPhone */
+/* by Michael Markert */
+
+
+#globalWrapper div.yah {
+	line-height: 9px;
+}
+
+#signature {
+	position: relative;
+	top: 0px;
+}
+#footer ul {
+	margin-top: 8px;
+	position: relative;
+	top: 0px;
+}
+

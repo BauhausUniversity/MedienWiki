@@ -1,0 +1,112 @@
+/* SelectCategoryTagCloud Mediawiki Extension
+ *
+ * @author Andreas Rindler (mediawiki at jenandi dot com)
+ * @credits Leon Weber <leon.weber@leonweber.de> & Manuel Schneider <manuel.schneider@wikimedia.ch>, Daniel Friesen http://wiki-tools.com
+ * @licence GNU General Public Licence 2.0 or later
+ * @description Adds a category selection tag cloud to the edit and upload pages and enables a Google Suggest like completion of categories entered by the user.
+ *
+*/
+
+	/*Suggest search results DIV*/
+#searchResults {
+	line-height: 1.6; 
+	overflow: auto;
+	max-height: 170px;
+	height: expression(
+		this.scrollHeight > 170? "170px" : "auto" );
+	width: 95%;
+	margin-top : -1px;
+	float : none;
+	visibility: hidden;
+	position: absolute;
+	color: #17375E;
+	background-color: white;
+	z-index: 1;
+	border: solid 1px black;
+	}
+
+/*Highlighted category in search results list*/
+span.highlight {
+	background-color: #17375E;
+	color: white;
+	cursor: pointer;
+	line-Height: 1.6;
+	padding: 3px 4px;
+/*	width: 278px; */
+	margin: 0px;
+}
+	input#txtSelectedCategories {
+	width: 90%;
+}
+
+	/*Category Select Master DIV*/
+	#categoryselectmaster {
+	border: 1px solid #17375E;
+	background-color: #e9e9e9;
+	max-height: 550px;
+	padding: 5px;
+	margin: 0px 0px 15px 0px;
+	}
+	
+	/*Tag cloud area*/
+	#tagcloud {
+	  text-align: center;
+	  margin: 10px;
+	}
+
+	/*Each individual tag*/
+	.tagselected {
+		 background-color: #515256;
+		 color: white;
+      	 
+	 }
+	
+	.tag:hover {
+      cursor: pointer;
+      text-decoration: underline;
+	}
+	
+	.tooltip {
+      cursor: pointer;
+      text-decoration: underline;
+      color: #2d5381;
+	}
+	
+		
+span.cs {
+	color: #17375E;
+	background-color: white;
+	cursor: pointer;
+	line-Height: 1.6;  
+	padding: 3px 4px;
+/*	width: 278px; */
+	margin: 0px;
+}
+
+span.csSelect {
+/*	color: rgb(255,0,0); */
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+/*Highlighted category in search results list*/
+p.highlight {
+	background-color: #17375E;
+	color: white;
+	cursor: pointer;
+	line-Height: 1;
+	padding: 0.1em 2px;
+/*	width: 278px; */
+	margin: 0px;
+}
+
+	
+p.cs {
+	color: #17375E;
+	background-color: white;
+	cursor: pointer;
+	line-Height: 1;
+	padding: 0.1em 2px;
+/*	width: 278px;*/
+	margin: 0px;
+}

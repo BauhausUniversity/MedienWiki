@@ -1,0 +1,92 @@
+/* Basic CSS Template for Bauhaus Medien Skin
+ * 2010 by Michael Markert, Faculty of Media
+ * If you don't need an override, the selector can also be removed
+ * All selectors (and more) are already in _bauhausmedien.css
+ *
+ * Please do not change 
+ * the position and size of the sidebar 
+ * and the BUW Logos
+ * Thank you!
+ *
+ * Questions to michael.markert (at university address)
+ */
+
+
+/* @group TOC */
+
+#toc ul li a:visited,
+#toc ul li ul li a:visited {
+	color: #004069;
+}
+
+#toc td a:hover,
+#toc ul li a:hover,
+#toc ul li ul li a:hover {
+	color: #00608B;
+}
+
+/* @end */
+
+
+/* @group Structure */
+
+#bodyContent h2 {
+}
+
+/* @end */
+
+
+/* @group Typo */
+
+pre, code {
+	background-color: #eee;
+	border-left: 2px solid #00608B;
+}
+
+/* @end */
+
+/* @group Links */
+
+#logo3 a:link, #logo3 a:visited {
+	color: #333;
+}
+
+a:link,
+#content a:link,
+#content a:visited {
+	color: #00608B;
+}
+
+a:hover, #content a:hover, #globalnav a:hover, #logo3 a:hover {
+	color: #00608B;
+}
+
+a.new, #globalnav a.new, #globalWrapper a.new, #footer a.new {
+	color: #8a9090;
+}
+
+a.new, #globalnav a.new:hover, #globalWrapper a.new:hover, #footer a.new:hover {
+	color: silver;
+}
+
+#globalWrapper div.yah a:link[href*="redlink=1"] {
+	color: silver;
+}
+
+a.internal.text,
+a[title*="web.uni-weimar.de/medien/wiki"],
+a.external.text[title*="web.uni-weimar.de/medien/wiki"],
+#content a.external.text[title*="web.uni-weimar.de/medien/wiki"],
+#content a[title*="web.uni-weimar.de/medien/wiki"],
+#bodyContent div.printfooter a,
+#signature p a:link, #signature p a:visited {
+	color: #00608B;
+}
+a.external.text, a.external.free,
+#content a.external.text, #content a.external.free,
+#content a[href^="http://"] {
+	color: #3954dd;
+}
+
+
+/* @end */

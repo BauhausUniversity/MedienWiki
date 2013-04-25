@@ -1,0 +1,121 @@
+/* @override 
+	http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/_bauhausmediengmu.css?207
+	http://web.uni-weimar.de/medien/wiki/skins/bauhausmedien/_bauhausmedienmoden.css?207
+*/
+
+body {
+	/*background: url(../../skins/bauhausmedien/images/../../GMU/gmu_headimg.jpg) no-repeat;*/
+}
+
+/* @group Structure */
+
+#bodyContent h2 {
+	background-color: transparent;
+	/*border-left: 1px dotted #D30044;*/
+	padding-left: 5px;
+}
+
+/* @end */
+
+
+/*
+/* @group TOC * /
+
+#toc ul li a:visited,
+#toc ul li ul li a:visited {
+	color: #ba0033;
+}
+
+#toc td a:hover,
+#toc ul li a:hover,
+#toc ul li ul li a:hover {
+	color: #D30044;
+}*/
+
+/* @end * /
+
+/* @group Typo * /
+
+pre, code {
+	background-color: #eee;
+	border-left: 2px solid #D30044;
+}
+
+/* @end */
+
+/* @group Lists */
+
+#content ul li,
+#content ul li ul li,
+#content ol li ul li {
+	list-style-type: disc;
+	color: black;
+}
+#toc ul li,
+#footer ul li {
+	list-style-type: none;
+}
+
+/* @end */
+
+/*
+/* @group Links * /
+
+#logo3 a:link, #logo3 a:visited {
+	color: #333;
+}
+
+a:link,
+#content a:link,
+#content a:visited {
+	color: #D30044;
+}
+
+a:hover, #content a:hover, #globalnav a:hover, #logo3 a:hover {
+	color: #D30044;
+}
+
+a.new, #globalnav a.new, #globalWrapper a.new, #footer a.new {
+	color: #8a9090;
+}
+
+a.new, #globalnav a.new:hover, #globalWrapper a.new:hover, #footer a.new:hover {
+	color: silver;
+}
+
+#globalWrapper div.yah a:link[href*="redlink=1"] {
+	color: silver;
+}
+
+
+/*a.external.text, a.external.free,
+#content a.external.text, #content a.external.free,
+#content a[href^="http://"] {
+	color: #8bd720;
+}* /
+
+a.internal.text,
+a[title*="web.uni-weimar.de/medien/wiki"],
+a.external.text[title*="web.uni-weimar.de/medien/wiki"],
+#content a.external.text[title*="web.uni-weimar.de/medien/wiki"],
+#content a[title*="web.uni-weimar.de/medien/wiki"],
+#bodyContent div.printfooter a,
+#signature p a:link, #signature p a:visited {
+	color: #D30044;
+}
+a.external.text, a.external.free,
+#content a.external.text, #content a.external.free,
+#content a[href^="http://"] {
+	color: #ed009e;
+}
+
+/*a[href^="https://"],
+a[href^="https://"].external.text,
+.link-https,
+#content a[href^="https://"],
+#content a[href^="https://"].external.text,
+#content .link-https {
+	color: #00be00;
+}*/
+
+/* @end */
