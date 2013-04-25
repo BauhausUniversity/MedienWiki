@@ -4,6 +4,7 @@
 # MAKE SURE THIS FILE IS EXCLUDED FROM ANY VERSION CONTROL SYSTEM
 
 $wgSitename 		= "Medien Wiki";
+$wgServer           = "http://localhost:8888";
 $wgScriptPath 		= "/medienwiki/wiki";
 
 $wgEmergencyContact = "…@uni-weimar.de";

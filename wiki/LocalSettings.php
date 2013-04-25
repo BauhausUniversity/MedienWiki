@@ -15,6 +15,22 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+
+
+
+################ MAINTENANCE MODE ####################
+
+#$wgReadOnly = "<br/><strong>The Medien Wiki is currently being updated. Please check back in a few minutes!</strong>";
+
+# This shows exceptions. This should be disabled on a stable running system. 
+$wgShowExceptionDetails = true;
+
+
+
+
+################ PRIVATE SETTINGS ####################
+
+
 # private settings
 # (also see http://www.mediawiki.org/wiki/Manual_talk:Wiki_family#Step_2:_Add_structure_for_separating_wikis )
 require_once( "$IP/LocalSettingsPrivate.php" );
@@ -22,6 +38,9 @@ require_once( "$IP/LocalSettingsPrivate.php" );
 
 
 
+
+
+################ GENERAL SETTINGS ####################
 
 
 ## Uncomment this to disable output compression
@@ -39,7 +58,7 @@ $wgMetaNamespace = "MedienWiki";
 $wgScriptExtension  = ".php";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer           = "http://localhost:8888";
+#$wgServer           = "http://localhost:8888";			# +++++ defined in Private Settings
 
 ## The relative URL path to the skins directory
 $wgStylePath        = "$wgScriptPath/skins";
@@ -98,12 +117,50 @@ $wgShellLocale = "en_US.UTF-8";
 ## create the directories images/archive, images/thumb and
 ## images/temp, and make them all writable. Then uncomment
 ## this, if it's not already uncommented:
-#$wgHashedUploadDirectory = false;
+$wgHashedUploadDirectory = false;
+
+# Additionally allowed file extensions for uploads
+$wgFileExtensions[] = 'aac';
+$wgFileExtensions[] = 'asc';
+$wgFileExtensions[] = 'csv';
+$wgFileExtensions[] = 'doc';
+$wgFileExtensions[] = 'fla';
+$wgFileExtensions[] = 'gif';
+$wgFileExtensions[] = 'gpx';
+$wgFileExtensions[] = 'igc';
+$wgFileExtensions[] = 'jpg';
+$wgFileExtensions[] = 'jpeg';
+$wgFileExtensions[] = 'kml';
+$wgFileExtensions[] = 'kmz';
+$wgFileExtensions[] = 'maxpat';
+$wgFileExtensions[] = 'mobileconfig';
+$wgFileExtensions[] = 'mp3';
+$wgFileExtensions[] = 'pdf';
+$wgFileExtensions[] = 'pd';
+$wgFileExtensions[] = 'pde';
+$wgFileExtensions[] = 'pds';
+$wgFileExtensions[] = 'png';
+$wgFileExtensions[] = 'rte';
+$wgFileExtensions[] = 'rtf';
+$wgFileExtensions[] = 'svg';
+$wgFileExtensions[] = 'swf';
+$wgFileExtensions[] = 'trl';
+$wgFileExtensions[] = 'txt';
+$wgFileExtensions[] = 'wpt';
+$wgFileExtensions[] = 'zip';
+
+$wgVerifyMimeType = false;
+$wgAllowExternalImages = true;
 
 ## Set $wgCacheDirectory to a writable directory on the web server
 ## to make your wiki go slightly faster. The directory should not
 ## be publically accessible from the web.
 #$wgCacheDirectory = "$IP/cache";
+
+# When you make changes to this configuration file, this will make
+# sure that cached pages are cleared.
+$wgCacheEpoch = max( $wgCacheEpoch, gmdate( 'YmdHis', @filemtime( __FILE__ ) ) );
+
 
 # Site language code, should be one of the list in ./languages/Names.php
 $wgLanguageCode = "en";
@@ -126,6 +183,11 @@ $wgRightsUrl  = "http://creativecommons.org/licenses/by-nc-sa/3.0/";
 $wgRightsText = "Creative Commons Attribution Non-Commercial Share Alike";
 $wgRightsIcon = "{$wgStylePath}/common/images/cc-by-nc-sa.png";
 
+# Set this to true if you want detailed copyright information forms on Upload.
+$wgUseCopyrightUpload = true;
+# Set this to false if you want to disable checking that detailed 
+$wgCheckCopyrightUpload = true;
+
 # Path to the GNU diff3 utility. Used for conflict resolution.
 $wgDiff3 = "/usr/bin/diff3";
 
@@ -137,6 +199,119 @@ $wgResourceLoaderMaxQueryLength = -1;
 
 # The following permissions were set based on your choice in the installer
 $wgGroupPermissions['*']['edit'] = false;
+
+
+
+################ ADDITIONAL SETTINGS ####################
+
+#set default favicon
+$wgFavicon = '/medien/wiki/skins/bauhausmedien/favicon_m.ico';
+
+
+
+################ NAMESPACES ####################
+
+#Number 100 and beyond are reserved for custom namespaces;
+define("BUW_GMU", 100);
+define("BUW_GMU_TALK", 101);
+define("BUW_IFD", 102);
+define("BUW_IFD_TALK", 103);
+define("BUW_MODEN", 104);
+define("BUW_MODEN_TALK", 105);
+define("BUW_RADIO", 106);
+define("BUW_RADIO_TALK", 107);
+define("BUW_FOTO", 108);
+define("BUW_FOTO_TALK", 109);
+define("BUW_ME", 110);
+define("BUW_ME_TALK", 111);
+define("BUW_EXPTV", 112);
+define("BUW_EXPTV_TALK", 113);
+define("BUW_EKK", 114);
+define("BUW_EKK_TALK", 115);
+define("PDCON", 116);
+define("PDCON_TALK", 117);
+define("BUW_MME", 118);
+define("BUW_MME_TALK", 119);
+
+$wgExtraNamespaces[BUW_GMU] 		= "GMU";
+$wgExtraNamespaces[BUW_GMU_TALK] 	= "GMU_talk";
+$wgExtraNamespaces[BUW_IFD] 		= "IFD";
+$wgExtraNamespaces[BUW_IFD_TALK] 	= "IFD_talk";
+$wgExtraNamespaces[BUW_MODEN] 		= "MODEN";
+$wgExtraNamespaces[BUW_MODEN_TALK] 	= "MODEN_talk";
+$wgExtraNamespaces[BUW_RADIO] 		= "RADIO";
+$wgExtraNamespaces[BUW_RADIO_TALK] 	= "RADIO_talk";
+$wgExtraNamespaces[BUW_FOTO]		= "FOTO";
+$wgExtraNamespaces[BUW_FOTO_TALK]	= "FOTO_talk";
+$wgExtraNamespaces[BUW_ME]			= "ME";
+$wgExtraNamespaces[BUW_ME_TALK]		= "ME_talk";
+$wgExtraNamespaces[BUW_EXPTV]		= "EXPTV";
+$wgExtraNamespaces[BUW_EXPTV_TALK]	= "EXPTV_talk";
+$wgExtraNamespaces[BUW_EKK]			= "EKK";
+$wgExtraNamespaces[BUW_EKK_TALK]	= "EKK_talk";
+$wgExtraNamespaces[BUW_MME]			= "MME";
+$wgExtraNamespaces[BUW_MME_TALK]	= "MME_talk";
+$wgExtraNamespaces[PDCON]			= "PDCON";
+$wgExtraNamespaces[PDCON_TALK]		= "PDCON_talk";
+
+# Enable subpages in the main namespace
+$wgNamespacesWithSubpages[NS_MAIN] = true;
+# Enable subpages all other namespaces
+$wgNamespacesWithSubpages[BUW_GMU] 	 = true;
+$wgNamespacesWithSubpages[BUW_IFD] 	 = true;
+$wgNamespacesWithSubpages[BUW_MODEN] = true;
+$wgNamespacesWithSubpages[BUW_RADIO] = true;
+$wgNamespacesWithSubpages[BUW_FOTO]	 = true;
+$wgNamespacesWithSubpages[BUW_ME]	 = true;
+$wgNamespacesWithSubpages[BUW_EXPTV] = true;
+$wgNamespacesWithSubpages[BUW_EKK]	 = true;
+$wgNamespacesWithSubpages[BUW_MME]	 = true;
+$wgNamespacesWithSubpages[PDCON]	 = true;
+#$wgNamespaceProtection[BUW_MK] = array( 'editbuwmk' ); #permission editbuwmk required
+
+#Set default searching, see http://www.mediawiki.org/wiki/Manual:$wgNamespacesToBeSearchedDefault
+$wgNamespacesToBeSearchedDefault = array(
+	NS_MAIN =>          	true,
+	NS_TALK =>          	false,
+	NS_USER =>          	true,
+	NS_USER_TALK =>     	false,
+	NS_PROJECT =>			true,
+	NS_PROJECT_TALK =>		false,
+	NS_IMAGE =>         	true,
+	NS_IMAGE_TALK =>    	false,
+	NS_MEDIAWIKI =>      	true,
+	NS_MEDIAWIKI_TALK => 	false,
+	NS_TEMPLATE => 			false,
+	NS_TEMPLATE_TALK => 	false,
+	NS_HELP =>           	true,
+	NS_HELP_TALK =>      	true,
+	NS_CATEGORY =>       	true,
+	NS_CATEGORY_TALK =>  	false,
+	BUW_GMU => 				true,
+	BUW_GMU_TALK =>			false,
+	BUW_IFD => 				true,
+	BUW_IFD_TALK =>			false,
+	BUW_MODEN => 			true,
+	BUW_MODEN_TALK =>		false,
+	BUW_RADIO => 			true,
+	BUW_RADIO_TALK =>		false,
+	BUW_FOTO =>				true,
+	BUW_FOTO_TALK =>		false,
+	BUW_ME =>				true,
+	BUW_ME_TALK =>			false,
+	BUW_EXPTV =>			true,
+	BUW_EXPTV_TALK =>		false,
+	BUW_EKK =>				true,
+	BUW_EKK_TALK =>			false,
+	BUW_MME =>				true,
+	BUW_MME_TALK =>			false,
+	PDCON =>				true,
+	PDCON_TALK =>			false
+);
+
+
+
+################ EXTENSIONS ####################
 
 # Enabled Extensions. Most extensions are enabled by including the base extension file here
 # but check specific extension documentation for more details
