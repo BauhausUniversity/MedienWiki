@@ -6,11 +6,13 @@
 
 ##Folders##
 * ~archive: contains old files of the first MedienWiki installation. This folder will be deleted when the current version will go online. It contains:
-** the current .htaccess file (renamed to ,htaccess)
-** extensions: current extensions
-** skins: the current MedienWiki skin
+ * the current .htaccess file (renamed to ,htaccess)
+ * extensions: current extensions
+ * skins: the current MedienWiki skin
 * latest: contains the latest (fresh) MediaWiki from http://www.mediawiki.org/wiki/Download
 * wiki: contains the MedienWiki
+* Usability: Contains Research results form usability test and user research
+ * Wireframes: Possible Layouts and Interface changes. 
 
 ##LocalSettings.php##
 For security reasons, the LocalSettings.php is split into two parts. The file "LocalSettings.php" includes a second LocalSettings.php file, which is ignored by this git repository.
