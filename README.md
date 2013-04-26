@@ -28,7 +28,7 @@ This repository and all source files are under the same license as the mediawiki
 All images, logos, brands, names and contents related to the Bauhaus-University Weimar remain under copyright and are not part of this software. © Bauhaus-Universität Weimar, Faculty of Media. Just ask if you're unsure, we're not out to protect knowledge, but we have to make sure we don't release any rights we do not own.
 
 ##Team##
-* Jan Dittrich
+* Jan Dittrich (User Research, Usability) 
 * Michael Markert
 * Max Neupert
 * Gianluca Pandolfo
