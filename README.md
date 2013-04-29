@@ -1,4 +1,4 @@
-#MedienWiki#
+﻿#MedienWiki#
 ##Media Wiki Installation for Bauhaus-Universität Weimar##
 
 ##About##
@@ -31,5 +31,5 @@ All images, logos, brands, names and contents related to the Bauhaus-University 
 * Jan Dittrich (User Research, Usability) 
 * Michael Markert
 * Max Neupert
-* Gianluca Pandolfo
+* Gianluca Pandolfo (Medienwiki Skin)
 * Gabriel Rausch
