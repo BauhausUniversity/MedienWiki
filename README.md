@@ -1,4 +1,4 @@
-#MedienWiki#
+﻿#MedienWiki#
 ##Media Wiki Installation for Bauhaus-Universität Weimar##
 
 ##About##
@@ -18,7 +18,7 @@
 For security reasons, the LocalSettings.php is split into two parts. The file "LocalSettings.php" includes a second LocalSettings.php file, which is ignored by this git repository.
 
 ##Links##
-* MedienWiki: uni-weimar.de/medien/wiki
+* MedienWiki: http://www.uni-weimar.de/medien/wiki
 * MediaWiki: http://www.mediawiki.org
 * MediaWiki Git Repository: http://www.mediawiki.org/wiki/Download_from_Git
 
@@ -31,5 +31,5 @@ All images, logos, brands, names and contents related to the Bauhaus-University 
 * Jan Dittrich (User Research, Usability) 
 * Michael Markert
 * Max Neupert
-* Gianluca Pandolfo
+* Gianluca Pandolfo (Medienwiki Skin)
 * Gabriel Rausch
