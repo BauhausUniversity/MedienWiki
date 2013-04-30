@@ -10,6 +10,9 @@ Logging out and logging in again (oops, I did not want to logout!) leads to a "l
 
 #Possible improvements
 * Search more prominent
-* Have a link in the imagepage that AJAX-Requests the last uploaded image by the same user
+
+##Just uploaded
+Have a link in the imagepage that AJAX-Requests the last uploaded image by the same user
+using https://www.mediawiki.org/wiki/API:Recentchanges, scrap the name of the user from somewhere; paste it in the query and limit the query only to files. Display the filenames in overlay. 
 
 
