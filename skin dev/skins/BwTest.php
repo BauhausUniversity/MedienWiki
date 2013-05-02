@@ -31,12 +31,12 @@ if( !defined( 'MEDIAWIKI' ) ) {
  * SkinTemplate class for Vector skin
  * @ingroup Skins
  */
-class SkinBwSkin extends SkinTemplate {
+class SkinBwTest extends SkinTemplate {
 
 	protected static $bodyClasses = array( 'vector-animateLayout' );
 
-	var $skinname = 'bwskin', $stylename = 'bwskin',
-		$template = 'BwSkinTemplate', $useHeadElement = true;
+	var $skinname = 'bwtest', $stylename = 'bwtest',
+		$template = 'BwTestTemplate', $useHeadElement = true;
 
 	/**
 	 * Initializes output page and sets up skin-specific parameters
@@ -57,11 +57,11 @@ class SkinBwSkin extends SkinTemplate {
 				"/{$this->stylename}/csshover{$min}.htc\")}</style><![endif]-->"
 		);
 
-		$out->addModuleScripts( 'skins.bwskin' );
+		$out->addModuleScripts( 'skins.bwtest' );
 		$out->addStyle('common/commonElements.css', 'screen');
 		$out->addStyle('common/commonContent.css', 'screen');
 		$out->addStyle('common/commonInterface.css', 'screen');
-		$out->addStyle('bwskin/screen.css', 'screen');
+		$out->addStyle('bwtest/screen.css', 'screen');
 	}
 
 	/**
@@ -71,7 +71,7 @@ class SkinBwSkin extends SkinTemplate {
 	 */
 	function setupSkinUserCss( OutputPage $out ){
 		parent::setupSkinUserCss( $out );
-		$out->addModuleStyles( 'skins.bwskin' );
+		$out->addModuleStyles( 'skins.bwtest' );
 	}
 
 	/**
@@ -93,7 +93,7 @@ class SkinBwSkin extends SkinTemplate {
  * QuickTemplate class for Vector skin
  * @ingroup Skins
  */
-class BwSkinTemplate extends BaseTemplate {
+class BwTestTemplate extends BaseTemplate {
 
 	/* Functions */
 
