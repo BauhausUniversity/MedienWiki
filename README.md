@@ -1,4 +1,4 @@
-﻿#MedienWiki#
+#MedienWiki#
 ##Media Wiki Installation for Bauhaus-Universität Weimar##
 
 ##About##
@@ -9,9 +9,8 @@
  * the current .htaccess file (renamed to ,htaccess)
  * extensions: current extensions
  * skins: the current MedienWiki skin
-* latest: contains the latest (fresh) MediaWiki from http://www.mediawiki.org/wiki/Download
-* wiki: contains the MedienWiki
-* Usability: Contains [Research results](/usability/Forschungsergebnisse.md) from usability test and user research
+* wiki: contains the (latest) MedienWiki installation from http://www.mediawiki.org
+* usability: Contains [Research results](/usability/Forschungsergebnisse.md) from usability test and user research
  * [Wireframes](/usability/Wireframes/readme.md): Possible Layouts and Interface changes. 
 
 ##LocalSettings.php##
