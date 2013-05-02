@@ -342,18 +342,21 @@ require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 ###### Bundled Extions Setup
 
 # ConfirmEdit
-$wgCaptchaClass = 'ReCaptcha';	// Sign up for keys: http://recaptcha.net/api/getkey
-$wgReCaptchaPublicKey = '';								# +++++ defined in Private Settings
-$wgReCaptchaPrivateKey = '';							# +++++ defined in Private Settings
+#$wgCaptchaClass = 'ReCaptcha';	// Sign up for keys: http://recaptcha.net/api/getkey
+#$wgReCaptchaPublicKey = '';								# +++++ defined in Private Settings
+#$wgReCaptchaPrivateKey = '';							# +++++ defined in Private Settings
 // no captcha for confirmed users
 $wgGroupPermissions['emailconfirmed']['skipcaptcha'] = true;
 $ceAllowConfirmedEmail = true;
 // no captcha for edits within university IP range
-#$wgCaptchaWhitelistIP
+$wgCaptchaWhitelistIP[] = '192.168.1.1';
+$wgCaptchaWhitelistIP[] = '127.0.0.0';
+
 
 # ParserFunctions
 # http://www.mediawiki.org/wiki/Extension:ParserFunctions
 $wgPFEnableStringFunctions = true;
+
 
 # Vector provides enhancements to the Vector skin
 # see Vector.php: $wgVectorFeatures configuration
@@ -364,6 +367,7 @@ $wgDefaultUserOptions['vector-collapsiblenav'] = 1;
 $wgVectorFeatures['collapsibletabs']['user'] = true;
 $wgVectorFeatures['editwarning']['user'] = true;
 $wgVectorUseSimpleSearch = true;
+
 
 # Wiki Editor
 # http://www.mediawiki.org/wiki/Extension:WikiEditor
@@ -379,7 +383,9 @@ $wgDefaultUserOptions['wikieditor-preview'] = 1;
 ################ DEFAULT EXTENSIONS ####################
 
 
-# Addtional Extensions here:
+# Addtional Extensions here (alphabetically ordered)
+
+
 
 # Maps
 #require_once( "$IP/extensions/Maps/Maps.php" );
@@ -391,3 +397,28 @@ $egYahooMapsKey = "";									# +++++ defined in Private Settings
 # Public Transport OSM layer for OpenLayers
 $egMapsOLAvailableLayers['osm-oepnv'] = array('OpenLayers.Layer.OSM("ÖPNV Deutschland", "http://tile.xn--pnvkarte-m4a.de/tilegen/${z}/${x}/${y}.png", {numZoomLevels: 19,buffer:0})');
 
+
+# Upload Wizard
+# https://www.mediawiki.org/wiki/Extension:UploadWizard
+require_once( "$IP/extensions/UploadWizard/UploadWizard.php" );
+// Needed to make UploadWizard work in IE, see bug 39877
+$wgApiFrameOptions = 'SAMEORIGIN';
+$wgUseInstantCommons = false;
+$wgExtensionFunctions[] = function() {
+        $GLOBALS['wgUploadNavigationUrl'] = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
+        return true;
+};
+$wgUploadWizardConfig = array(
+        'debug' => true,
+        //'autoCategory' => 'Uploaded with UploadWizard',
+        //'feedbackPage' => 'UploadSuccessful',
+        'altUploadForm' => 'Special:Upload',
+        'fallbackToAltUploadForm' => false,
+        'enableFormData' => true,  # Should FileAPI uploads be used on supported browsers?
+        'enableMultipleFiles' => true,
+        'enableMultiFileSelect' => false,
+        'skipTutorial' => false
+ );
+ 
+ 
+ 
