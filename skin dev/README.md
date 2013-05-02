@@ -6,11 +6,11 @@ This is a test folder for the new **MedienWiki** skin. The current Skin, which w
 
 ##Folders##
 * **skins** contains:
- * bwskin folder (includes screen.css)
- * BwSkin.php
+ * bwtest folder (includes screen.css)
+ * BwTest.php
 
 ##Installation##
 
 * Copy the content of the Skin folder into your ../skin/ directory of your MediaWiki. **Latest Version 1.20.04**
-* Change **$wgDefaultSkin = "vector";** to **$wgDefaultSkin = "bwskin";**
+* Change **$wgDefaultSkin = "vector";** to **$wgDefaultSkin = "bwtest";**
 
