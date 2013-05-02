@@ -42,7 +42,7 @@ class BauhausMedienGMUTemplate extends BauhausMedienTemplate {
 		$this->templPrefs['myFakWortmarke']		= 'faculty_media_P368.png';
 		$this->templPrefs['myTitleLogo']		= 'media_art_design_P368.png';
 		$this->templPrefs['myTitle']			= 'Media Art & Design';
-		$this->templPrefs['mySubtitle']			= 'Design of Medial Environments / Prof. Ursula Damm';
+		$this->templPrefs['mySubtitle']			= 'Medial Environments / Prof. Ursula Damm';
 		$this->templPrefs['myFakLink'] 			= 'http://www.uni-weimar.de/cms/medien.html';
 		$this->templPrefs['myTitleLink']		= 'http://www.uni-weimar.de/cms/medien/medienkunstmediengestaltung.html';	// Link of $myTitle
 		$this->templPrefs['myHomeURL']			= 'http://www.uni-weimar.de/medien/umgebungen'; // Link of $mySubtitle
