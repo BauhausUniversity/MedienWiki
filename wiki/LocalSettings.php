@@ -27,20 +27,6 @@ $wgShowExceptionDetails = true;
 
 
 
-
-
-################ PRIVATE SETTINGS ####################
-
-
-# private settings
-# (also see http://www.mediawiki.org/wiki/Manual_talk:Wiki_family#Step_2:_Add_structure_for_separating_wikis )
-require_once( "$IP/LocalSettingsPrivate.php" );
-
-
-
-
-
-
 ################ GENERAL SETTINGS ####################
 
 
@@ -421,4 +407,10 @@ $wgUploadWizardConfig = array(
  );
  
  
- 
+#################PRIVATE SETTINGS ####################
+
+
+# private settings
+# (also see http://www.mediawiki.org/wiki/Manual_talk:Wiki_family#Step_2:_Add_structure_for_separating_wikis )
+require_once( "$IP/LocalSettingsPrivate.php" );
+
