@@ -415,7 +415,7 @@ $wgUploadWizardConfig = array(
         'skipTutorial' => false
  );
 
- // Adding a custom cc-by-nc-nd license
+ /*// Adding a custom cc-by-nc-nd license
  $wgUploadWizardConfig['licenses']['cc-by-nc-nd-3.0'] = array(
  	'msg' => 'mwe-upwiz-license-cc-by-nc-nd-3.0',
  	'icons'	=> array( 'cc-by', 'cc-nc', 'cc-nd' ),
@@ -423,7 +423,7 @@ $wgUploadWizardConfig = array(
  );
  $wgUploadWizardConfig['licensesOwnWork']['licenses'][] = 'cc-by-nc-nd-3.0';
  $wgUploadWizardConfig['licensesOwnWork']['defaults'][] = 'cc-by-nc-nd-3.0';	# make it the default
-
+*/
  
  
 #################PRIVATE SETTINGS ####################
