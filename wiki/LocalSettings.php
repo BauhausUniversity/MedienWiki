@@ -27,6 +27,18 @@ $wgShowExceptionDetails = true;
 
 
 
+
+ 
+#################PRIVATE SETTINGS ####################
+
+
+# private settings
+# (also see http://www.mediawiki.org/wiki/Manual_talk:Wiki_family#Step_2:_Add_structure_for_separating_wikis )
+require_once( "$IP/LocalSettingsPrivate.php" );
+
+
+
+
 ################ GENERAL SETTINGS ####################
 
 
@@ -81,10 +93,6 @@ $wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 
 # Experimental charset support for MySQL 5.0.
 $wgDBmysql5 = false;
-
-## Shared memory settings
-$wgMainCacheType    = CACHE_ACCEL;
-$wgMemCachedServers = array();
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
@@ -403,8 +411,19 @@ $wgUploadWizardConfig = array(
         'enableFormData' => true,  # Should FileAPI uploads be used on supported browsers?
         'enableMultipleFiles' => true,
         'enableMultiFileSelect' => false,
+        'tutorialTemplate' => 'licenseTutorial.jpg',	# TODO: This has to be created!
         'skipTutorial' => false
  );
+
+ // Adding a custom cc-by-nc-nd license
+ $wgUploadWizardConfig['licenses']['cc-by-nc-nd-3.0'] = array(
+ 	'msg' => 'mwe-upwiz-license-cc-by-nc-nd-3.0',
+ 	'icons'	=> array( 'cc-by', 'cc-nc', 'cc-nd' ),
+ 	'url' => '//creativecommons.org/licenses/by-nc-nd/3.0/'
+ );
+ $wgUploadWizardConfig['licensesOwnWork']['licenses'][] = 'cc-by-nc-nd-3.0';
+ $wgUploadWizardConfig['licensesOwnWork']['defaults'][] = 'cc-by-nc-nd-3.0';	# make it the default
+
  
  
 #################PRIVATE SETTINGS ####################

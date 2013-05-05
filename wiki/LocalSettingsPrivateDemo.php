@@ -20,6 +20,10 @@ $wgDBpassword       = "root";
 # MySQL specific settings
 $wgDBprefix 		= "wki_";
 
+## Shared memory settings
+$wgMainCacheType    = CACHE_ACCEL;
+$wgMemCachedServers = array();
+
 # MediaWiki secret key
 $wgSecretKey 		= "";
 $wgUpgradeKey 		= "";
