@@ -5,67 +5,11 @@
 
 */
 
-if ( $.inArray( mw.config.get( 'wgAction' ), ['edit', 'submit'] ) !== -1 ) {
-        mw.loader.using( 'user.options', function () {
-                if ( mw.user.options.get('usebetatoolbar') ) {
-                        mw.loader.using( 'ext.wikiEditor.toolbar', function () {
-                                $(document).ready( customizeToolbar );
-                        } );
-                }
-        } );
-}
-
-
 
 
 var customizeToolbar = function() {
-    $( '#wpTextbox1' ).wikiEditor( 'addToToolbar', {
-    	'section': 'main',
-    	'group':'insert'
-    
-    }
-	
-
-	//a test addition. It does add a :) in order to make discussions in tough editwars way nicer.
-    $( '#wpTextbox1' ).wikiEditor('addToToolbar',{
-       'section': 'main',
-       'group': 'insert',
-       'tools': {
-                'smile': {
-                        label: 'Smile!', // or use labelMsg for a localized label, see above
-                        type: 'button',
-                        icon: '//upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Gnome-face-smile.svg/22px-Gnome-face-smile.svg.png',
-                        action: {
-                                type: 'encapsulate',
-                                options: {
-                                        pre: ":)" // text to be inserted
-                                }    
-                        }
-                }
-        }
-        
-        
- });//END:wikiEditor('addToToolbar
- 
- $( '#wpTextbox1' ).wikiEditor( 'addToToolbar', {
-       'section': 'main',
-       'group': 'insert',
-       'tools': {
-                'mytool': {
-                        label: 'Smile!', // or use labelMsg for a localized label, see above
-                        type: 'button',
-                        icon: 'http://upload.wikimedia.org/wikipedia/commons/4/49/Tango_-_text-x-script_22px.png',
-                        module:'mytool'
-                }
-        }
-        
-        
- });//END:wikiEditor('addToToolbar
- 
-};
-
-
-$( '#wpTextbox1' ).wikiEditor( 'addModule',
+	$( '#wpTextbox1').wikiEditor('addModule',{
+	'dialogs':{
 	'insert-mytool': {
 				titleMsg: 'wikieditor-toolbar-tool-mytool-title',
 				id: 'wikieditor-toolbar-mytool-dialog',
@@ -106,14 +50,14 @@ $( '#wpTextbox1' ).wikiEditor( 'addModule',
 						</div>\
 					</fieldset>',
 				init: function () {
-
+window.alert("hi!")
 				},
 				dialog: {
 					resizable: false,
 					dialogClass: 'wikiEditor-toolbar-dialog',
 					width: 590,
 					buttons: {
-						'wikieditor-toolbar-tool-file-insert': function () {
+						'wikieditor-toolbar-tool-mytool-insert': function () {
 							var fileName, caption, fileFloat, fileFormat, fileSize, fileTitle,
 								options, fileUse,
 								hasPxRgx = /.+px$/;
@@ -166,7 +110,7 @@ $( '#wpTextbox1' ).wikiEditor( 'addModule',
 								'#wikieditor-toolbar-file-format'].join( ',' )
 							).val( '' );
 						},
-						'wikieditor-toolbar-tool-file-cancel': function () {
+						'wikieditor-toolbar-tool-mytool-cancel': function () {
 							$( this ).dialog( 'close' );
 						}
 					},
@@ -194,6 +138,64 @@ $( '#wpTextbox1' ).wikiEditor( 'addModule',
 					}
 				}
 			}
-
+	}//end "dialogs:"
+}
 
 )//end addmodule
+
+
+
+	//a test addition. It does add a :) in order to make discussions in tough editwars way nicer.
+    $( '#wpTextbox1' ).wikiEditor('addToToolbar',{
+       'section': 'main',
+       'group': 'insert',
+       'tools': {
+                'smile': {
+                        label: 'Smile!', // or use labelMsg for a localized label, see above
+                        type: 'button',
+                        icon: '//upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Gnome-face-smile.svg/22px-Gnome-face-smile.svg.png',
+                        action: {
+                                type: 'encapsulate',
+                                options: {
+                                        pre: ":)" // text to be inserted
+                                }    
+                        }
+                }
+        }
+        
+        
+ });//END:wikiEditor('addToToolbar
+ 
+ 
+ $( '#wpTextbox1' ).wikiEditor( 'addToToolbar', {
+       'section': 'main',
+       'group': 'insert',
+       'tools': {
+                'mytool': {
+                        label: 'mytool!', // or use labelMsg for a localized label, see above
+                        type: 'button',
+                        icon: 'http://upload.wikimedia.org/wikipedia/commons/4/49/Tango_-_text-x-script_22px.png',
+                        module:'mytool'
+                }
+        }
+        
+        
+ });//END:wikiEditor('addToToolbar
+};
+
+
+
+
+
+
+
+//loader
+if ( $.inArray( mw.config.get( 'wgAction' ), ['edit', 'submit'] ) !== -1 ) {
+        mw.loader.using( 'user.options', function () {
+                if ( mw.user.options.get('usebetatoolbar') ) {
+                        mw.loader.using( 'ext.wikiEditor.toolbar', function () {
+                                $(document).ready( customizeToolbar );
+                        } );
+                }
+        } );
+}
