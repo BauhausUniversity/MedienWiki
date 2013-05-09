@@ -8,9 +8,7 @@
 
 
 var customizeToolbar = function() {
-	$( '#wpTextbox1').wikiEditor('addModule',{
-	'dialogs':{
-	'insert-mytool': {
+	$.wikiEditor.modules.dialogs.modules['insert-mytool'] ={
 				titleMsg: 'wikieditor-toolbar-tool-mytool-title',
 				id: 'wikieditor-toolbar-mytool-dialog',
 				html: '\
@@ -138,11 +136,6 @@ window.alert("hi!")
 					}
 				}
 			}
-	}//end "dialogs:"
-}
-
-)//end addmodule
-
 
 
 	//a test addition. It does add a :) in order to make discussions in tough editwars way nicer.
@@ -172,10 +165,13 @@ window.alert("hi!")
        'group': 'insert',
        'tools': {
                 'mytool': {
-                        label: 'mytool!', // or use labelMsg for a localized label, see above
-                        type: 'button',
-                        icon: 'http://upload.wikimedia.org/wikipedia/commons/4/49/Tango_-_text-x-script_22px.png',
-                        module:'mytool'
+                        'label': 'mytool', // or use labelMsg for a localized label, see above
+                        'type': 'button',
+                        'icon': 'http://upload.wikimedia.org/wikipedia/commons/4/49/Tango_-_text-x-script_22px.png',
+                        'action': {
+       							'type': 'dialog',
+									'module':'insert-mytool'
+      	 					}
                 }
         }
         
