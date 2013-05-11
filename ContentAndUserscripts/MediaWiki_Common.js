@@ -5,7 +5,7 @@
 /*
 
 */
-"use strict"
+"use strict";
 
 var customizeToolbar = function() {
 	console.log("customizeToolbarStarted");
@@ -37,36 +37,40 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				init: function () {
 					console.log("init Started");
 				},
-				dialog: {
+				dialog:{
 					resizable: false,
 					dialogClass: 'wikiEditor-toolbar-dialog',
 					width: 590,
-					buttons: {
-						'insert': function () {
+					buttons: [
+						{
+							'text':'insert', 
+							'click':function () {
 							var fileUse = "yey! teststring";
 							$( this ).dialog( 'close' );
 							$.wikiEditor.modules.toolbar.fn.doAction(
-								$( this ).data( 'context' ),
-								{
-									type: 'replace',
-									options: {
-										pre: '[[',
-										peri: fileUse,
-										post: ']]',
-										ownline: true
-									}
-								},
-								$( this )
-							);
-
-							
-						},
-						'cancel': function () {
-							$( this ).dialog( 'close' );
+									$( this ).data( 'context' ),
+									{
+										type: 'replace',
+										options: {
+											pre: '[[',
+											peri: fileUse,
+											post: ']]',
+											ownline: true
+										}
+									},
+									$( this )
+								);
+							}//click function
+						},//text/click object
+						{
+							'text':'cancel',
+							'click': function () {
+								$( this ).dialog( 'close' );
+							}
 						}
-					},
+					],
 					open: function () {
-						console.log("open!")
+						console.log("open!");
 						}
 					}
 				};//modules mytool def
