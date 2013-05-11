@@ -12,7 +12,7 @@ var customizeToolbar = function() {
 	
 
  
- $( '#wpTextbox1' ).wikiEditor( 'addToToolbar', {
+ $('#wpTextbox1').wikiEditor( 'addToToolbar', {
        'section': 'main',
        'group': 'insert',
        'tools': {
@@ -25,15 +25,13 @@ var customizeToolbar = function() {
 								'module':'mytool'
       	 					}
                 }
-        }
-        
-        
+        }    
  });//END:wikiEditor('addToToolbar
 
 $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				titleMsg: 'wikieditor-toolbar-tool-mytool-title',
 				id: 'wikieditor-toolbar-mytool-dialog',
-				html: '\
+				html:'\
 				<div id="wikieditor-toolbar-mytool-step1Container"> <!-- what do you want to do wrapper-->\
 				<!-- wizard buttons go here-->\
 				</div>\
@@ -53,6 +51,7 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 			</div>',
 				init: function () {
 					console.log("init Started");
+					$(this);
 				},
 				dialog:{
 					resizable: false,
@@ -62,7 +61,7 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 						{
 							'text':'insert', 
 							'click':function () {
-							var fileUse = $('this').find('#wikieditor-toolbar-mytool-inputFilename').val();
+							var fileUse = $(this).find('#wikieditor-toolbar-mytool-inputFilename').val();
 							$( this ).dialog( 'close' );
 							$.wikiEditor.modules.toolbar.fn.doAction(
 									$( this ).data( 'context' ),
