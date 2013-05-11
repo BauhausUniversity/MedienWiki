@@ -22,7 +22,7 @@ var customizeToolbar = function() {
                         'icon': 'http://upload.wikimedia.org/wikipedia/commons/4/49/Tango_-_text-x-script_22px.png',
                         'action': {
        							'type': 'dialog',
-									'module':'mytool'
+								'module':'mytool'
       	 					}
                 }
         }
