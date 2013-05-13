@@ -8,7 +8,8 @@
 "use strict";
 
 var customizeToolbar = function() {
-	console.log("customizeToolbarStarted");
+	
+console.log("customizeToolbarStarted");
 	
 
  
@@ -31,8 +32,7 @@ var customizeToolbar = function() {
 $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				titleMsg: 'wikieditor-toolbar-tool-mytool-title',
 				id: 'wikieditor-toolbar-mytool-dialog',
-				html:'\
-				<div id="wikieditor-toolbar-mytool-step1Container"> <!-- what do you want to do wrapper-->\
+				html:'<div id="wikieditor-toolbar-mytool-step1Container"> <!-- what do you want to do wrapper-->\
 					<!-- wizard buttons go here-->\
 				</div>\
 				<div id="wikieditor-toolbar-mytool-step2Container">\
@@ -79,7 +79,8 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					resizable: false,
 					dialogClass: 'wikiEditor-toolbar-dialog',
 					width: 590,
-					buttons: [
+					buttons:
+					[
 						{
 							'text':'insert', 
 							'click':function () {
