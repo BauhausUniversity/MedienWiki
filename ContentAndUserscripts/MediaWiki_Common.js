@@ -33,25 +33,38 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				id: 'wikieditor-toolbar-mytool-dialog',
 				html:'\
 				<div id="wikieditor-toolbar-mytool-step1Container"> <!-- what do you want to do wrapper-->\
-				<!-- wizard buttons go here-->\
+					<!-- wizard buttons go here-->\
 				</div>\
 				<div id="wikieditor-toolbar-mytool-step2Container">\
-				<div>\
-				<!-- insert image goes here-->\
-			</div>\
-			<div>\
-				<!-- generatete Link goes here-->\
-			</div>\
-			<fieldset>\
-				<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
-				<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
-				<input type="text" id="wikieditor-toolbar-mytool-inputCaption" name="caption">\
-				<label id="wikieditor-toolbar-mytool-lableCaption"for="caption">Caption</label>\
-			</fieldset>\
-			</div>',
+					<div id="wikieditor-toolbar-mytool-recentimagesContainer">\
+					<!-- insert image goes here-->\
+					</div>\
+					<div>\
+						<!-- generatete Link goes here-->\
+					</div>\
+					<fieldset>\
+						<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
+						<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
+						<input type="text" id="wikieditor-toolbar-mytool-inputCaption" name="caption">\
+						<label id="wikieditor-toolbar-mytool-lableCaption"for="caption">Caption</label>\
+					</fieldset>\
+				</div>',
 				init: function () {
 					console.log("init Started");
-					$(this);
+					
+					/*Create Wizard behaviour*/
+					//attach events and actions to buttons
+					//disable/enable dialog buttons
+					
+					/*GET LATEST UPLOADS from user, put into array*/
+					//get recent images
+					//$.ajax( {
+					//			url: mw.util.wikiScript( 'api' ),
+					
+					/*WRITE LATEST UPLOADS*/
+					//for loop
+					//attach click-event for writing the value of #wikieditor-toolbar-mytool-inputFilename
+					
 				},
 				dialog:{
 					resizable: false,
@@ -87,6 +100,10 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					],
 					open: function () {
 						console.log("open!");
+						//
+						
+						
+						
 						}
 					}
 				};//modules mytool def
