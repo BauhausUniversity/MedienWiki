@@ -37,10 +37,16 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				</div>\
 				<div id="wikieditor-toolbar-mytool-step2Container">\
 					<div id="wikieditor-toolbar-mytool-recentimagesContainer">\
-					<!-- insert image goes here-->\
+						<p id="wikieditor-toolbar-mytool-recentimagesContainer-helptext"></p>\
+						<ul id="wikieditor-toolbar-mytool-recentimagesContainer-recentimageslist">\
+							<!--<li>with title, (preview?) "use this" button goes here -->\
+						</ul>\
+						<!-- insert image goes here-->\
 					</div>\
-					<div>\
-						<!-- generatete Link goes here-->\
+					<div id="wikieditor-toolbar-mytool-generatelinktext-container">\
+					<p id="id="wikieditor-toolbar-mytool-generatelinktext-container-helptext">\
+					 <!--a text with: "try uploading first, its easier!" and "you can generate a upload link, it will..." -->\
+					</p>\
 					</div>\
 					<fieldset>\
 						<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
@@ -61,8 +67,11 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					//$.ajax( {
 					//			url: mw.util.wikiScript( 'api' ),
 					
+					
 					/*WRITE LATEST UPLOADS*/
-					//for loop
+					//for loop. generate [{},{},…] {} contains: title, evtl image link to thumbnail
+					
+					//generate text:li + evtl. preview + image name+ button
 					//attach click-event for writing the value of #wikieditor-toolbar-mytool-inputFilename
 					
 				},
