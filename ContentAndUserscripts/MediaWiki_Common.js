@@ -77,9 +77,24 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 									'ailimit':ailimit_var, //see above for definition
 									'aisort':'timestamp',
 									'aiuser': mw.config.wgUserName
+								},
+								success:function(data){
+									generateList(data);
 								}
 					});
 					
+					function generateList(imagesList){
+						/*generates several List points*/
+						//ul
+						var inputToFill=''//ID of the input field here
+						var domList = $('<ul>');
+						for(var i=0;i<imagesList.length; i++){
+							
+							
+						}
+						
+						
+					}				
 					
 					/*WRITE LATEST UPLOADS*/
 					//for loop. generate [{},{},…] {} contains: title, evtl image link to thumbnail
