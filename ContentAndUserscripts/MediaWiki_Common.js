@@ -38,9 +38,6 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				<div id="wikieditor-toolbar-mytool-step2Container">\
 					<div id="wikieditor-toolbar-mytool-recentimagesContainer">\
 						<p id="wikieditor-toolbar-mytool-recentimagesContainer-helptext"></p>\
-						<ul id="wikieditor-toolbar-mytool-recentimagesContainer-recentimageslist">\
-							<!--<li>with title, (preview?) "use this" button goes here -->\
-						</ul>\
 						<!-- insert image goes here-->\
 					</div>\
 					<div id="wikieditor-toolbar-mytool-generatelinktext-container">\
@@ -57,6 +54,7 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				</div>',
 				init: function () {
 					var ailimit_var = 5; //how many item shell be retrieved from the api?
+					var inputID ='#wikieditor-toolbar-mytool-inputFilename'; //id of the input field that gets the image name, preceeded by a '#'
 					console.log("init Started");
 					
 					/*Create Wizard behaviour*/
@@ -76,25 +74,37 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 									'list':'allimages',
 									'ailimit':ailimit_var, //see above for definition
 									'aisort':'timestamp',
-									'aiuser': mw.config.wgUserName
+									'aiuser': mw.config.get("wgUserName")
 								},
 								success:function(data){
 									generateList(data);
 								}
 					});
 					
-					function generateList(imagesList){
+					function generateList(images){
 						/*generates several List points*/
-						//ul
+						var imageArray = images.query.allimages; 
 						var inputToFill=''//ID of the input field here
 						var domList = $('<ul>');
-						for(var i=0;i<imagesList.length; i++){
-							
-							
-						}
-						
-						
-					}				
+						var li;
+						var imageTitle='';
+						var usethisButton;
+						for(var i=0;i<imageArray.length; i++){
+							li = $('<li>');
+							imageTitle = imageArray[i].name;
+							$(li).append('<em>'+imageTitle+'</em>');
+							$('<a href="#">use this</a>')
+									.button()
+									.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
+										return function(){
+											$(inputID).val('File:'+imageTitle);
+										};
+									})(imageTitle))
+									.appendTo(li);
+							$(li).appendTo(domList);
+						}//END for
+						$(domList).appendTo('#wikieditor-toolbar-mytool-recentimagesContainer');
+					}//end generateList()
 					
 					/*WRITE LATEST UPLOADS*/
 					//for loop. generate [{},{},…] {} contains: title, evtl image link to thumbnail
