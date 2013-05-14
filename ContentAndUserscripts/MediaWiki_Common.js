@@ -20,7 +20,7 @@ console.log("customizeToolbarStarted");
                 'mytool': {
                         'label': 'mytool', // or use labelMsg for a localized label, see above
                         'type': 'button',
-                        'icon': 'http://upload.wikimedia.org/wikipedia/commons/4/49/Tango_-_text-x-script_22px.png',
+                        'icon': '', //TODO FIXME | seems to help against no-diaglogs-present syndrom. Issue #15 on github.com/BauhausUniversity/MedienWiki/issues
                         'action': {
        							'type': 'dialog',
 								'module':'mytool'
@@ -56,6 +56,7 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					</fieldset>\
 				</div>',
 				init: function () {
+					var ailimit_var = 5; //how many item shell be retrieved from the api?
 					console.log("init Started");
 					
 					/*Create Wizard behaviour*/
@@ -64,8 +65,20 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					
 					/*GET LATEST UPLOADS from user, put into array*/
 					//get recent images
-					//$.ajax( {
-					//			url: mw.util.wikiScript( 'api' ),
+					
+					//TODO: Ajax should e wrapped in am-I-logged-in check: skip if mw.config.wgUserName
+					$.ajax( {
+								url: mw.util.wikiScript( 'api' ),
+								dataType: 'json',
+								data: {
+									'action':'query',
+									'format':'json',
+									'list':'allimages',
+									'ailimit':ailimit_var, //see above for definition
+									'aisort':'timestamp',
+									'aiuser': mw.config.wgUserName
+								}
+					});
 					
 					
 					/*WRITE LATEST UPLOADS*/
