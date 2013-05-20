@@ -5,12 +5,8 @@
 /*
 
 */
-"use strict";
 
-var customizeToolbar = function() {
-	
-console.log("customizeToolbarStarted");
-	
+$( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
 
  
  $('#wpTextbox1').wikiEditor( 'addToToolbar', {
@@ -20,7 +16,7 @@ console.log("customizeToolbarStarted");
                 'mytool': {
                         'label': 'mytool', // or use labelMsg for a localized label, see above
                         'type': 'button',
-                        'icon': '', //TODO FIXME | seems to help against no-diaglogs-present syndrom. Issue #15 on github.com/BauhausUniversity/MedienWiki/issues
+                        'icon': '', 
                         'action': {
        							'type': 'dialog',
 								'module':'mytool'
@@ -28,6 +24,7 @@ console.log("customizeToolbarStarted");
                 }
         }    
  });//END:wikiEditor('addToToolbar
+
 
 $.wikiEditor.modules.dialogs.modules['mytool'] = {
 				titleMsg: 'wikieditor-toolbar-tool-mytool-title',
@@ -155,21 +152,5 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 						}
 					}
 				};//modules mytool def
-}; //customize Toolbar
-
-
-
-
-
-
-
-//loader
-if ( $.inArray( mw.config.get( 'wgAction' ), ['edit', 'submit'] ) !== -1 ) {
-        mw.loader.using( 'user.options', function () {
-                if ( mw.user.options.get('usebetatoolbar') ) {
-                        mw.loader.using( 'ext.wikiEditor.toolbar', function () {
-                                $(document).ready( customizeToolbar );
-                        } );
-                }
-        } );
-}
+    
+} );
