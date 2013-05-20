@@ -16,7 +16,7 @@ $( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
                 'mytool': {
                         'label': 'mytool', // or use labelMsg for a localized label, see above
                         'type': 'button',
-                        'icon': '', 
+                        'icon': 'customInsertImage.png', 
                         'action': {
        							'type': 'dialog',
 								'module':'mytool'
@@ -50,8 +50,13 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					</fieldset>\
 				</div>',
 				init: function () {
-					var ailimit_var = 5; //how many item shell be retrieved from the api?
+					//CONFIG START
+					var ailimit_var = 5; //how many items shell be retrieved from the api?
 					var inputID ='#wikieditor-toolbar-mytool-inputFilename'; //id of the input field that gets the image name, preceeded by a '#'
+					var thumbWidth = 32; //width of the image preview thumbnails 
+					//CONFIG END
+					
+					
 					console.log("init Started");
 					
 					/*Create Wizard behaviour*/
@@ -80,16 +85,19 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					
 					function generateList(images){
 						/*generates several List points*/
+						
+					//http://localhost/wiki/images/PencilIcon.png in imageArray[0].url
 						var imageArray = images.query.allimages; 
-						var inputToFill=''//ID of the input field here
 						var domList = $('<ul>');
 						var li;
 						var imageTitle='';
+						var thumbLink ='';
 						var usethisButton;
 						for(var i=0;i<imageArray.length; i++){
 							li = $('<li>');
 							imageTitle = imageArray[i].name;
-							$(li).append('<em>'+imageTitle+'</em>');
+							thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
+							$(li).append('<img src="'+thumbLink+'width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
 							$('<a href="#">use this</a>')
 									.button()
 									.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
