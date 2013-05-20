@@ -6,8 +6,18 @@
 
 */
 
-$( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
+function changeToolbar(){
+	if($('#wikiEditor-ui-toolbar [title="mytool"]')){//if mytool is activated
+		$('#wikiEditor-ui-toolbar [title="Embedded file"]').hide();//hide the normal embed image button
+	}
+}
 
+
+
+$( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
+	
+	
+ 
  
  $('#wpTextbox1').wikiEditor( 'addToToolbar', {
        'section': 'main',
@@ -42,11 +52,12 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					 <!--a text with: "try uploading first, its easier!" and "you can generate a upload link, it will..." -->\
 					</p>\
 					</div>\
+					<hr>\
 					<fieldset>\
-						<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
 						<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
-						<input type="text" id="wikieditor-toolbar-mytool-inputCaption" name="caption">\
+						<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
 						<label id="wikieditor-toolbar-mytool-lableCaption"for="caption">Caption</label>\
+						<input type="text" id="wikieditor-toolbar-mytool-inputCaption" name="caption">\
 					</fieldset>\
 				</div>',
 				init: function () {
@@ -86,9 +97,8 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 					function generateList(images){
 						/*generates several List points*/
 						
-					//http://localhost/wiki/images/PencilIcon.png in imageArray[0].url
 						var imageArray = images.query.allimages; 
-						var domList = $('<ul>');
+						var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
 						var li;
 						var imageTitle='';
 						var thumbLink ='';
@@ -97,7 +107,6 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 							li = $('<li>');
 							imageTitle = imageArray[i].name;
 							thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
-							$(li).append('<img src="'+thumbLink+'width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
 							$('<a href="#">use this</a>')
 									.button()
 									.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
@@ -107,6 +116,8 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 									})(imageTitle))
 									.appendTo(li);
 							$(li).appendTo(domList);
+							$(li).prepend('<img src="'+thumbLink+'" '+' width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
+							
 						}//END for
 						$(domList).appendTo('#wikieditor-toolbar-mytool-recentimagesContainer');
 					}//end generateList()
@@ -160,5 +171,7 @@ $.wikiEditor.modules.dialogs.modules['mytool'] = {
 						}
 					}
 				};//modules mytool def
+				
+				changeToolbar();//change toolbar after button has been inserted
     
 } );
