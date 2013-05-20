@@ -87,21 +87,21 @@ var myTool = function(){
 								var imageTitle='';
 								var thumbLink ='';
 								var usethisButton;
+								
 								for(var i=0;i<imageArray.length; i++){
 									li = $('<li>');
 									imageTitle = imageArray[i].name;
 									thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
+									$(li).append('<img src="'+thumbLink+'" '+' width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
 									$('<a href="#">use this</a>')
-											.button()
-											.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
-												return function(){
-													$(inputID).val('File:'+imageTitle);
-												};
-											})(imageTitle))
-											.appendTo(li);
+										.button()
+										.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
+											return function(){
+												$(inputID).val('File:'+imageTitle);
+											};
+										})(imageTitle))
+										.prependTo(li);
 									$(li).appendTo(domList);
-									$(li).prepend('<img src="'+thumbLink+'" '+' width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
-
 								}//END for
 								$(domList).appendTo('#wikieditor-toolbar-mytool-recentimagesContainer');
 							}//end generateList()
@@ -177,6 +177,6 @@ var myTool = function(){
 				 }
 				});//END:wikiEditor('addToToolbar
 				
-				changeToolbar();//change toolbar after button has been inserted
+				window.setTimeout(changeToolbar, 500); //change toolbar after button has been inserted
 
 } );
