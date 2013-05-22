@@ -33,7 +33,7 @@ var mytool = function(){
 							<!-- wizard buttons go here-->\
 						</div>\
 						<div id="wikieditor-toolbar-mytool-step2Container">\
-							<p id="wikieditor-toolbar-mytool-step2Container-helptext">To use an image, please <span href="#" class="wikieditor-toolbar-mytool-highlightUploadButton">upload</span> it first, or create put in a filename, save the page and click the link you created to upload the picture</p>\
+							<p id="wikieditor-toolbar-mytool-step2Container-helptext">To use an image, please upload it first (show <span href="#" class="wikieditor-toolbar-mytool-highlightUploadButton">upload button</span>) <br> or create put in a filename, save the page and click the link you created to upload the picture</p>\
 							<div id="wikieditor-toolbar-mytool-recentimagesContainer">\
 								<p id="wikieditor-toolbar-mytool-recentimagesContainer-helptext">Your recent uploads</p>\
 								<!-- insert image goes here-->\
@@ -58,6 +58,8 @@ var mytool = function(){
 								$('.ui-widget-overlay')
 								.animate({"opacity": 0.2},50, function(){
 									$('li#t-upload a')
+								.animate({"margin-left": "+=5px"}, 200)
+								.animate({"margin-left": "-=5px"}, 100)
 								.animate({"margin-left": "+=35px"}, 100)
 								.animate({"margin-left": "-=35px"}, 100)
 								.animate({"margin-left": "+=20px"}, 150)
@@ -194,7 +196,7 @@ var mytool = function(){
 				'group': 'insert',
 				'tools': {
 						 'mytool': {
-								 'label': 'mytool', // or use labelMsg for a localized label, see above
+								 'label': 'insert Image', // or use labelMsg for a localized label, see above
 								 'type': 'button',
 								 'icon': 'customInsertImage.png', 
 								 'action': {
