@@ -1,3 +1,6 @@
+<!-- this tempate goes to Template:Foo. Refer to it by a link parameter like  http://en.wikipedia.org/wiki/Talk:Main_Page?action=edit&section=new&preload=Template:Foo -->
+
+
 <!-- Hallo! This is your wikipage. Use it to show your works and interests to your fellow students.
 You can use this page as well for learning how to edit the wiki. 
 -->
@@ -17,8 +20,8 @@ and than link them here using the following code: [[File:myImageName.png|Caption
 ==Pages I use and/or Edit==
 <!-- here you can show which wikipage you improve-->
 
-<!-- this is an internal link. It directs to the [where?!?!, could we have a playground?]-->
-[[User:myname]]
+<!-- this is an internal link. It directs to the FAQ-->
+[[Manual:FAQ]]
 
 <!-- this is an external link. It uses a slightly different syntax: the target and the text to appear are devided by an Blank (" ") and it only uses single brackets. -->
 [http://www.uni-weimar.de/piazza the uni's piazza] 

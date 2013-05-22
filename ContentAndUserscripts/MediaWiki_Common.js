@@ -6,18 +6,24 @@
 
 */
 
-function changeToolbar(){
-	if($('#wikiEditor-ui-toolbar [title="mytool"]') && $('#wikiEditor-ui-toolbar [title="Embedded file"]')){//if mytool is activated
-		$('#wikiEditor-ui-toolbar [title="Embedded file"]').hide();//hide the normal embed image button
-	}
-}
 
 
 
 $( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
 
+function changeToolbar(){
+	if($('#wikiEditor-ui-toolbar [title="mytool"]') && $('#wikiEditor-ui-toolbar [title="Embedded file"]')){//if mytool is activated
+		$('#wikiEditor-ui-toolbar [title="Embedded file"]').hide();//hide the normal embed image button
+	}
+	if(!$.wikiEditor.modules.dialogs.modules.mytool){
+		$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
+		console.log("oha. postLoad of module was needed!")
+	}
+}
 
-var myTool = function(){
+
+
+var mytool = function(){
 				
 				return { dialogs:{
 					mytool:{
@@ -50,13 +56,13 @@ var myTool = function(){
 							$('.wikieditor-toolbar-mytool-highlightUploadButton').on('click',function(e){
 								var oldOpacity = $('.ui-widget-overlay').css("opacity")
 								$('.ui-widget-overlay')
-								.animate({"opacity": 0.2},200, function(){
+								.animate({"opacity": 0.2},50, function(){
 									$('li#t-upload a')
-								.animate({"margin-left": "+=35px"}, 50)
-								.animate({"margin-left": "-=35px"}, 50)
-								.animate({"margin-left": "+=20px"}, 100)
-								.animate({"margin-left": "-=20px"}, 100, function(){
-									$('.ui-widget-overlay').animate({"opacity": oldOpacity},300);})
+								.animate({"margin-left": "+=35px"}, 100)
+								.animate({"margin-left": "-=35px"}, 100)
+								.animate({"margin-left": "+=20px"}, 150)
+								.animate({"margin-left": "-=20px"}, 150, function(){
+									$('.ui-widget-overlay').animate({"opacity": oldOpacity},200);})
 								});
 							}) ;
 							
@@ -88,6 +94,7 @@ var myTool = function(){
 											'list':'allimages',
 											'ailimit':ailimit_var, //see above for definition
 											'aisort':'timestamp',
+											'aidir':'older',
 											'aiuser': mw.config.get("wgUserName")
 										},
 										success:function(data){
@@ -176,7 +183,11 @@ var myTool = function(){
 					};//end return object
 				};//modules mytool def
 				
-				$( '#wpTextbox1' ).wikiEditor( 'addModule', myTool());
+				
+				//FIXME: If the button appears but there is no function on clicking 
+				//you can reexecute `$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());` 
+				//whereas mytool is a function which returns a module object. 
+				$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
 				
 				 $('#wpTextbox1').wikiEditor( 'addToToolbar', {
 				'section': 'main',
