@@ -13,7 +13,25 @@ ul.wikieditor-toolbar-mytool-recentImagesList li img{
 margin: 0 10px 0 10px;
 }
 
-div#p-tb ul li#t-upload {
+#wikieditor-toolbar-mytool-recentimagesContainer-helptext{
+	font-weight:bold;
+}
+
+.ui-widget-overlay {
+	opacity:0.5;
+}
+
+.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton{
+	color:blue;
+}
+.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton:hover{
+	text-decoration: underline; 
+}
+
+
+div#p-tb ul li#t-upload a{
+	display:inline-block;
+	width:8em;
 	color: #000000;
 	padding: 6px 16px;
 	background: -moz-linear-gradient(
