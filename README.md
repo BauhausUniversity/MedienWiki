@@ -17,7 +17,7 @@
 For security reasons, the LocalSettings.php is split into two parts. The file "LocalSettings.php" includes a second LocalSettings.php file, which is ignored by this git repository.
 
 ##Links
-* MedienWiki: http://www.uni-weimar.de/medien/wiki
+* MedienWiki: uni-weimar.de/medien/wiki
 * MediaWiki: http://www.mediawiki.org
 * MediaWiki Git Repository: http://www.mediawiki.org/wiki/Download_from_Git
 
@@ -27,8 +27,7 @@ This repository and all source files are under the same license as the mediawiki
 All images, logos, brands, names and contents related to the Bauhaus-University Weimar remain under copyright and are not part of this software. © Bauhaus-Universität Weimar, Faculty of Media. Just ask if you're unsure, we're not out to protect knowledge, but we have to make sure we don't release any rights we do not own.
 
 ##Team
-* Jan Dittrich (User Research, Usability) 
 * Michael Markert
 * Max Neupert
-* Gianluca Pandolfo (MedienWiki Skin)
 * Gabriel Rausch
+* Jan Dittrich (User Research, Usability) 
