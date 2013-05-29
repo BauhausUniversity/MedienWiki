@@ -55,16 +55,16 @@ var mytool = function(){
 							//start highlight upload button
 							$('.wikieditor-toolbar-mytool-highlightUploadButton').on('click',function(e){
 								var oldOpacity = $('.ui-widget-overlay').css("opacity")
-								$('.ui-widget-overlay')
-								.animate({"opacity": 0.2},50, function(){
+								$('.ui-widget-overlay') //find the upload button/link
+								.animate({"opacity": 0.2},50, function(){ //light up the background
 									$('li#t-upload a')
-								.animate({"margin-left": "+=5px"}, 200)
+								.animate({"margin-left": "+=5px"}, 200) //shake upload button to grab attention...
 								.animate({"margin-left": "-=5px"}, 100)
 								.animate({"margin-left": "+=35px"}, 100)
 								.animate({"margin-left": "-=35px"}, 100)
 								.animate({"margin-left": "+=20px"}, 150)
 								.animate({"margin-left": "-=20px"}, 150, function(){
-									$('.ui-widget-overlay').animate({"opacity": oldOpacity},200);})
+									$('.ui-widget-overlay').animate({"opacity": oldOpacity},200);}) //redo the dark background after shaking the button. 
 								});
 							}) ;
 							
@@ -106,30 +106,35 @@ var mytool = function(){
 
 							function generateList(images){
 								/*generates several List points*/
-
+								
+								//initialize variables for image ist generation
 								var imageArray = images.query.allimages; 
 								var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
 								var li;
 								var imageTitle='';
 								var thumbLink ='';
 								var usethisButton;
+								//END initialization of variables					
 								
+													
 								for(var i=0;i<imageArray.length; i++){
+								   //creates a li for each image in array
 									li = $('<li>');
 									imageTitle = imageArray[i].name;
 									thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
 									$(li).append('<img src="'+thumbLink+'" '+' width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
-									$('<a href="#">use this</a>')
+									$('<a href="#">use this</a>') //create a button which on click...
 										.button()
 										.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
 											return function(){
-												$(inputID).val('File:'+imageTitle);
+												$(inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
 											};
 										})(imageTitle))
 										.prependTo(li);
 									$(li).appendTo(domList);
 								}//END for
-								$(domList).appendTo('#wikieditor-toolbar-mytool-recentimagesContainer');
+								
+								$(domList).appendTo('#wikieditor-toolbar-mytool-recentimagesContainer');//append the list of images to the dialog-box 
 							}//end generateList()
 
 							/*WRITE LATEST UPLOADS*/
