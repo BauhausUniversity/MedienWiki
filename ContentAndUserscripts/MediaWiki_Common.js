@@ -43,6 +43,15 @@ var mytool = function(){
 									<!-- insert image goes here-->\
 								</div>\
 								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
+									<div><!--Choose file-->\
+									</div>\
+									<div><!--Choose Licence-->\
+									</div>\
+									<div><!--Title and description-->\
+									</div>\
+									<!-- insert image goes here-->\
+									<!-- insert image goes here-->\
+									<!-- insert image goes here-->\
 									<!-- insert image goes here-->\
 								</div>\
 							</div>\
@@ -77,9 +86,11 @@ var mytool = function(){
 							//highlight uploadbutton end
 							
 							//CONFIG START
-							var ailimit_var = 5; //how many items shell be retrieved from the api?
-							var inputID ='#wikieditor-toolbar-mytool-inputFilename'; //id of the input field that gets the image name, preceeded by a '#'
-							var thumbWidth = 32; //width of the image preview thumbnails 
+							var imageConfig = {
+								ailimit:5, //how many items shell be retrieved from the api?
+								inputID: '#wikieditor-toolbar-mytool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
+								thumbWidth: 32, //width of the image preview thumbnails 
+							}
 							//CONFIG END
 
 
@@ -100,7 +111,7 @@ var mytool = function(){
 											'action':'query',
 											'format':'json',
 											'list':'allimages',
-											'ailimit':ailimit_var, //see above for definition
+											'ailimit':imageConfig.ailimit, //see above for definition
 											'aisort':'timestamp',
 											'aidir':'older',
 											'aiuser': mw.config.get("wgUserName")
@@ -127,13 +138,13 @@ var mytool = function(){
 								   //creates a li for each image in array
 									li = $('<li>');
 									imageTitle = imageArray[i].name;
-									thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
-									$(li).append('<img src="'+thumbLink+'" '+' width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
+									thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
+									$(li).append('<img src="'+thumbLink+'" '+' width="'+imageConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
 									$('<a href="#">use this</a>') //create a button which on click...
 										.button()
 										.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
 											return function(){
-												$(inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
+												$(imageConfig.inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
 											};
 										})(imageTitle))
 										.prependTo(li);
