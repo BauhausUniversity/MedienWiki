@@ -6,9 +6,12 @@
 
 */
 
+/*
+load needed modules 
+ */
+mw.loader.load( 'jquery.ui.tabs' );
 
-
-
+//actual code
 $( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
 
 function changeToolbar(){
@@ -29,30 +32,33 @@ var mytool = function(){
 					mytool:{
 						titleMsg: 'wikieditor-toolbar-tool-mytool-title',
 						id: 'wikieditor-toolbar-mytool-dialog',
-						html:'<div id="wikieditor-toolbar-mytool-step1Container"> <!-- what do you want to do wrapper-->\
-							<!-- wizard buttons go here-->\
-						</div>\
-						<div id="wikieditor-toolbar-mytool-step2Container">\
-							<p id="wikieditor-toolbar-mytool-step2Container-helptext">To use an image, please upload it first (show <span href="#" class="wikieditor-toolbar-mytool-highlightUploadButton">upload button</span>) <br> or create put in a filename, save the page and click the link you created to upload the picture</p>\
-							<div id="wikieditor-toolbar-mytool-recentimagesContainer">\
-								<p id="wikieditor-toolbar-mytool-recentimagesContainer-helptext">Your recent uploads</p>\
-								<!-- insert image goes here-->\
+						html:'\
+							<div id="wikieditor-toolbar-mytool-imageSources">\
+								<ul>\
+									<li><a href="#wikieditor-toolbar-mytool-imageSources-recentimagesContainer">Recent Uploads</a></li>\
+									<li><a href="#wikieditor-toolbar-mytool-imageSources-uploadImage">Upload new Image</a></li>\
+								</ul>\
+								<div id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer">\
+									<p id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer-helptext">Your recent uploads</p>\
+									<!-- insert image goes here-->\
+								</div>\
+								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
+									<!-- insert image goes here-->\
+								</div>\
 							</div>\
-							<div id="wikieditor-toolbar-mytool-generatelinktext-container">\
-							<p id="id="wikieditor-toolbar-mytool-generatelinktext-container-helptext">\
-							 <!--a text with: "try uploading first, its easier!" and "you can generate a upload link, it will..." -->\
-							</p>\
-							</div>\
-							<hr>\
 							<fieldset>\
 								<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
 								<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
 								<label id="wikieditor-toolbar-mytool-lableCaption"for="caption">Caption</label>\
 								<input type="text" id="wikieditor-toolbar-mytool-inputCaption" name="caption">\
 							</fieldset>\
-						</div>',
+						',
 						init: function () {
+							//REQUIRES: jquery.ui.tabs
+							//Setup tabs for recent uploads and upload image
+							$( "#wikieditor-toolbar-mytool-imageSources" ).tabs();
 							//start highlight upload button
+							/*
 							$('.wikieditor-toolbar-mytool-highlightUploadButton').on('click',function(e){
 								var oldOpacity = $('.ui-widget-overlay').css("opacity")
 								$('.ui-widget-overlay') //find the upload button/link
@@ -67,7 +73,7 @@ var mytool = function(){
 									$('.ui-widget-overlay').animate({"opacity": oldOpacity},200);}) //redo the dark background after shaking the button. 
 								});
 							}) ;
-							
+							*/
 							//highlight uploadbutton end
 							
 							//CONFIG START
@@ -134,7 +140,7 @@ var mytool = function(){
 									$(li).appendTo(domList);
 								}//END for
 								
-								$(domList).appendTo('#wikieditor-toolbar-mytool-recentimagesContainer');//append the list of images to the dialog-box 
+								$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer');//append the list of images to the dialog-box 
 							}//end generateList()
 
 							/*WRITE LATEST UPLOADS*/
