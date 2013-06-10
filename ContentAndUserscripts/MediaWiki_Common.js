@@ -6,9 +6,12 @@
 
 */
 
+/*
+load needed modules 
+ */
+mw.loader.load( 'jquery.ui.tabs' );
 
-
-
+//actual code
 $( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
 
 function changeToolbar(){
@@ -29,30 +32,42 @@ var mytool = function(){
 					mytool:{
 						titleMsg: 'wikieditor-toolbar-tool-mytool-title',
 						id: 'wikieditor-toolbar-mytool-dialog',
-						html:'<div id="wikieditor-toolbar-mytool-step1Container"> <!-- what do you want to do wrapper-->\
-							<!-- wizard buttons go here-->\
-						</div>\
-						<div id="wikieditor-toolbar-mytool-step2Container">\
-							<p id="wikieditor-toolbar-mytool-step2Container-helptext">To use an image, please upload it first (show <span href="#" class="wikieditor-toolbar-mytool-highlightUploadButton">upload button</span>) <br> or create put in a filename, save the page and click the link you created to upload the picture</p>\
-							<div id="wikieditor-toolbar-mytool-recentimagesContainer">\
-								<p id="wikieditor-toolbar-mytool-recentimagesContainer-helptext">Your recent uploads</p>\
-								<!-- insert image goes here-->\
+						html:'\
+							<div id="wikieditor-toolbar-mytool-imageSources">\
+								<ul>\
+									<li><a href="#wikieditor-toolbar-mytool-imageSources-recentimagesContainer">Recent Uploads</a></li>\
+									<li><a href="#wikieditor-toolbar-mytool-imageSources-uploadImage">Upload new Image</a></li>\
+								</ul>\
+								<div id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer">\
+									<p id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer-helptext">Your recent uploads</p>\
+									<!-- insert image goes here-->\
+								</div>\
+								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
+									<div><!--Choose file-->\
+									</div>\
+									<div><!--Choose Licence-->\
+									</div>\
+									<div><!--Title and description-->\
+									</div>\
+									<!-- insert image goes here-->\
+									<!-- insert image goes here-->\
+									<!-- insert image goes here-->\
+									<!-- insert image goes here-->\
+								</div>\
 							</div>\
-							<div id="wikieditor-toolbar-mytool-generatelinktext-container">\
-							<p id="id="wikieditor-toolbar-mytool-generatelinktext-container-helptext">\
-							 <!--a text with: "try uploading first, its easier!" and "you can generate a upload link, it will..." -->\
-							</p>\
-							</div>\
-							<hr>\
 							<fieldset>\
 								<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
 								<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
 								<label id="wikieditor-toolbar-mytool-lableCaption"for="caption">Caption</label>\
 								<input type="text" id="wikieditor-toolbar-mytool-inputCaption" name="caption">\
 							</fieldset>\
-						</div>',
+						',
 						init: function () {
+							//REQUIRES: jquery.ui.tabs
+							//Setup tabs for recent uploads and upload image
+							$( "#wikieditor-toolbar-mytool-imageSources" ).tabs();
 							//start highlight upload button
+							/*
 							$('.wikieditor-toolbar-mytool-highlightUploadButton').on('click',function(e){
 								var oldOpacity = $('.ui-widget-overlay').css("opacity")
 								$('.ui-widget-overlay') //find the upload button/link
@@ -67,13 +82,15 @@ var mytool = function(){
 									$('.ui-widget-overlay').animate({"opacity": oldOpacity},200);}) //redo the dark background after shaking the button. 
 								});
 							}) ;
-							
+							*/
 							//highlight uploadbutton end
 							
 							//CONFIG START
-							var ailimit_var = 5; //how many items shell be retrieved from the api?
-							var inputID ='#wikieditor-toolbar-mytool-inputFilename'; //id of the input field that gets the image name, preceeded by a '#'
-							var thumbWidth = 32; //width of the image preview thumbnails 
+							var imageConfig = {
+								ailimit:5, //how many items shell be retrieved from the api?
+								inputID: '#wikieditor-toolbar-mytool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
+								thumbWidth: 32, //width of the image preview thumbnails 
+							}
 							//CONFIG END
 
 
@@ -94,7 +111,7 @@ var mytool = function(){
 											'action':'query',
 											'format':'json',
 											'list':'allimages',
-											'ailimit':ailimit_var, //see above for definition
+											'ailimit':imageConfig.ailimit, //see above for definition
 											'aisort':'timestamp',
 											'aidir':'older',
 											'aiuser': mw.config.get("wgUserName")
@@ -121,20 +138,20 @@ var mytool = function(){
 								   //creates a li for each image in array
 									li = $('<li>');
 									imageTitle = imageArray[i].name;
-									thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
-									$(li).append('<img src="'+thumbLink+'" '+' width="'+thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
+									thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
+									$(li).append('<img src="'+thumbLink+'" '+' width="'+imageConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
 									$('<a href="#">use this</a>') //create a button which on click...
 										.button()
 										.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
 											return function(){
-												$(inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
+												$(imageConfig.inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
 											};
 										})(imageTitle))
 										.prependTo(li);
 									$(li).appendTo(domList);
 								}//END for
 								
-								$(domList).appendTo('#wikieditor-toolbar-mytool-recentimagesContainer');//append the list of images to the dialog-box 
+								$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer');//append the list of images to the dialog-box 
 							}//end generateList()
 
 							/*WRITE LATEST UPLOADS*/
