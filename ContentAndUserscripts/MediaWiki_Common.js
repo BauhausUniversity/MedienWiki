@@ -12,12 +12,12 @@
 $( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
 
 function changeToolbar(){
-	if($('#wikiEditor-ui-toolbar [title="mytool"]') && $('#wikiEditor-ui-toolbar [title="Embedded file"]')){//if mytool is activated
+	/*if($('#wikiEditor-ui-toolbar [title="mytool"]') && $('#wikiEditor-ui-toolbar [title="Embedded file"]')){//if mytool is activated
 		$('#wikiEditor-ui-toolbar [title="Embedded file"]').hide();//hide the normal embed image button
-	}
-	if(!$.wikiEditor.modules.dialogs.modules.mytool){
+	} //probably not needed because  $( '#wpTextbox1' ).wikiEditor( 'removeFromToolbar', { */
+	if(!$.wikiEditor.modules.dialogs.modules.mytool){ //that should be not needed anymore since we use  mw.loader.using( ['ext.wikiEditor.dialogs'],function(){  But I am a bit FUD about it. 
 		$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
-		console.log("oha. postLoad of module was needed!")
+		console.log("oha. postLoad of module was needed!");
 	}
 }
 
@@ -194,9 +194,10 @@ var mytool = function(){
 				//FIXME: If the button appears but there is no function on clicking 
 				//you can reexecute `$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());` 
 				//whereas mytool is a function which returns a module object. 
-				$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
 				
-				 $('#wpTextbox1').wikiEditor( 'addToToolbar', {
+				mw.loader.using( ['ext.wikiEditor.dialogs'],function(){ //the usual dialogs sould be initialized first
+					$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
+					 $('#wpTextbox1').wikiEditor( 'addToToolbar', {
 				'section': 'main',
 				'group': 'insert',
 				'tools': {
@@ -211,6 +212,18 @@ var mytool = function(){
 						 }
 				 }
 				});//END:wikiEditor('addToToolbar
+				
+				$( '#wpTextbox1' ).wikiEditor( 'removeFromToolbar', {
+					'section': 'main',
+					'group': 'insert',
+					 'tool': 'insert-file'
+					});
+				
+				}, function(){console.log("error initializing editor config");});
+		
+				
+				
+				
 				
 				window.setTimeout(changeToolbar, 500); //change toolbar after button has been inserted
 
