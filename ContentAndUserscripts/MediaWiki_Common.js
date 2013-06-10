@@ -43,18 +43,44 @@ var mytool = function(){
 									<!-- insert image goes here-->\
 								</div>\
 								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
-									<div><!--Choose file-->\
+									<div>\
+										<h2>This is the previous step!</h2>\
 									</div>\
-									<div><!--Choose Licence-->\
+									<div id="selectLicense">\
+										<h3><input id="selector-radio-license-byme" name="selector-radio-license" type="radio" required>I created this work</h3>\
+										<div id="byme">\
+											<p>I, <input name="authorname" type="text" size="30" maxlength="30" placeholder="Your Name" pattern="..+" required>, want to release the file`s content under a\
+											<select name="license" id="byMe-license">\
+											</select>\
+											license.\
+											</p>\
+											<p id="myMe-licenseDescriptor"></p>\
+											<div>\
+												<h4>I want to provide another license</h4>\
+												<div>\
+													<input name="customlicense" type="text" size="30" maxlength="30" placeholder="licensename and source of license">\
+												</div>\
+											</div>\
+										</div>\
+										<h3> <input id="selector-radio-license-byother" name="selector-radio-license" type="radio" required>Someone else created this work</h3>\
+										<div id="byother">\
+											I may use this file from the source  <input name="source" type="text" size="30" maxlength="30" placeholder="where did you find the file?" pattern="...+" required> by the author <input name="authorname" type="text" size="30" maxlength="30" placeholder="The authors name">, because it is \
+											<select name="license" id="bySomeone-license">\
+											</select>\
+											<br>\
+											Or an other reason: <input name="customlicense" type="text" size="30" maxlength="30" placeholder="provide reason here">\
+											<h4>Please note: </h4>\
+											<p>Uploading files just because you found them on the web is <em>illegal</em><br>\
+											If the file is not legally uploaded, it may be deleted (which looks ugly on the page you use it on)<br>\
+											Furthermore if you just took it without being allowed, the author might sue you (Which can cost <em>a lot</em>. Take. It. Serious. We are not kidding.)</p>\
+										</div>\
+									</div><!--select License end--->\
+									<div>\
+										<h2>This is the next step!</h2>\
 									</div>\
-									<div><!--Title and description-->\
-									</div>\
-									<!-- insert image goes here-->\
-									<!-- insert image goes here-->\
-									<!-- insert image goes here-->\
-									<!-- insert image goes here-->\
-								</div>\
+								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
 							</div>\
+							\
 							<fieldset>\
 								<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
 								<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
@@ -66,6 +92,8 @@ var mytool = function(){
 							//REQUIRES: jquery.ui.tabs
 							//Setup tabs for recent uploads and upload image
 							$( "#wikieditor-toolbar-mytool-imageSources" ).tabs();
+							
+							
 							//start highlight upload button
 							/*
 							$('.wikieditor-toolbar-mytool-highlightUploadButton').on('click',function(e){
