@@ -92,27 +92,9 @@ var mytool = function(){
 							//REQUIRES: jquery.ui.tabs
 							//Setup tabs for recent uploads and upload image
 							$( "#wikieditor-toolbar-mytool-imageSources" ).tabs();
-							
-							
+			
 							//start highlight upload button
-							/*
-							$('.wikieditor-toolbar-mytool-highlightUploadButton').on('click',function(e){
-								var oldOpacity = $('.ui-widget-overlay').css("opacity")
-								$('.ui-widget-overlay') //find the upload button/link
-								.animate({"opacity": 0.2},50, function(){ //light up the background
-									$('li#t-upload a')
-								.animate({"margin-left": "+=5px"}, 200) //shake upload button to grab attention...
-								.animate({"margin-left": "-=5px"}, 100)
-								.animate({"margin-left": "+=35px"}, 100)
-								.animate({"margin-left": "-=35px"}, 100)
-								.animate({"margin-left": "+=20px"}, 150)
-								.animate({"margin-left": "-=20px"}, 150, function(){
-									$('.ui-widget-overlay').animate({"opacity": oldOpacity},200);}) //redo the dark background after shaking the button. 
-								});
-							}) ;
-							*/
-							//highlight uploadbutton end
-							
+											
 							//CONFIG START
 							var imageConfig = {
 								ailimit:5, //how many items shell be retrieved from the api?
@@ -120,8 +102,6 @@ var mytool = function(){
 								thumbWidth: 32, //width of the image preview thumbnails 
 							}
 							//CONFIG END
-
-
 							console.log("init Started");
 
 							/*Create Wizard behaviour*/
@@ -132,7 +112,8 @@ var mytool = function(){
 							//get recent images
 
 							//TODO: Ajax should e wrapped in am-I-logged-in check: skip if mw.config.wgUserName
-							$.ajax( {
+							function generateRecentImagesList(){
+								$.ajax({
 										url: mw.util.wikiScript( 'api' ),
 										dataType: 'json',
 										data: {
@@ -147,40 +128,44 @@ var mytool = function(){
 										success:function(data){
 											generateList(data);
 										}
-							});
+								});
+								
+								function generateList(images){
+									/*generates several List points*/
+									
+									//initialize variables for image ist generation
+									var imageArray = images.query.allimages; 
+									var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
+									var li;
+									var imageTitle='';
+									var thumbLink ='';
+									var usethisButton;
+									//END initialization of variables					
+									
+														
+									for(var i=0;i<imageArray.length; i++){
+									   //creates a li for each image in array
+										li = $('<li>');
+										imageTitle = imageArray[i].name;
+										thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
+										$(li).append('<img src="'+thumbLink+'" '+' width="'+imageConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
+										$('<a href="#">use this</a>') //create a button which on click...
+											.button()
+											.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
+												return function(){
+													$(imageConfig.inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
+												};
+											})(imageTitle))
+											.prependTo(li);
+										$(li).appendTo(domList);
+									}//END for
+									
+									$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer');//append the list of images to the dialog-box 
+								}//end generateList()								
+							}
+							
 
-							function generateList(images){
-								/*generates several List points*/
-								
-								//initialize variables for image ist generation
-								var imageArray = images.query.allimages; 
-								var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
-								var li;
-								var imageTitle='';
-								var thumbLink ='';
-								var usethisButton;
-								//END initialization of variables					
-								
-													
-								for(var i=0;i<imageArray.length; i++){
-								   //creates a li for each image in array
-									li = $('<li>');
-									imageTitle = imageArray[i].name;
-									thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
-									$(li).append('<img src="'+thumbLink+'" '+' width="'+imageConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
-									$('<a href="#">use this</a>') //create a button which on click...
-										.button()
-										.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
-											return function(){
-												$(imageConfig.inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
-											};
-										})(imageTitle))
-										.prependTo(li);
-									$(li).appendTo(domList);
-								}//END for
-								
-								$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer');//append the list of images to the dialog-box 
-							}//end generateList()
+							
 
 							/*WRITE LATEST UPLOADS*/
 							//for loop. generate [{},{},…] {} contains: title, evtl image link to thumbnail
@@ -242,7 +227,7 @@ var mytool = function(){
 				
 				mw.loader.using( ['ext.wikiEditor.dialogs'],function(){ //the usual dialogs sould be initialized first
 					$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
-					 $('#wpTextbox1').wikiEditor( 'addToToolbar', {
+					$('#wpTextbox1').wikiEditor( 'addToToolbar', {
 				'section': 'main',
 				'group': 'insert',
 				'tools': {
@@ -268,8 +253,6 @@ var mytool = function(){
 		
 				
 				
-				
-				
 				window.setTimeout(changeToolbar, 500); //change toolbar after button has been inserted
 
-} );
+});
