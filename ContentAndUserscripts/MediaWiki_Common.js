@@ -48,7 +48,9 @@ var mytool = function(){
 								</div>\
 								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
 									<div>\
-										<h2>This is the previous step!</h2>\
+										<h2>Upload a file!</h2>\
+										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]"/>\\n\
+										<p class="helptext"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense">\
 										<h3><input id="selector-radio-license-byme" name="selector-radio-license" type="radio" required>I created this work</h3>\
@@ -79,8 +81,9 @@ var mytool = function(){
 											Furthermore if you just took it without being allowed, the author might sue you (Which can cost <em>a lot</em>. Take. It. Serious. We are not kidding.)</p>\
 										</div>\
 									</div><!--select License end--->\
-									<div>\
-										<h2>This is the next step!</h2>\
+									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata">\
+										<h2>Name the file</h2>\
+										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
 									</div>\
 								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
 							</div>\
@@ -146,7 +149,13 @@ var mytool = function(){
 							};
 							//CONFIG END
 							
-							//TODO
+							//USER DATA
+							var userData={
+								file:null,
+								filekey:null
+							}
+							//USER DATA END
+						
 							
 
 							console.log("init Started");
@@ -201,6 +210,7 @@ var mytool = function(){
 								}//end generateList()
 							}//end createRecentImagesList()
 							
+							
 							var wizardify=function(parameters){
 								/* PARAMETERS: rootElementID: String; 
 								 * SHORTDESC: Creates a simple wizard. single steps are <div> nested in another div, which is the Root element
@@ -211,7 +221,8 @@ var mytool = function(){
 									rootElement: parameters.rootElement,
 									endFunction:parameters.endFunction,
 									cssClassForwardButton:'wizardify-forward',
-									cssClassBackwardButton:'wizardify-backward'
+									cssClassBackwardButton:'wizardify-backward',
+									//checkingFunctions:parameters.checkingFunctions//the checking functions are functions that are executed before the page is turned. The array consists of subobject containing an ID-selector and a function. If that returns false the turn is not done.
 								};
 
 								var wizardStepContainers = config.rootElement.children();
@@ -225,11 +236,29 @@ var mytool = function(){
 
 								wizardStepContainers.each(function(index){
 									$(this).append('<div class="wizardify-buttonset">');
+									
+									//we check if there is any function that should be applied before we turn to the next page
+									/*var currentCheckfunction = function(){
+										var foundCheckfunction;
+										if($.isArray(conf.checkingFunctions)){
+												for(var i=0;i<config.checkingFunctions.length;i++){ //for each object in checkin
+													if(config.checkingFunctions[i].selector===wizardStepContainers.eq(index).attr("id")){ //if [i].selector matches the id of the current Container
+														if($isFunction(config.checkingFunctions[i].checkFunction)){
+															foundCheckfunction = checkingFunctions[i].checkFunction;
+														}
+													}
+												}//for end
+											return foundCheckfunction;
+										}										
+									}*/
+										
+									
 									if(index>0){
 										$('<button/>',{
 											'text':config.backbuttonText,
 											'class':config.cssClassBackwardButton		
 										}).click(function(){
+											
 											wizardStepContainers.eq(index).css('display','none');
 											wizardStepContainers.eq(index-1).css('display','block');			
 										}).appendTo(wizardStepContainers.eq(index).children('.wizardify-buttonset'));
@@ -239,6 +268,9 @@ var mytool = function(){
 											'text':config.forwardbuttonText,
 											'class':config.cssClassForwardButton
 										}).click(function(){
+											/*if(currentCheckfunction||currentCheckfunction()!== false){ //if the function is existend and after executing it, it returns false, dont "turn the page""
+												return; 
+											}*/
 											wizardStepContainers.eq(index).css('display','none');
 											wizardStepContainers.eq(index+1).css('display','block');			
 										}).appendTo(wizardStepContainers.eq(index).children('.wizardify-buttonset'));
@@ -350,6 +382,8 @@ var mytool = function(){
 								domElement.append(fragment);
 							};
 							
+							
+							
 							var generateWikitext = function(divOwn,divOthers,licensesOwn_bool, licensesOwn, licensesOthers, config){
 								/*
 								divOwn: The jquery object div which contains the form Elements regarding the Infos on the own works 
@@ -396,30 +430,116 @@ var mytool = function(){
 								var wikitextLicense = textArray.join("");
 								return wikitextLicense;
 							}
-							/*Create Wizard behaviour*/
-							//attach events and actions to buttons
-							//disable/enable dialog buttons
-
-							/*GET LATEST UPLOADS from user, put into array*/
-							//get recent images
-
-							/*WRITE LATEST UPLOADS*/
-							//for loop. generate [{},{},…] {} contains: title, evtl image link to thumbnail
-
-							//generate text:li + evtl. preview + image name+ button
-							//attach click-event for writing the value of #wikieditor-toolbar-mytool-inputFilename
+							
+							var uploadSetup= function(parameters){
+								var config={
+								selectorFileinput: parameters.selectorFileinput,
+								selectorMetadataUpload:parameters.selectorMetadataUpload,
+								text: parameters.text,
+								selectorDisplayHints:parameters.selectorDisplayHints
+								}
+								
+								var fileParameters={}
+								
+								$(config.selectorFileinput).change(function(evt){
+									fileParameters.file=evt.target.files[0],
+									fileParameters.filename=evt.target.files[0].name							
+									
+									
+									var successfunction = function(data){
+										fileParameters.filekey=data.filekey;
+										//$(selectorDisplayHints).text("file sucessfully uploaded");
+									}
+									
+									var errorfunction = function(data){
+										//$(config.selectorFileinput).(selectorDisplayHints).text("there was a problem when uploading your file. You might wnat to try the old uploader (in the sidebar, \"upload file\" ");
+									}
+									
+									uploadFile(fileParameters,"file",successfunction,errorfunction);
+								})
+								
+								$(config.selectorMetadataUpload).click(function(){
+									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
+									uploadFile(fileParameters,"metadata",function(data){console.log(data)},function(xhr,status, error){console.log(error)} );
+								})
+								
+								
+							}
+							var uploadFile = function(fileParameters,kindOfUpload,successfunction,errorfunction){
+								//fileParameters: Object with stash, file,filekey,filename,text
+								//kindOfUpload: "file" OR "metadata"
+								//successfunction, errorfunction: functions for XHR-request
+								
+								var editToken; // mw.user.tokens.get( 'editToken' )
+								var config; //{}
+								var formdata; //new FormData()
+								
+								if(mw){
+									editToken = mw.user.tokens.get( 'editToken' );
+								}
+									
+								
+								config={
+									stash:fileParameters.stash||false, //true or false
+									file: fileParameters.file || null, //the file to upload like the one fired on chage of a fileselector on as event.target.files[0]
+									filekey:fileParameters.filekey || null, //the filekey returned after a stashed upload (needed to resume)
+									filename:fileParameters.filename || fileParameters.file.name || null,
+									text:fileParameters.text||null
+								};
+								
+								
+								formdata = new FormData();
+								formdata.append("filename", config.filename);
+								formdata.append("action", "upload");
+								formdata.append("token", editToken);
+								
+								
+								if(kindOfUpload==="file"){
+								 	formdata.append("file", config.file);
+								 	formdata.append("stash", 1);
+									formdata.append("ignorewarnings", true);
+								}else if(kindOfUpload==="metadata"){
+									formdata.append("text", config.text);
+								}else{
+									formdata.append("file", config.file);
+									formdata.append("text", config.text);
+								}
+								
+								$.ajax({ //http://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
+										url: mw.util.wikiScript( 'api' ),
+										contentType:false,
+										processData:false,
+										type:'POST',
+										data: formdata,
+										success:successfunction,
+										error:errorfunction
+									});
+								//https://en.wikipedia.org/w/api.php?action=upload&filename=Test.txt&file=file_contents_here&token=+\		
+							};
+/*
+ *var config={
+								selectorFileinput: parameters.selectorFileinput,
+								selectorMetadataUpload:parameters.selectorMetadataUpload,
+								text: parameters.text,
+								selectorDisplayHints:parameters.selectorDisplayHints
+								}
+ **/
 							
 							
 							createRecentImagesList();
 							
 							wizardify({
 								rootElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage'),
-								endFunction:function(){generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);}
+								endFunction:function(){console.log("end")}
 							});
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
 							validate(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.ownWorkLicenses);
+							uploadSetup({
+								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
+								selectorMetadataUpload:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata .wizardify-forward",
+							});
 							
 						},
 						dialog:{
