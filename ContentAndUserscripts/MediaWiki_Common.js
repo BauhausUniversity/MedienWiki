@@ -447,20 +447,28 @@ var mytool = function(){
 									
 									
 									var successfunction = function(data){
-										fileParameters.filekey=data.filekey;
+										fileParameters.filekey=data.upload.filekey;
 										//$(selectorDisplayHints).text("file sucessfully uploaded");
 									}
 									
 									var errorfunction = function(data){
+										if(data.filekey)
+										{fileParameters.filekey=data.upload.filekey}//WTF TODO It always calls the error function...
 										//$(config.selectorFileinput).(selectorDisplayHints).text("there was a problem when uploading your file. You might wnat to try the old uploader (in the sidebar, \"upload file\" ");
 									}
 									
-									uploadFile(fileParameters,"file",successfunction,errorfunction);
+									uploadFile(fileParameters,"file",function(data){
+										fileParameters.filekey=data.upload.filekey;
+										//$(selectorDisplayHints).text("file sucessfully uploaded");
+									},function(data){console.log("error",data)});
 								})
 								
 								$(config.selectorMetadataUpload).click(function(){
 									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
-									uploadFile(fileParameters,"metadata",function(data){console.log(data)},function(xhr,status, error){console.log(error)} );
+									uploadFile(fileParameters,"metadata",function(data){
+										fileParameters.filekey=data.upload.filekey;
+										//$(selectorDisplayHints).text("file sucessfully uploaded");
+									},function(data){console.log("error",data)}); //,function(data){console.log(data)},function(xhr,status, error){console.log(error)} 
 								})
 								
 								
@@ -492,6 +500,7 @@ var mytool = function(){
 								formdata.append("filename", config.filename);
 								formdata.append("action", "upload");
 								formdata.append("token", editToken);
+								formdata.append("format", "json");
 								
 								
 								if(kindOfUpload==="file"){
@@ -500,6 +509,8 @@ var mytool = function(){
 									formdata.append("ignorewarnings", true);
 								}else if(kindOfUpload==="metadata"){
 									formdata.append("text", config.text);
+									formdata.append("filekey", config.filekey);
+									
 								}else{
 									formdata.append("file", config.file);
 									formdata.append("text", config.text);
@@ -511,6 +522,7 @@ var mytool = function(){
 										processData:false,
 										type:'POST',
 										data: formdata,
+										dataType:"json",
 										success:successfunction,
 										error:errorfunction
 									});
