@@ -444,10 +444,12 @@ var mytool = function(){
 								$(config.selectorFileinput).change(function(evt){
 									fileParameters.file=evt.target.files[0],
 									fileParameters.filename=evt.target.files[0].name							
-									
+									$('wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]').val(evt.target.files[0].name);
 									
 									var successfunction = function(data){
 										fileParameters.filekey=data.upload.filekey;
+										
+										
 										//$(selectorDisplayHints).text("file sucessfully uploaded");
 									}
 									
@@ -465,6 +467,7 @@ var mytool = function(){
 								
 								$(config.selectorMetadataUpload).click(function(){
 									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
+									fileParameters.filename = $('wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]').val();
 									uploadFile(fileParameters,"metadata",function(data){
 										fileParameters.filekey=data.upload.filekey;
 										//$(selectorDisplayHints).text("file sucessfully uploaded");
