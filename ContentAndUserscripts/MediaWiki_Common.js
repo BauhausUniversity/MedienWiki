@@ -85,6 +85,10 @@ var mytool = function(){
 										<h2>Name the file</h2>\
 										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
 									</div>\
+									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
+										<h2>Use the file</h2>\
+										<p>You can now use the file in your article by clicking on "insert</p>\
+									</div>\
 								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
 							</div>\
 							\
@@ -348,8 +352,8 @@ var mytool = function(){
 									});
 								});
 							};
-							var validate = function(forwardButtonSelector, formcontainerSelector){
-				
+							var validateFormPart = function(forwardButtonSelector, formcontainerSelector){
+								//Description: Activates/Deactivates the forward-button dependend on the :invalid pseudoclass
 								//formcontainerSelector: the selector for the container of the elements (a div e.g.)
 								//forwardButtonSelector: the selector of the forward-Button from the 
 								//dependend elements, [[dependendA1,dependendA2],[dependendB1,dependendB2]]... so elements of which one needs to have a value are in grouped in an array and oll those arrays of dependend elements are in an array too.  
@@ -382,7 +386,62 @@ var mytool = function(){
 								domElement.append(fragment);
 							};
 							
-							
+							var uniqueFilenameCheck = function(filename,finenameinputElement,explanationElement){
+								//this function checks if the filename given is o.k. or not. It uses the api to do so. 
+								//returns true or false
+								config={
+									invalidFilenameMessage:"",
+									takenFilenameMessage:"",
+									timeToCheck:200, //in ms
+								};
+								//setup input element
+								var timeoutCode;
+								
+								inputElement.on("keyup",function(){
+										clearTimeout(timeoutCode); //that stops the previous timeout for the function
+										
+										timeoutCode = setTimeout(function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
+											$.ajax({
+												url: mw.util.wikiScript( 'api' ),
+												type:'GET',
+												data: {
+													action:'query',
+													titles:'File:'+filename,
+													format:'json'
+												},
+
+												success: function(data){
+													var filenameStatus;
+
+													if(data.query['-2']){
+														filenameStatus = "new";
+														//add a  class to the element that signifies that is is o.k. 
+														//remove a class from the element that signfies that the name is not o.k.
+
+													} else if(data.query['-1']){
+														filenameStatus = "invalid";
+														//remove a  class to the element that signifies that is is o.k. 
+														//add a class from the element that signfies that the name is not o.k.
+														//display message saying that the name is invalid
+													}else{
+														filenameStatus = "taken";
+														//remove a  class to the element that signifies that is is o.k. 
+														//add a class from the element that signfies that the name is not o.k.
+														//display message saying that the name is taken
+													}
+												},
+												error: function(){
+													console.log("An error ocurred when reaching the server");
+												},
+												dataType: "json"
+											});//end Ajax
+		
+										},config.timeToCheck);//set the time till the previously given function is executed
+									});
+								
+								//make requests
+								
+							};
 							
 							var generateWikitext = function(divOwn,divOthers,licensesOwn_bool, licensesOwn, licensesOthers, config){
 								/*
@@ -437,13 +496,13 @@ var mytool = function(){
 								selectorMetadataUpload:parameters.selectorMetadataUpload,
 								text: parameters.text,
 								selectorDisplayHints:parameters.selectorDisplayHints
-								}
+								};
 								
-								var fileParameters={}
+								var fileParameters={};
 								
 								$(config.selectorFileinput).change(function(evt){
 									fileParameters.file=evt.target.files[0],
-									fileParameters.filename=evt.target.files[0].name							
+									fileParameters.filename=evt.target.files[0].name;
 									$('wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]').val(evt.target.files[0].name);
 									
 									var successfunction = function(data){
@@ -463,7 +522,7 @@ var mytool = function(){
 										fileParameters.filekey=data.upload.filekey;
 										//$(selectorDisplayHints).text("file sucessfully uploaded");
 									},function(data){console.log("error",data)});
-								})
+								});
 								
 								$(config.selectorMetadataUpload).click(function(){
 									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
@@ -472,10 +531,10 @@ var mytool = function(){
 										fileParameters.filekey=data.upload.filekey;
 										//$(selectorDisplayHints).text("file sucessfully uploaded");
 									},function(data){console.log("error",data)}); //,function(data){console.log(data)},function(xhr,status, error){console.log(error)} 
-								})
+								});
 								
 								
-							}
+							};
 							var uploadFile = function(fileParameters,kindOfUpload,successfunction,errorfunction){
 								//fileParameters: Object with stash, file,filekey,filename,text
 								//kindOfUpload: "file" OR "metadata"
@@ -531,14 +590,17 @@ var mytool = function(){
 									});
 								//https://en.wikipedia.org/w/api.php?action=upload&filename=Test.txt&file=file_contents_here&token=+\		
 							};
-/*
+							
+							
+/*							
+ *								
  *var config={
 								selectorFileinput: parameters.selectorFileinput,
 								selectorMetadataUpload:parameters.selectorMetadataUpload,
 								text: parameters.text,
 								selectorDisplayHints:parameters.selectorDisplayHints
 								}
- **/
+ **/						
 							
 							
 							createRecentImagesList();
@@ -548,13 +610,14 @@ var mytool = function(){
 								endFunction:function(){console.log("end")}
 							});
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
-							validate(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
+							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.ownWorkLicenses);
 							uploadSetup({
 								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
 								selectorMetadataUpload:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata .wizardify-forward",
 							});
+							
 							
 						},
 						dialog:{
