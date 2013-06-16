@@ -83,7 +83,8 @@ var mytool = function(){
 									</div><!--select License end--->\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata">\
 										<h2>Name the file</h2>\
-										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
+										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\\n\
+										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
 										<h2>Use the file</h2>\
@@ -357,13 +358,16 @@ var mytool = function(){
 								//formcontainerSelector: the selector for the container of the elements (a div e.g.)
 								//forwardButtonSelector: the selector of the forward-Button from the 
 								//dependend elements, [[dependendA1,dependendA2],[dependendB1,dependendB2]]... so elements of which one needs to have a value are in grouped in an array and oll those arrays of dependend elements are in an array too.  
-
+								config={
+									customInvalidClass:"invalid",
+									customValidClass:"valid"
+								}
 								$(formcontainerSelector).each(function(index,element){
 									$(element).find("input,select").on("change keyup", validation);
 									var button = $(element).find('.wizardify-forward'); 
 
 									function validation(){
-										if($(element).find(":invalid").length===0){
+										if($(element).find(":invalid"+", "+" ."+config.customInvalidClass).length===0){
 											button.prop("disabled",false);
 										}else{
 											button.prop("disabled",true);
@@ -372,6 +376,7 @@ var mytool = function(){
 									validation();
 								}); //each end
 							};
+							
 							var generateSelects = function (domElement,content){
 								//domElement: The select element that should get the options
 								//content: a JSON with sub-object each provinding a short and long description and possibly a link to the original licencse text
@@ -386,19 +391,25 @@ var mytool = function(){
 								domElement.append(fragment);
 							};
 							
-							var uniqueFilenameCheck = function(filename,finenameinputElement,explanationElement){
+							var uniqueFilenameCheck = function(filename,filenameinputElement,explanationElement){
 								//this function checks if the filename given is o.k. or not. It uses the api to do so. 
 								//returns true or false
 								config={
 									invalidFilenameMessage:"",
 									takenFilenameMessage:"",
 									timeToCheck:200, //in ms
+									messageElement: $('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck'),
+									validClass:"valid", //classname for valid Elements
+									invalidClass:"invalid"
+									
 								};
-								//setup input element
 								var timeoutCode;
 								
-								inputElement.on("keyup",function(){
+								
+								inputElement.on("keyup",function(){ //setup event on input element
 										clearTimeout(timeoutCode); //that stops the previous timeout for the function
+										var proposedFilename = inputElement.val();
+										
 										
 										timeoutCode = setTimeout(function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
 											$.ajax({
@@ -415,16 +426,26 @@ var mytool = function(){
 
 													if(data.query['-2']){
 														filenameStatus = "new";
+														config.messageElement.text("");
+														config.messageElement.addClass(config.validClass);
+														config.messageElement.removeClass(config.invalidClass);
 														//add a  class to the element that signifies that is is o.k. 
 														//remove a class from the element that signfies that the name is not o.k.
 
 													} else if(data.query['-1']){
 														filenameStatus = "invalid";
+														config.messageElement.text("The wiki can't process the filename you entered. Did you use any special characters? (e.g. %&$³§ß\" usw.)");
+														config.messageElement.addClass(config.invalidClass);
+														config.messageElement.removeClass(config.validClass);
+														
 														//remove a  class to the element that signifies that is is o.k. 
 														//add a class from the element that signfies that the name is not o.k.
 														//display message saying that the name is invalid
 													}else{
 														filenameStatus = "taken";
+														config.messageElement.text("This filename is already used. Please choose another");
+														config.messageElement.addClass(config.invalidClass);
+														config.messageElement.removeClass(config.validClass);
 														//remove a  class to the element that signifies that is is o.k. 
 														//add a class from the element that signfies that the name is not o.k.
 														//display message saying that the name is taken
@@ -495,7 +516,8 @@ var mytool = function(){
 								selectorFileinput: parameters.selectorFileinput,
 								selectorMetadataUpload:parameters.selectorMetadataUpload,
 								text: parameters.text,
-								selectorDisplayHints:parameters.selectorDisplayHints
+								selectorDisplayHints:parameters.selectorDisplayHints,
+								selectorInsertField:"#wikieditor-toolbar-mytool-inputFilename"
 								};
 								
 								var fileParameters={};
@@ -520,7 +542,7 @@ var mytool = function(){
 									
 									uploadFile(fileParameters,"file",function(data){
 										fileParameters.filekey=data.upload.filekey;
-										//$(selectorDisplayHints).text("file sucessfully uploaded");
+										$("#wikieditor-toolbar-mytool-inputFilename").val(data.upload.filename);
 									},function(data){console.log("error",data)});
 								});
 								
@@ -529,6 +551,7 @@ var mytool = function(){
 									fileParameters.filename = $('wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]').val();
 									uploadFile(fileParameters,"metadata",function(data){
 										fileParameters.filekey=data.upload.filekey;
+										$()
 										//$(selectorDisplayHints).text("file sucessfully uploaded");
 									},function(data){console.log("error",data)}); //,function(data){console.log(data)},function(xhr,status, error){console.log(error)} 
 								});
@@ -611,6 +634,7 @@ var mytool = function(){
 							wizardify({
 								rootElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage'),
 								endFunction:function(){console.log("end")
+									$("#wikieditor-toolbar-mytool-inputFilename").val("")
 								//TODO: Put image link in the input field
 								}
 							});
