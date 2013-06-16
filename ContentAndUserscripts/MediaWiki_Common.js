@@ -603,11 +603,16 @@ var mytool = function(){
  **/						
 							
 							
+							
+							//TODO: create event system for communicating invalidity
+							
 							createRecentImagesList();
 							
 							wizardify({
 								rootElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage'),
-								endFunction:function(){console.log("end")}
+								endFunction:function(){console.log("end")
+								//TODO: Put image link in the input field
+								}
 							});
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
 							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
