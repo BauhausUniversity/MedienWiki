@@ -49,7 +49,7 @@ var mytool = function(){
 								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
 									<div>\
 										<h2>Upload a file!</h2>\
-										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]"/>\\n\
+										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]"/>\
 										<p class="helptext"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense">\
@@ -391,9 +391,10 @@ var mytool = function(){
 								domElement.append(fragment);
 							};
 							
-							var uniqueFilenameCheck = function(filename,filenameinputElement,explanationElement){
+							var uniqueFilenameCheck = function(filenameinputElement,explanationElement){
 								//this function checks if the filename given is o.k. or not. It uses the api to do so. 
 								//returns true or false
+								
 								config={
 									invalidFilenameMessage:"",
 									takenFilenameMessage:"",
@@ -513,11 +514,14 @@ var mytool = function(){
 							
 							var uploadSetup= function(parameters){
 								var config={
-								selectorFileinput: parameters.selectorFileinput,
-								selectorMetadataUpload:parameters.selectorMetadataUpload,
-								text: parameters.text,
-								selectorDisplayHints:parameters.selectorDisplayHints,
-								selectorInsertField:"#wikieditor-toolbar-mytool-inputFilename"
+									selectorFileinput: parameters.selectorFileinput, //the "upload a file" input"
+									selectorMetadataUpload:parameters.selectorMetadataUpload, //the "click here to finish upload" (to get the missing metadata and estash- the file)
+									text: parameters.text,
+									selectorDisplayHintsFile:"",
+									selectorDisplayHintsMetadata:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck",
+									selectorInsertField:"#wikieditor-toolbar-mytool-inputFilename", //the the "insert to document button"
+									selectorInputFilename:'#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
+									
 								};
 								
 								var fileParameters={};
@@ -525,11 +529,10 @@ var mytool = function(){
 								$(config.selectorFileinput).change(function(evt){
 									fileParameters.file=evt.target.files[0],
 									fileParameters.filename=evt.target.files[0].name;
-									$('wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]').val(evt.target.files[0].name);
+									$(config.selectorInputFilename).val(evt.target.files[0].name);
 									
 									var successfunction = function(data){
 										fileParameters.filekey=data.upload.filekey;
-										
 										
 										//$(selectorDisplayHints).text("file sucessfully uploaded");
 									}
@@ -548,11 +551,27 @@ var mytool = function(){
 								
 								$(config.selectorMetadataUpload).click(function(){
 									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
-									fileParameters.filename = $('wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]').val();
+									fileParameters.filename = $(config.selectorInputFilename).val();
+									
 									uploadFile(fileParameters,"metadata",function(data){
-										fileParameters.filekey=data.upload.filekey;
-										$()
-										//$(selectorDisplayHints).text("file sucessfully uploaded");
+										if(data.error){
+											console.log("Error"+data.error.info);
+											$(config.selectorDisplayHintsMetadata).text("OMFG:"+data.error.info);
+											return; 
+											
+										}else if(data.upload.filename){
+											var filename=data.upload.filename;
+											$(config.selectorInsertField).val(filename);
+										};
+										
+										
+										//TODO: put stuff in the boxes on success
+										//finename insert and the like...
+										//use the xhtt-object you got back
+										
+									
+										//fileParameters.filekey=data.upload.filekey;
+										//$(selectorDisplayHints).text("filefunctionfunction sucessfully uploaded");
 									},function(data){console.log("error",data)}); //,function(data){console.log(data)},function(xhr,status, error){console.log(error)} 
 								});
 								
@@ -634,7 +653,7 @@ var mytool = function(){
 							wizardify({
 								rootElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage'),
 								endFunction:function(){console.log("end")
-									$("#wikieditor-toolbar-mytool-inputFilename").val("")
+									$("#wikieditor-toolbar-mytool-inputFilename").val()
 								//TODO: Put image link in the input field
 								}
 							});
@@ -642,6 +661,7 @@ var mytool = function(){
 							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.ownWorkLicenses);
+							uniqueFilenameCheck(filenameinputElement,explanationElement);
 							uploadSetup({
 								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
 								selectorMetadataUpload:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata .wizardify-forward",
