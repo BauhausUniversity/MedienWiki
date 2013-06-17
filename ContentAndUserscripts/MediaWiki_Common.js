@@ -50,7 +50,7 @@ var mytool = function(){
 									<div>\
 										<h2>Upload a file!</h2>\
 										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]"/>\
-										<p class="helptext"></p>\
+										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense">\
 										<h3><input id="selector-radio-license-byme" name="selector-radio-license" type="radio" required>I created this work</h3>\
@@ -88,7 +88,7 @@ var mytool = function(){
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
 										<h2>Use the file</h2>\
-										<p>You can now use the file in your article by clicking on "insert</p>\
+										<!--<p>You can now use the file in your article by clicking on "insert</p>-->\
 									</div>\
 								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
 							</div>\
@@ -391,7 +391,7 @@ var mytool = function(){
 								domElement.append(fragment);
 							};
 							
-							var uniqueFilenameCheck = function(filenameinputElement,explanationElement){
+							var uniqueFilenameCheck = function(filenameinputElement,messageElement){
 								//this function checks if the filename given is o.k. or not. It uses the api to do so. 
 								//returns true or false
 								
@@ -399,7 +399,7 @@ var mytool = function(){
 									invalidFilenameMessage:"",
 									takenFilenameMessage:"",
 									timeToCheck:200, //in ms
-									messageElement: $('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck'),
+									messageElement: messageElement,
 									validClass:"valid", //classname for valid Elements
 									invalidClass:"invalid"
 									
@@ -407,9 +407,9 @@ var mytool = function(){
 								var timeoutCode;
 								
 								
-								inputElement.on("keyup",function(){ //setup event on input element
+								filenameinputElement.on("keyup",function(){ //setup event on input element
 										clearTimeout(timeoutCode); //that stops the previous timeout for the function
-										var proposedFilename = inputElement.val();
+										var proposedFilename = filenameinputElement.val();
 										
 										
 										timeoutCode = setTimeout(function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
@@ -418,7 +418,7 @@ var mytool = function(){
 												type:'GET',
 												data: {
 													action:'query',
-													titles:'File:'+filename,
+													titles:'File:'+proposedFilename,
 													format:'json'
 												},
 
@@ -517,7 +517,9 @@ var mytool = function(){
 									selectorFileinput: parameters.selectorFileinput, //the "upload a file" input"
 									selectorMetadataUpload:parameters.selectorMetadataUpload, //the "click here to finish upload" (to get the missing metadata and estash- the file)
 									text: parameters.text,
-									selectorDisplayHintsFile:"",
+									fileDuplicatedText:"the content of the file already exists – in file",
+									fileNameExistsText:"the name of the file already exists:",
+									selectorDisplayHintsFile:"#wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status",
 									selectorDisplayHintsMetadata:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck",
 									selectorInsertField:"#wikieditor-toolbar-mytool-inputFilename", //the the "insert to document button"
 									selectorInputFilename:'#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
@@ -531,11 +533,7 @@ var mytool = function(){
 									fileParameters.filename=evt.target.files[0].name;
 									$(config.selectorInputFilename).val(evt.target.files[0].name);
 									
-									var successfunction = function(data){
-										fileParameters.filekey=data.upload.filekey;
-										
-										//$(selectorDisplayHints).text("file sucessfully uploaded");
-									}
+									
 									
 									var errorfunction = function(data){
 										if(data.filekey)
@@ -545,7 +543,15 @@ var mytool = function(){
 									
 									uploadFile(fileParameters,"file",function(data){
 										fileParameters.filekey=data.upload.filekey;
-										$("#wikieditor-toolbar-mytool-inputFilename").val(data.upload.filename);
+										
+										if(data.upload.warnings.duplicate){
+												$(config.selectorDisplayHintsFile).text(config.fileDuplicatedText+data.upload.warnings.duplicate[0])
+										}else if(data.upload.warnings.exists){
+											$(config.selectorDisplayHintsFile).text(config.fileNameExistsText+data.upload.warnings.exists);
+										}else{
+											$(config.selectorDisplayHintsFile).text("file sucessfully registered for upload");
+											$("#wikieditor-toolbar-mytool-inputFilename").val(data.upload.filename);
+										}
 									},function(data){console.log("error",data)});
 								});
 								
@@ -556,10 +562,18 @@ var mytool = function(){
 									uploadFile(fileParameters,"metadata",function(data){
 										if(data.error){
 											console.log("Error"+data.error.info);
-											$(config.selectorDisplayHintsMetadata).text("OMFG:"+data.error.info);
+											$(config.selectorDisplayHintsMetadata).text("OMG:"+data.error.info);
 											return; 
 											
+										}else if(data.upload.warnings.duplicate){
+											console.log("Warning"+data.upload.warnings.duplicate);
+											$(config.selectorDisplayHintsMetadata).text(config.fileDuplicatedText+data.upload.warnings.duplicate[0]); //[0] because obviously it is deliverd as array: like:  'duplicates':["myimage"]
+											return;		
+										}else if(data.upload.warnings.exists){
+											$(config.selectorDisplayHintsMetadata).text(config.fileNameExistsText+data.upload.warnings.exists+"please Change the name")
+											
 										}else if(data.upload.filename){
+											$(config.selectorDisplayHintsMetadata).text("Image was sucessfully uploaded. You can now use the file in your article by clicking on insert"); 
 											var filename=data.upload.filename;
 											$(config.selectorInsertField).val(filename);
 										};
@@ -661,7 +675,7 @@ var mytool = function(){
 							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.ownWorkLicenses);
-							uniqueFilenameCheck(filenameinputElement,explanationElement);
+							uniqueFilenameCheck($('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]'),$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck'));
 							uploadSetup({
 								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
 								selectorMetadataUpload:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata .wizardify-forward",
