@@ -88,6 +88,7 @@ var mytool = function(){
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
 										<h2>Use the file</h2>\
+										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints"></p>\
 										<!--<p>You can now use the file in your article by clicking on "insert</p>-->\
 									</div>\
 								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
@@ -112,6 +113,8 @@ var mytool = function(){
 								ailimit:5, //how many items shell be retrieved from the api?
 								inputID: '#wikieditor-toolbar-mytool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
 								thumbWidth: 32, //width of the image preview thumbnails ,
+								notValidClass:"invalid",
+								validClass:"valid",
 								othersWorkReasons:{
 									'BYSA':{
 										shortdesc:"CC attribution, share alike, Non-Commerical",
@@ -151,6 +154,7 @@ var mytool = function(){
 										linkToText:"http://creativecommons.com"
 									}
 								}
+								
 							};
 							//CONFIG END
 							
@@ -358,9 +362,9 @@ var mytool = function(){
 								//formcontainerSelector: the selector for the container of the elements (a div e.g.)
 								//forwardButtonSelector: the selector of the forward-Button from the 
 								//dependend elements, [[dependendA1,dependendA2],[dependendB1,dependendB2]]... so elements of which one needs to have a value are in grouped in an array and oll those arrays of dependend elements are in an array too.  
-								config={
-									customInvalidClass:"invalid",
-									customValidClass:"valid"
+								var config={
+									customInvalidClass:imageInsertConfig.notValidClass||"invalid",
+									customValidClass:imageInsertConfig.validClass||"valid"
 								}
 								$(formcontainerSelector).each(function(index,element){
 									$(element).find("input,select").on("change keyup", validation);
@@ -395,24 +399,25 @@ var mytool = function(){
 								//this function checks if the filename given is o.k. or not. It uses the api to do so. 
 								//returns true or false
 								
-								config={
+								var config={
 									invalidFilenameMessage:"",
 									takenFilenameMessage:"",
 									timeToCheck:200, //in ms
 									messageElement: messageElement,
-									validClass:"valid", //classname for valid Elements
-									invalidClass:"invalid"
+									validClass:imageInsertConfig.validClass||"valid", //classname for valid Elements
+									invalidClass:imageInsertConfig.notValidClass||"invalid",
+									filenameinputElement: filenameinputElement
 									
 								};
 								var timeoutCode;
 								
 								
-								filenameinputElement.on("keyup",function(){ //setup event on input element
-										clearTimeout(timeoutCode); //that stops the previous timeout for the function
-										var proposedFilename = filenameinputElement.val();
+								config.filenameinputElement.on("keyup",function(){ //setup event on input element
+										//clearTimeout(timeoutCode); //that stops the previous timeout for the function
+										var proposedFilename = config.filenameinputElement.val();
 										
-										
-										timeoutCode = setTimeout(function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
+										//timeoutCode = setTimeout(
+										//function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
 											$.ajax({
 												url: mw.util.wikiScript( 'api' ),
 												type:'GET',
@@ -425,15 +430,26 @@ var mytool = function(){
 												success: function(data){
 													var filenameStatus;
 
-													if(data.query['-2']){
+													if(data.query.pages['-2'] || data.query.pages['-1']){
 														filenameStatus = "new";
-														config.messageElement.text("");
-														config.messageElement.addClass(config.validClass);
-														config.messageElement.removeClass(config.invalidClass);
+														config.messageElement.text("the filename is o.k.");
+														config.filenameinputElement.addClass(config.validClass);
+														config.filenameinputElement.removeClass(config.invalidClass);
+														filenameinputElement.change(); //triggers check
 														//add a  class to the element that signifies that is is o.k. 
 														//remove a class from the element that signfies that the name is not o.k.
 
-													} else if(data.query['-1']){
+													}  else{
+														filenameStatus = "taken";
+														config.messageElement.text("This filename is already used. Please choose another");
+														config.filenameinputElement.addClass(config.invalidClass);
+														config.filenameinputElement.removeClass(config.validClass);
+														filenameinputElement.change(); //triggers check
+														//remove a  class to the element that signifies that is is o.k. 
+														//add a class from the element that signfies that the name is not o.k.
+														//display message saying that the name is taken
+													}
+													/*else if(){
 														filenameStatus = "invalid";
 														config.messageElement.text("The wiki can't process the filename you entered. Did you use any special characters? (e.g. %&$³§ß\" usw.)");
 														config.messageElement.addClass(config.invalidClass);
@@ -442,15 +458,7 @@ var mytool = function(){
 														//remove a  class to the element that signifies that is is o.k. 
 														//add a class from the element that signfies that the name is not o.k.
 														//display message saying that the name is invalid
-													}else{
-														filenameStatus = "taken";
-														config.messageElement.text("This filename is already used. Please choose another");
-														config.messageElement.addClass(config.invalidClass);
-														config.messageElement.removeClass(config.validClass);
-														//remove a  class to the element that signifies that is is o.k. 
-														//add a class from the element that signfies that the name is not o.k.
-														//display message saying that the name is taken
-													}
+													}*/
 												},
 												error: function(){
 													console.log("An error ocurred when reaching the server");
@@ -458,7 +466,7 @@ var mytool = function(){
 												dataType: "json"
 											});//end Ajax
 		
-										},config.timeToCheck);//set the time till the previously given function is executed
+										//}config.timeToCheck);//set the time till the previously given function is executed
 									});
 								
 								//make requests
@@ -520,8 +528,8 @@ var mytool = function(){
 									fileDuplicatedText:"the content of the file already exists – in file",
 									fileNameExistsText:"the name of the file already exists:",
 									selectorDisplayHintsFile:"#wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status",
-									selectorDisplayHintsMetadata:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck",
-									selectorInsertField:"#wikieditor-toolbar-mytool-inputFilename", //the the "insert to document button"
+									selectorDisplayHintsMetadata:"#wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints",
+									selectorInsertField:imageInsertConfig.inputID, //the the "insert to document button"
 									selectorInputFilename:'#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
 									
 								};
@@ -550,7 +558,7 @@ var mytool = function(){
 											$(config.selectorDisplayHintsFile).text(config.fileNameExistsText+data.upload.warnings.exists);
 										}else{
 											$(config.selectorDisplayHintsFile).text("file sucessfully registered for upload");
-											$("#wikieditor-toolbar-mytool-inputFilename").val(data.upload.filename);
+											$(config.selectorInsertField).val(data.upload.filename);
 										}
 									},function(data){console.log("error",data)});
 								});
@@ -667,7 +675,7 @@ var mytool = function(){
 							wizardify({
 								rootElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage'),
 								endFunction:function(){console.log("end")
-									$("#wikieditor-toolbar-mytool-inputFilename").val()
+									$(imageInsertConfig.inputID).val()
 								//TODO: Put image link in the input field
 								}
 							});
