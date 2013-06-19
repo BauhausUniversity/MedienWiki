@@ -171,55 +171,7 @@ var mytool = function(){
 
 							console.log("init Started");
 
-							function createRecentImagesList(){
-								$.ajax( {
-										url: mw.util.wikiScript( 'api' ),
-										dataType: 'json',
-										data: {
-											'action':'query',
-											'format':'json',
-											'list':'allimages',
-											'ailimit':imageInsertConfig.ailimit, //see above for definition
-											'aisort':'timestamp',
-											'aidir':'older',
-											'aiuser': mw.config.get("wgUserName")
-										},
-										success:function(data){
-											generateList(data);
-										}
-								});
-
-								function generateList(images){
-									/*generates several List points*/
-
-									//initialize variables for image ist generation
-									var imageArray = images.query.allimages; 
-									var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
-									var li;
-									var imageTitle='';
-									var thumbLink ='';
-									var usethisButton;
-									//END initialization of variables					
-
-									for(var i=0;i<imageArray.length; i++){
-									   //creates a li for each image in array
-										li = $('<li>');
-										imageTitle = imageArray[i].name;
-										thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageInsertConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
-										$(li).append('<img src="'+thumbLink+'" '+' width="'+imageInsertConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
-										$('<a href="#">use this</a>') //create a button which on click...
-											.button()
-											.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
-												return function(){
-													$(imageInsertConfig.inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
-												};
-											})(imageTitle))
-											.prependTo(li);
-										$(li).appendTo(domList);
-									}//END for
-									$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer');//append the list of images to the dialog-box 
-								}//end generateList()
-							}//end createRecentImagesList()
+							
 							
 							
 							var wizardify=function(parameters){
@@ -716,11 +668,7 @@ var mytool = function(){
 								//https://en.wikipedia.org/w/api.php?action=upload&filename=Test.txt&file=file_contents_here&token=+\		
 							};
 							
-							var resetUploadForm(container){
-								
-								
-								
-							}
+							
 							
 							
 /*							
@@ -737,7 +685,7 @@ var mytool = function(){
 							
 							//TODO: create event system for communicating invalidity
 							
-							createRecentImagesList();
+							
 							
 							wizardify({
 								rootElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage'),
@@ -793,13 +741,95 @@ var mytool = function(){
 							],
 							open: function () {
 								console.log("open!");
+								
+								var imageInsertConfig = {
+									ailimit:5, //how many items shell be retrieved from the api?
+									inputID: '#wikieditor-toolbar-mytool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
+									thumbWidth: 32, //width of the image preview thumbnails ,
+									notValidClass:"invalid",
+									validClass:"valid"
+								}
+								
 								//we want form reset here
+								var resetUploadForm= function(container){
+									
+									//deletes all values from input fields
+									container.find('input').each(function(){
+										$(this).val("");
+										$(this).removeClass("valid");
+									});//each end
+									
+									//set wizard container to first element
+									container.children("div").each(function(index,element){
+										if(index===0){
+											$(element).css("display","block");
+										}else{
+											$(element).css("display","none");
+										}
+										
+									})
+									
+									
+									
+								}//function reset Upload end	
 								
 								//We want the recent files fill here. 
+								function createRecentImagesList(){
+									$.ajax( {
+											url: mw.util.wikiScript( 'api' ),
+											dataType: 'json',
+											data: {
+												'action':'query',
+												'format':'json',
+												'list':'allimages',
+												'ailimit':imageInsertConfig.ailimit, //see above for definition
+												'aisort':'timestamp',
+												'aidir':'older',
+												'aiuser': mw.config.get("wgUserName")
+											},
+											success:function(data){
+												generateList(data);
+											}
+									});
+
+									function generateList(images){
+										/*generates several List points*/
+										//remove current list
+										$('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').children('ul').remove();
+										//initialize variables for image ist generation
+										var imageArray = images.query.allimages; 
+										var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
+										var li;
+										var imageTitle='';
+										var thumbLink ='';
+										var usethisButton;
+										//END initialization of variables					
+
+										for(var i=0;i<imageArray.length; i++){
+										   //creates a li for each image in array
+											li = $('<li>');
+											imageTitle = imageArray[i].name;
+											thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageInsertConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
+											$(li).append('<img src="'+thumbLink+'" '+' width="'+imageInsertConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
+											$('<a href="#">use this</a>') //create a button which on click...
+												.button()
+												.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
+													return function(){
+														$(imageInsertConfig.inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
+													};
+												})(imageTitle))
+												.prependTo(li);
+											$(li).appendTo(domList);
+										}//END for
+										$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').addClass("recentImagesList");//append the list of images to the dialog-box 
+									}//end generateList()
+								}//end createRecentImagesList()	
+								
+								resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
+								createRecentImagesList(); //call recent images list
 
 
-
-								}
+								}//end open
 							}
 						}//end mytool
 					}//end dialogs
