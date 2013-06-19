@@ -12,7 +12,9 @@ load needed modules
 
 
 //actual code
-$( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () {
+$( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', function () { //event way for production
+//
+//(function () { //Direct way for dev
 
 //load needed modules 
 mw.loader.load( 'jquery.ui.tabs' );
@@ -83,7 +85,7 @@ var mytool = function(){
 									</div><!--select License end--->\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata">\
 										<h2>Name the file</h2>\
-										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\\n\
+										<input name="file	name" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
 										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
@@ -357,6 +359,8 @@ var mytool = function(){
 									});
 								});
 							};
+							
+							
 							var validateFormPart = function(forwardButtonSelector, formcontainerSelector){
 								//Description: Activates/Deactivates the forward-button dependend on the :invalid pseudoclass
 								//formcontainerSelector: the selector for the container of the elements (a div e.g.)
@@ -409,67 +413,124 @@ var mytool = function(){
 									filenameinputElement: filenameinputElement
 									
 								};
-								var timeoutCode;
+								//var timeoutCode;
 								
-								
-								config.filenameinputElement.on("keyup",function(){ //setup event on input element
-										//clearTimeout(timeoutCode); //that stops the previous timeout for the function
-										var proposedFilename = config.filenameinputElement.val();
-										
-										//timeoutCode = setTimeout(
-										//function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
-											$.ajax({
+								var timeoutId
+								var counter = 0
+								function autoComplete() //http://stackoverflow.com/questions/6378696/use-settimeout-to-periodically-make-autocomplete-ajax-calls?answertab=votes#tab-top
+								{	
+									//define function to be called on success: 
+									var succ = function(data){
+										var filenameStatus;
+
+										if(data.query.pages['-2'] || data.query.pages['-1']){
+											filenameStatus = "new";
+											config.messageElement.text("the filename is o.k.");
+											config.filenameinputElement.addClass(config.validClass);
+											config.filenameinputElement.removeClass(config.invalidClass);
+											filenameinputElement.change(); //triggers check
+											//add a  class to the element that signifies that is is o.k. 
+											//remove a class from the element that signfies that the name is not o.k.
+
+										}  else{
+											filenameStatus = "taken";
+											config.messageElement.text("This filename is already used. Please choose another");
+											config.filenameinputElement.addClass(config.invalidClass);
+											config.filenameinputElement.removeClass(config.validClass);
+											filenameinputElement.change(); //triggers check
+											//remove a  class to the element that signifies that is is o.k. 
+											//add a class from the element that signfies that the name is not o.k.
+											//display message saying that the name is taken
+										}
+									}
+									
+									//actual function
+									counter++
+									var thisCounter = counter
+									clearTimeout(timeoutId)
+									timeoutId = setTimeout(function () {
+										var q = filenameinputElement.val() // get the q ... NOW //original:  var q = getQ() // get the q ... NOW
+										if (q) {
+											$.ajax({type:"GET",
 												url: mw.util.wikiScript( 'api' ),
-												type:'GET',
 												data: {
 													action:'query',
-													titles:'File:'+proposedFilename,
+													titles:'File:'+q,
 													format:'json'
 												},
-
-												success: function(data){
-													var filenameStatus;
-
-													if(data.query.pages['-2'] || data.query.pages['-1']){
-														filenameStatus = "new";
-														config.messageElement.text("the filename is o.k.");
-														config.filenameinputElement.addClass(config.validClass);
-														config.filenameinputElement.removeClass(config.invalidClass);
-														filenameinputElement.change(); //triggers check
-														//add a  class to the element that signifies that is is o.k. 
-														//remove a class from the element that signfies that the name is not o.k.
-
-													}  else{
-														filenameStatus = "taken";
-														config.messageElement.text("This filename is already used. Please choose another");
-														config.filenameinputElement.addClass(config.invalidClass);
-														config.filenameinputElement.removeClass(config.validClass);
-														filenameinputElement.change(); //triggers check
-														//remove a  class to the element that signifies that is is o.k. 
-														//add a class from the element that signfies that the name is not o.k.
-														//display message saying that the name is taken
+												success: function (data) {
+													if (counter == thisCounter) {
+													   succ.apply(this,[data]) //was succ.apply(this, arguments)
 													}
-													/*else if(){
-														filenameStatus = "invalid";
-														config.messageElement.text("The wiki can't process the filename you entered. Did you use any special characters? (e.g. %&$³§ß\" usw.)");
-														config.messageElement.addClass(config.invalidClass);
-														config.messageElement.removeClass(config.validClass);
-														
-														//remove a  class to the element that signifies that is is o.k. 
-														//add a class from the element that signfies that the name is not o.k.
-														//display message saying that the name is invalid
-													}*/
-												},
-												error: function(){
-													console.log("An error ocurred when reaching the server");
-												},
-												dataType: "json"
-											});//end Ajax
-		
-										//}config.timeToCheck);//set the time till the previously given function is executed
-									});
+												}
+											});
+										 }
+									 }, config.timeToCheck);
+								}
 								
-								//make requests
+								config.filenameinputElement.on("keyup",autoComplete);
+								
+								
+								
+								
+//								
+//								config.filenameinputElement.on("keyup",function(){ //setup event on input element
+//										//clearTimeout(timeoutCode); //that stops the previous timeout for the function
+//										var proposedFilename = config.filenameinputElement.val();
+//										
+//										//timeoutCode = setTimeout(
+//										//function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
+//											$.ajax({
+//												url: mw.util.wikiScript( 'api' ),
+//												type:'GET',
+//												data: {
+//													action:'query',
+//													titles:'File:'+proposedFilename,
+//													format:'json'
+//												},
+//
+//												success: function(data){
+//													var filenameStatus;
+//
+//													if(data.query.pages['-2'] || data.query.pages['-1']){
+//														filenameStatus = "new";
+//														config.messageElement.text("the filename is o.k.");
+//														config.filenameinputElement.addClass(config.validClass);
+//														config.filenameinputElement.removeClass(config.invalidClass);
+//														filenameinputElement.change(); //triggers check
+//														//add a  class to the element that signifies that is is o.k. 
+//														//remove a class from the element that signfies that the name is not o.k.
+//
+//													}  else{
+//														filenameStatus = "taken";
+//														config.messageElement.text("This filename is already used. Please choose another");
+//														config.filenameinputElement.addClass(config.invalidClass);
+//														config.filenameinputElement.removeClass(config.validClass);
+//														filenameinputElement.change(); //triggers check
+//														//remove a  class to the element that signifies that is is o.k. 
+//														//add a class from the element that signfies that the name is not o.k.
+//														//display message saying that the name is taken
+//													}
+//													else if(){
+//														filenameStatus = "invalid";
+//														config.messageElement.text("The wiki can't process the filename you entered. Did you use any special characters? (e.g. %&$³§ß\" usw.)");
+//														config.messageElement.addClass(config.invalidClass);
+//														config.messageElement.removeClass(config.validClass);
+//														
+//														//remove a  class to the element that signifies that is is o.k. 
+//														//add a class from the element that signfies that the name is not o.k.
+//														//display message saying that the name is invalid
+////													}
+//												},
+//												error: function(){
+//													console.log("An error ocurred when reaching the server");
+//												},
+//												dataType: "json"
+//											});//end Ajax
+//		
+//										//}config.timeToCheck);//set the time till the previously given function is executed
+//									});
+								
 								
 							};
 							
@@ -655,6 +716,12 @@ var mytool = function(){
 								//https://en.wikipedia.org/w/api.php?action=upload&filename=Test.txt&file=file_contents_here&token=+\		
 							};
 							
+							var resetUploadForm(container){
+								
+								
+								
+							}
+							
 							
 /*							
  *								
@@ -726,7 +793,9 @@ var mytool = function(){
 							],
 							open: function () {
 								console.log("open!");
-								//
+								//we want form reset here
+								
+								//We want the recent files fill here. 
 
 
 
@@ -770,4 +839,5 @@ var mytool = function(){
 				
 				window.setTimeout(changeToolbar, 500); //change toolbar after button has been inserted
 
-});
+}) //for production
+//})(); //for brief try via console
