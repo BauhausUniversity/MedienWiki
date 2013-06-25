@@ -50,9 +50,9 @@ var mytool = function(){
 								</div>\
 								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
 									<div>\
-										<h2>Upload a file!</h2>\
+										<h2>Choose a file!</h2>\
 										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]" required/>\
-										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status"></p>\
+										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense">\
 										<h3><input id="selector-radio-license-byme" name="selector-radio-license" type="radio" required>I created this work</h3>\
@@ -62,7 +62,7 @@ var mytool = function(){
 											</select>\
 											license.\
 											</p>\
-											<p id="myMe-licenseDescriptor"></p>\
+											<p id="myMe-licenseDescriptor" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 											<div>\
 												<h4>I want to provide another license</h4>\
 												<div>\
@@ -85,12 +85,12 @@ var mytool = function(){
 									</div><!--select License end--->\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata">\
 										<h2>Name the file</h2>\
-										<input name="file	name" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
-										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck"></p>\
+										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
+										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
 										<h2>Use the file</h2>\
-										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints"></p>\
+										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 										<!--<p>You can now use the file in your article by clicking on "insert</p>-->\
 									</div>\
 								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
@@ -185,6 +185,10 @@ var mytool = function(){
 									endFunction:parameters.endFunction,
 									cssClassForwardButton:'wizardify-forward',
 									cssClassBackwardButton:'wizardify-backward',
+									forwardbuttonTexts: { //if the id matches the hash key of the current container, the forward button. If there is no such container in the html or later bing created, clean up the entry if you like
+												"wikieditor-toolbar-mytool-imageSources-uploadImage":"choose this file",
+												
+										}
 									//checkingFunctions:parameters.checkingFunctions//the checking functions are functions that are executed before the page is turned. The array consists of subobject containing an ID-selector and a function. If that returns false the turn is not done.
 								};
 
@@ -487,6 +491,7 @@ var mytool = function(){
 							};
 							
 							var generateWikitext = function(divOwn,divOthers,licensesOwn_bool, licensesOwn, licensesOthers, config){
+								
 								/*
 								divOwn: The jquery object div which contains the form Elements regarding the Infos on the own works 
 								divOthers: The jquery object  div which contains the form Elements regarding the Infos on the own works 
@@ -500,7 +505,7 @@ var mytool = function(){
 								var licenseIdentifier = sourceDiv.find('select[name="license"]').val();
 								var license = licenseCollection[licenseIdentifier];
 
-								textfragments={
+								var textfragments={
 									name: sourceDiv.find('input[name="authorname"]').val(),
 									source: sourceDiv.find('input[name="source"]').val(), 
 									customlicense: sourceDiv.children('input[name="customlicense"]').val(),
@@ -508,9 +513,9 @@ var mytool = function(){
 									licenseShortdesc: license.shortdesc,
 									licenseLongdesc: license.longdesc,
 									linkToText: license.linkToText
-								}
+								};
 
-								textArray = [
+								var textArray = [
 									"==Author==\n",
 									textfragments.name,
 									"\n",
@@ -540,6 +545,7 @@ var mytool = function(){
 									text: parameters.text,
 									fileDuplicatedText:"the content of the file already exists – in file",
 									fileNameExistsText:"the name of the file already exists:",
+									badFilenameText:"The filename is bad. Please choose another name. If this continues to come up, please do a re-upload",
 									selectorDisplayHintsFile:"#wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status",
 									selectorDisplayHintsMetadata:"#wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints",
 									selectorInsertField:imageInsertConfig.inputID, //the the "insert to document button"
@@ -550,6 +556,8 @@ var mytool = function(){
 								var fileParameters={};
 								
 								$(config.selectorFileinput).change(function(evt){
+									if(evt.target.files.length===0){return};
+									
 									fileParameters.file=evt.target.files[0],
 									fileParameters.filename=evt.target.files[0].name;
 									$(config.selectorInputFilename).val(evt.target.files[0].name);
@@ -565,34 +573,34 @@ var mytool = function(){
 									uploadFile(fileParameters,"file",function(data){
 										fileParameters.filekey=data.upload.filekey;
 										
-										if(data.upload.warnings.duplicate){
+										if(data.upload.warnings && data.upload.warnings.duplicate){
 												$(config.selectorDisplayHintsFile).text(config.fileDuplicatedText+data.upload.warnings.duplicate[0])
-										}else if(data.upload.warnings.exists){
+										}else if(data.upload.warnings && data.upload.warnings.exists){
 											$(config.selectorDisplayHintsFile).text(config.fileNameExistsText+data.upload.warnings.exists);
 										}else{
 											$(config.selectorDisplayHintsFile).text("file sucessfully registered for upload");
-											$(config.selectorInsertField).val(data.upload.filename);
+											$(config.selectorInsertField).val(data.upload.filename).change();
 										}
 									},function(data){console.log("error",data)});
 								});
 								
 								$(config.selectorMetadataUpload).click(function(){
-									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
+									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
 									fileParameters.filename = $(config.selectorInputFilename).val();
 									
 									uploadFile(fileParameters,"metadata",function(data){
 										if(data.error){
 											console.log("Error"+data.error.info);
 											$(config.selectorDisplayHintsMetadata).text("OMG:"+data.error.info);
-											return; 
-											
-										}else if(data.upload.warnings.duplicate){
+											return; 	
+										}else if(data.upload.warnings && data.upload.warnings.duplicate){
 											console.log("Warning"+data.upload.warnings.duplicate);
 											$(config.selectorDisplayHintsMetadata).text(config.fileDuplicatedText+data.upload.warnings.duplicate[0]); //[0] because obviously it is deliverd as array: like:  'duplicates':["myimage"]
-											return;		
-										}else if(data.upload.warnings.exists){
+											return;
+										}else if(data.upload.warnings && data.upload.warnings.badfilename){
+											$(config.selectorDisplayHintsMetadata).text(config.badFilenameText);
+										}else if(data.upload.warnings && data.upload.warnings.exists){
 											$(config.selectorDisplayHintsMetadata).text(config.fileNameExistsText+data.upload.warnings.exists+"please Change the name")
-											
 										}else if(data.upload.filename){
 											$(config.selectorDisplayHintsMetadata).text("Image was sucessfully uploaded. You can now use the file in your article by clicking on insert"); 
 											var filename=data.upload.filename;
@@ -668,7 +676,9 @@ var mytool = function(){
 								//https://en.wikipedia.org/w/api.php?action=upload&filename=Test.txt&file=file_contents_here&token=+\		
 							};
 							
-							
+							var enhanceRequiredFields = function (selector, textToAdd){				
+										$("<span> "+textToAdd+"<span>").insertAfter(selector);
+							};
 							
 							
 /*							
@@ -676,7 +686,7 @@ var mytool = function(){
  *var config={
 								selectorFileinput: parameters.selectorFileinput,
 								selectorMetadataUpload:parameters.selectorMetadataUpload,
-								text: parameters.text,
+								text:fcore parameters.text,
 								selectorDisplayHints:parameters.selectorDisplayHints
 								}
  **/						
@@ -694,6 +704,7 @@ var mytool = function(){
 								//TODO: Put image link in the input field
 								}
 							});
+							//enhanceRequiredFields("input[type=text][required]", "* &nbsp; "); //somehow this needs to be here as hidden elements are somehow not selected.
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
 							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
@@ -742,6 +753,8 @@ var mytool = function(){
 							open: function () {
 								console.log("open!");
 								
+							
+								
 								var imageInsertConfig = {
 									ailimit:5, //how many items shell be retrieved from the api?
 									inputID: '#wikieditor-toolbar-mytool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
@@ -755,10 +768,11 @@ var mytool = function(){
 									
 									//deletes all values from input fields
 									container.find('input').each(function(){
-										$(this).val("");
+										$(this).val("").change();
 										$(this).removeClass("valid");
 									});//each end
 									
+									container.find('	.wikieditor-toolbar-mytool-statusmessage').text(""); //find all dynamic hints
 									//set wizard container to first element
 									container.children("div").each(function(index,element){
 										if(index===0){
