@@ -51,7 +51,7 @@ var mytool = function(){
 								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
 									<div>\
 										<h2>Upload a file!</h2>\
-										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]"/>\
+										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]" required/>\
 										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense">\
