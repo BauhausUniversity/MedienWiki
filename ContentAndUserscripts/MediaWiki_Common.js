@@ -111,6 +111,8 @@ var mytool = function(){
 							//
 							//
 							
+							
+							
 							//Setup tabs for recent uploads and upload image							
 							$( "#wikieditor-toolbar-mytool-imageSources" ).tabs();
 			
@@ -178,6 +180,82 @@ var mytool = function(){
 							console.log("init Started");
 
 							
+								
+								
+								var resetUploadForm= function(container){
+									
+									//deletes all values from input fields
+									container.find('input').each(function(){
+										$(this).val("").change();
+										$(this).removeClass("valid");
+									});//each end
+									
+									$('#wikieditor-toolbar-mytool-dialog fieldset input').val(""); //reset filename etc.
+									
+									container.find('	.wikieditor-toolbar-mytool-statusmessage').text(""); //find all dynamic hints
+									//set wizard container to first element
+									container.children("div").each(function(index,element){
+										if(index===0){
+											$(element).css("display","block");
+										}else{
+											$(element).css("display","none");
+										}
+										
+									})
+
+								}//function reset Upload end	
+								
+								//We want the recent files fill here. 
+							var createRecentImagesList= function(){
+									$.ajax( {
+											url: mw.util.wikiScript( 'api' ),
+											dataType: 'json',
+											data: {
+												'action':'query',
+												'format':'json',
+												'list':'allimages',
+												'ailimit':imageInsertConfig.ailimit, //see above for definition
+												'aisort':'timestamp',
+												'aidir':'older',
+												'aiuser': mw.config.get("wgUserName")
+											},
+											success:function(data){
+												generateList(data);
+											}
+								});
+
+							var generateList= function (images){
+									/*generates several List points*/
+									//remove current list
+									$('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').children('ul').remove();
+									//initialize variables for image ist generation
+									var imageArray = images.query.allimages; 
+									var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
+									var li;
+									var imageTitle='';
+									var thumbLink ='';
+									var usethisButton;
+									//END initialization of variables					
+
+									for(var i=0;i<imageArray.length; i++){
+									   //creates a li for each image in array
+										li = $('<li>');
+										imageTitle = imageArray[i].name;
+										thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageInsertConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
+										$(li).append('<img src="'+thumbLink+'" '+' width="'+imageInsertConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
+										$('<a href="#">use this</a>') //create a button which on click...
+											.button()
+											.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
+												return function(){
+													$(imageInsertConfig.inputID).val(imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
+												};
+											})(imageTitle))
+											.prependTo(li);
+										$(li).appendTo(domList);
+									}//END for
+									$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').addClass("recentImagesList");//append the list of images to the dialog-box 
+								}//end generateList()
+							}//end createRecentImagesList()	
 							
 							
 							var wizardify=function(parameters){
@@ -193,8 +271,7 @@ var mytool = function(){
 									cssClassBackwardButton:'wizardify-backward',
 									//currently disabled: 
 									forwardButtonTexts: { //if the id matches the hash key of the current container, the forward button. If there is no such container in the html or later bing created, clean up the entry if you like
-												"wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile":"choose this file",
-												
+												"wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile":"choose this file",							
 										}
 									//checkingFunctions:parameters.checkingFunctions//the checking functions are functions that are executed before the page is turned. The array consists of subobject containing an ID-selector and a function. If that returns false the turn is not done.
 								};
@@ -279,14 +356,19 @@ var mytool = function(){
 								var relatedContainer; //the container for a headline
 								
 								if(elementsToCollapse.length===1){
+								
 									relatedContainer=$(elementsToCollapse[0]).next('div');
-									if(relatedContainer.css("display")==="block"){
-										relatedContainer.css("display","none");
-										$(elementsToCollapse[0]).children('input').prop('checked',false).change();
-									}else{
-										relatedContainer.css("display","block");
-										$(elementsToCollapse[0]).children('input').prop('checked',true).change();
-									}
+									relatedContainer.css("display","none");//hide container
+									
+									$(elementsToCollapse[0]).click(function(){
+										if(relatedContainer.css("display")==="block"){
+											relatedContainer.css("display","none");
+											$(elementsToCollapse[0]).children('input').prop('checked',false).change();
+										}else{
+											relatedContainer.css("display","block");
+											$(elementsToCollapse[0]).children('input').prop('checked',true).change();
+										}
+									})
 								}else{
 									elementsToCollapse.each(function(index){
 										var relatedContainer=$(this).next('div'); //selects the following element
@@ -407,7 +489,7 @@ var mytool = function(){
 											config.messageElement.text(""); //putting text here is irritating cause one can get filename bad
 											config.filenameinputElement.addClass(config.validClass);
 											config.filenameinputElement.removeClass(config.invalidClass);
-											filenameinputElement.change(); //triggers check
+											config.filenameinputElement.change(); //triggers check
 											//add a  class to the element that signifies that is is o.k. 
 											//remove a class from the element that signfies that the name is not o.k.
 
@@ -448,7 +530,6 @@ var mytool = function(){
 								}
 								
 								config.filenameinputElement.on("keyup",autoComplete);
-								config.filenameinputElement.on("change",autoComplete);
 						
 								
 							};
@@ -526,7 +607,7 @@ var mytool = function(){
 									
 									fileParameters.file=evt.target.files[0],
 									fileParameters.filename=evt.target.files[0].name;
-									$(config.selectorInputFilename).val(evt.target.files[0].name).change();
+									$(config.selectorInputFilename).val(evt.target.files[0].name).keyup();
 									
 									
 									
@@ -745,11 +826,30 @@ var mytool = function(){
 								//TODO: Put image link in the input field
 								}
 							});
+							
+							
+							$(this).on("dialogopen", function( event, ui ) {
+								resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
+								createRecentImagesList(); //call recent images list
+							} );
+							
+							$(this).on("dialogopen", function( event, ui ) {
+								resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
+								createRecentImagesList(); //call recent images list
+							} );
+							
+							
+							if( !FormData || !FileReader){
+								$("#wikieditor-toolbar-mytool-imageSources-uploadImage").html("You browser does not support the HTML5 File API. If you can, get a more recent browser")
+								return
+							}
+							
 							//events calling constraintElements()
 							$(document).on("mytool-upload-stashed",constraintsMainElements);
 							$(document).on("mytool-upload-complete",constraintsMainElements);
 							$( "#wikieditor-toolbar-mytool-imageSources" ).on("tabsselect", constraintsMainElements); //tabselect is depreciated and is removed in jQUI 1.10. In 1.10 it is renamed to tabsselect. tabsselect is a native jQ UI event for activating a new tab
 							
+							//General Upload Setup
 							//enhanceRequiredFields("input[type=text][required]", "* &nbsp; "); //somehow this needs to be here as hidden elements are somehow not selected.
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
 							makeCollapse('h4','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme',{'disableRequired':false});
@@ -761,6 +861,8 @@ var mytool = function(){
 								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
 								selectorMetadataUpload:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata .wizardify-forward",
 							});
+							
+							
 							
 							
 						},
@@ -808,94 +910,10 @@ var mytool = function(){
 								
 							
 								
-								var imageInsertConfig = {
-									ailimit:5, //how many items shell be retrieved from the api?
-									inputID: '#wikieditor-toolbar-mytool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
-									thumbWidth: 32, //width of the image preview thumbnails ,
-									notValidClass:"invalid",
-									validClass:"valid"
-								}
 								
-								//we want form reset here
-								var resetUploadForm= function(container){
-									
-									//deletes all values from input fields
-									container.find('input').each(function(){
-										$(this).val("").change();
-										$(this).removeClass("valid");
-									});//each end
-									
-									$('#wikieditor-toolbar-mytool-dialog fieldset input').val(""); //reset filename etc.
-									
-									container.find('	.wikieditor-toolbar-mytool-statusmessage').text(""); //find all dynamic hints
-									//set wizard container to first element
-									container.children("div").each(function(index,element){
-										if(index===0){
-											$(element).css("display","block");
-										}else{
-											$(element).css("display","none");
-										}
-										
-									})
-									
-									
-									
-								}//function reset Upload end	
 								
-								//We want the recent files fill here. 
-								function createRecentImagesList(){
-									$.ajax( {
-											url: mw.util.wikiScript( 'api' ),
-											dataType: 'json',
-											data: {
-												'action':'query',
-												'format':'json',
-												'list':'allimages',
-												'ailimit':imageInsertConfig.ailimit, //see above for definition
-												'aisort':'timestamp',
-												'aidir':'older',
-												'aiuser': mw.config.get("wgUserName")
-											},
-											success:function(data){
-												generateList(data);
-											}
-									});
-
-									function generateList(images){
-										/*generates several List points*/
-										//remove current list
-										$('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').children('ul').remove();
-										//initialize variables for image ist generation
-										var imageArray = images.query.allimages; 
-										var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
-										var li;
-										var imageTitle='';
-										var thumbLink ='';
-										var usethisButton;
-										//END initialization of variables					
-
-										for(var i=0;i<imageArray.length; i++){
-										   //creates a li for each image in array
-											li = $('<li>');
-											imageTitle = imageArray[i].name;
-											thumbLink = window.wgServer+window.wgScriptPath+'/thumb.php'+'?f='+imageTitle+'&w='+imageInsertConfig.thumbWidth; //link to thumb.php, generating and returning a thumb on request. parameters: f=filename, w=imagewidth
-											$(li).append('<img src="'+thumbLink+'" '+' width="'+imageInsertConfig.thumbWidth+'"/>'+'<em>'+imageTitle+'</em>');
-											$('<a href="#">use this</a>') //create a button which on click...
-												.button()
-												.on('click',(function(imageTitle){ //scoping/closure magic http://stackoverflow.com/questions/8624057/closure-needed-for-binding-event-handlers-within-a-loop
-													return function(){
-														$(imageInsertConfig.inputID).val('File:'+imageTitle); //changes the value of the input field to the filename of the image-list-item clicked on. 
-													};
-												})(imageTitle))
-												.prependTo(li);
-											$(li).appendTo(domList);
-										}//END for
-										$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').addClass("recentImagesList");//append the list of images to the dialog-box 
-									}//end generateList()
-								}//end createRecentImagesList()	
-								
-								resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
-								createRecentImagesList(); //call recent images list
+								//resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
+								//createRecentImagesList(); //call recent images list
 
 								}//end open
 							}
