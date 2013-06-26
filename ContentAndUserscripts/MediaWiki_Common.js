@@ -41,8 +41,8 @@ var mytool = function(){
 						html:'\
 							<div id="wikieditor-toolbar-mytool-imageSources">\
 								<ul>\
-									<li><a href="#wikieditor-toolbar-mytool-imageSources-recentimagesContainer">Recent Uploads</a></li>\
-									<li><a href="#wikieditor-toolbar-mytool-imageSources-uploadImage">Upload new Image</a></li>\
+									<li id="wikieditor-toolbar-mytool--imageSources-recentimagesContainer-tab"><a href="#wikieditor-toolbar-mytool-imageSources-recentimagesContainer">Recent Uploads</a></li>\
+									<li id="wikieditor-toolbar-mytool-imageSources-uploadImage-tab"><a href="#wikieditor-toolbar-mytool-imageSources-uploadImage">Upload new Image</a></li>\
 								</ul>\
 								<div id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer">\
 									<p id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer-helptext">Your recent uploads</p>\
@@ -66,7 +66,7 @@ var mytool = function(){
 											</p>\
 											<p id="myMe-licenseDescriptor" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 											<div>\
-												<h4>I want to provide another license</h4>\
+												<h4><input type="checkbox" \> I want to provide another license</h4>\
 												<div>\
 													<input name="customlicense" type="text" size="30" maxlength="30" placeholder="licensename and source of license">\
 												</div>\
@@ -98,7 +98,7 @@ var mytool = function(){
 								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
 							</div>\
 							\
-							<fieldset>\
+							<fieldset id="wikieditor-toolbar-mytool-mainFields">\
 								<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
 								<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
 								<label id="wikieditor-toolbar-mytool-lableCaption"for="caption">Caption</label>\
@@ -107,7 +107,11 @@ var mytool = function(){
 						',
 						init: function () {
 							//REQUIRES: jquery.ui.tabs
-							//Setup tabs for recent uploads and upload image
+							// Events:
+							//
+							//
+							
+							//Setup tabs for recent uploads and upload image							
 							$( "#wikieditor-toolbar-mytool-imageSources" ).tabs();
 			
 							//start highlight upload button
@@ -270,54 +274,69 @@ var mytool = function(){
 									container:null,
 									headline:null
 								}; 
-								rootElement.children().filter(config.signifierSelector).each(function(index){
-									var relatedContainer=$(this).next('div'); //selects the following element
-									relatedContainer.hide();
-									if(config.disableRequired){
-										$(relatedContainer).
-											find("[required]").
-											attr('data-collapse-required-disabled','true').
-												removeProp('required');
+								
+								var elementsToCollapse= rootElement.find(config.signifierSelector);
+								var relatedContainer; //the container for a headline
+								
+								if(elementsToCollapse.length===1){
+									relatedContainer=$(elementsToCollapse[0]).next('div');
+									if(relatedContainer.css("display")==="block"){
+										relatedContainer.css("display","none");
+										$(elementsToCollapse[0]).children('input').prop('checked',false).change();
+									}else{
+										relatedContainer.css("display","block");
+										$(elementsToCollapse[0]).children('input').prop('checked',true).change();
 									}
+								}else{
+									elementsToCollapse.each(function(index){
+										var relatedContainer=$(this).next('div'); //selects the following element
+										relatedContainer.hide();
+										if(config.disableRequired){
+											$(relatedContainer).
+												find("[required]").
+												attr('data-collapse-required-disabled','true').
+													removeProp('required');
+										}
 
-									$(this).click(function(event){
-										console.log('rcon:', relatedContainer, currentlyOpen);
+										$(this).click(function(event){
+											console.log('rcon:', relatedContainer, currentlyOpen);
 
-										if(currentlyOpen.container){
-											$(currentlyOpen.container).css("display","none");
+											if(currentlyOpen.container){
+												$(currentlyOpen.container).css("display","none");
 
-											if(config.disableRequired){
-											//remove all required and turn them into "data-collapse-required-disabled="true"";
-												$(currentlyOpen.container).
-													find("[required]").
-													attr('data-collapse-required-disabled','true').
-													removeProp('required');	
+												if(config.disableRequired){
+												//remove all required and turn them into "data-collapse-required-disabled="true"";
+													$(currentlyOpen.container).
+														find("[required]").
+														attr('data-collapse-required-disabled','true').
+														removeProp('required');	
+												}
+
+												$(currentlyOpen.headline).removeClass('makeCollapse-open');
+												$(currentlyOpen.headline).children('input:radio').prop('checked',false).change();
 											}
 
-											$(currentlyOpen.headline).removeClass('makeCollapse-open');
-											$(currentlyOpen.headline).children('input:radio').prop('checked',false).change();
-										}
-
-										relatedContainer.css("display","block");
-										$(this).addClass('makeCollapse-open');
-										//reattach all required attributes when reopened
-										if(config.disableRequired){
-											//reattach all required  elements with ("data-collapse-required-disabled="true");
-												relatedContainer.
-													find("[data-collapse-required-disabled]").
-													removeAttr('data-collapse-required-disabled').
-													prop('required',true);	
-										}
+											relatedContainer.css("display","block");
+											$(this).addClass('makeCollapse-open');
+											//reattach all required attributes when reopened
+											if(config.disableRequired){
+												//reattach all required  elements with ("data-collapse-required-disabled="true");
+													relatedContainer.
+														find("[data-collapse-required-disabled]").
+														removeAttr('data-collapse-required-disabled').
+														prop('required',true);	
+											}
 
 
-										currentlyOpen.container = relatedContainer;
-										currentlyOpen.headline = this;
-										console.log(this,' ', $(this).children('input:radio'));
+											currentlyOpen.container = relatedContainer;
+											currentlyOpen.headline = this;
+											console.log(this,' ', $(this).children('input:radio'));
 
-										$(this).children('input:radio').prop('checked',true).change();//dunno why but if it is not the last line, it fails the following ones.
+											$(this).children('input:radio').prop('checked',true).change();//dunno why but if it is not the last line, it fails the following ones.
+										});
 									});
-								});
-							};
+								}//end else
+							}//end make collapse
 							
 							
 							var validateFormPart = function(forwardButtonSelector, formcontainerSelector){
@@ -358,18 +377,19 @@ var mytool = function(){
 								domElement.append(fragment);
 							};
 							
-							var uniqueFilenameCheck = function(filenameinputElement,messageElement){
+							var uniqueFilenameCheck = function(arguments){
 								//this function checks if the filename given is o.k. or not. It uses the api to do so. 
 								//returns true or false
 								
+								//arguments.messageElement,arguments.filenameinputElement, arguments.filename
 								var config={
 									invalidFilenameMessage:"",
 									takenFilenameMessage:"",
 									timeToCheck:200, //in ms
-									messageElement: messageElement,
+									messageElement: arguments.messageElement,
 									validClass:imageInsertConfig.validClass||"valid", //classname for valid Elements
 									invalidClass:imageInsertConfig.notValidClass||"invalid",
-									filenameinputElement: filenameinputElement
+									filenameinputElement: arguments.inputElement
 									
 								};
 								//var timeoutCode;
@@ -396,7 +416,7 @@ var mytool = function(){
 											config.messageElement.text("This filename is already used. Please choose another");
 											config.filenameinputElement.addClass(config.invalidClass);
 											config.filenameinputElement.removeClass(config.validClass);
-											filenameinputElement.change(); //triggers check
+											config.filenameinputElement.change(); //triggers check
 											//remove a  class to the element that signifies that is is o.k. 
 											//add a class from the element that signfies that the name is not o.k.
 											//display message saying that the name is taken
@@ -408,7 +428,7 @@ var mytool = function(){
 									var thisCounter = counter
 									clearTimeout(timeoutId)
 									timeoutId = setTimeout(function () {
-										var q = filenameinputElement.val() // get the q ... NOW //original:  var q = getQ() // get the q ... NOW
+										var q = config.filenameinputElement.val();// get the q ... NOW //original:  var q = getQ() // get the q ... NOW
 										if (q) {
 											$.ajax({type:"GET",
 												url: mw.util.wikiScript( 'api' ),
@@ -428,12 +448,13 @@ var mytool = function(){
 								}
 								
 								config.filenameinputElement.on("keyup",autoComplete);
+								config.filenameinputElement.on("change",autoComplete);
 						
 								
 							};
 							
 							var generateWikitext = function(divOwn,divOthers,licensesOwn_bool, licensesOwn, licensesOthers, config){
-								
+							
 								/*
 								divOwn: The jquery object div which contains the form Elements regarding the Infos on the own works 
 								divOthers: The jquery object  div which contains the form Elements regarding the Infos on the own works 
@@ -493,17 +514,19 @@ var mytool = function(){
 									selectorInsertField:imageInsertConfig.inputID, //the the "insert to document button"
 									selectorInputFilename:'#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
 									selectorForwardButtonFileUpload:'#wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile button.wizardify-forward',
-									disableInputFilename:true
+									disableInputFilename:true, //disable the input for filename during the uploadProcess
+									eventUploadStashed:"mytool-upload-stashed", //event name for stashing the file
+									eventUploadComplete:"mytool-upload-complete" //event name when file is complete
 								};
 								
 								var fileParameters={};
 								
 								$(config.selectorFileinput).change(function(evt){
-									if(evt.target.files.length===0){return};
+									if(evt.target.files.length===0){return}; //if "change" was triggeed but not file uploaded
 									
 									fileParameters.file=evt.target.files[0],
 									fileParameters.filename=evt.target.files[0].name;
-									$(config.selectorInputFilename).val(evt.target.files[0].name);
+									$(config.selectorInputFilename).val(evt.target.files[0].name).change();
 									
 									
 									
@@ -517,17 +540,31 @@ var mytool = function(){
 										fileParameters.successfullFinished = false;
 										fileParameters.filekey=data.upload.filekey;
 										
+										
 										if(data.upload.warnings && data.upload.warnings.duplicate){
-												$(config.selectorDisplayHintsFile).text(config.fileDuplicatedText+data.upload.warnings.duplicate[0])
+											$(config.selectorDisplayHintsFile).text(config.fileDuplicatedText+data.upload.warnings.duplicate[0])
 										}else if(data.upload.warnings && data.upload.warnings.exists){
 											$(config.selectorDisplayHintsFile).text(config.fileNameExistsText+data.upload.warnings.exists);
+											$.event.trigger({
+												type:config.eventUploadStashed ,
+												event: {
+													success: true,
+													data: data
+												}
+											});
 										}else{
 											$(config.selectorDisplayHintsFile).text("file sucessfully registered for upload");
 											$(config.selectorInsertField).val(data.upload.filename).change();
-											$(config.selectorForwardButtonFileUpload).click();
-											if(config.disableInputFilename){
-												$(config.selectorInsertField).prop('disabled','true');
-											}
+											//$(config.selectorForwardButtonFileUpload).click(); if that is activated it automatically jumps forward after successful upload
+											
+											$.event.trigger({
+												type:config.eventUploadStashed ,
+												event: {
+													success: true,
+													data: data
+												}
+											});
+											
 										}
 									},function(data){console.log("error",data)});
 								});
@@ -553,9 +590,15 @@ var mytool = function(){
 											$(config.selectorDisplayHintsMetadata).text("Image was sucessfully uploaded. You can now use the file in your article by clicking on insert"); 
 											fileParameters.successfullFinished=true;
 											
-											if(config.disableInputFilename){
-												$(config.selectorInsertField).removeProp('disabled');
-											}
+											$.event.trigger({
+												type:config.eventUploadComplete ,
+												event: {
+													success: true,
+													data: data
+												}
+												
+											});
+											
 											var filename=data.upload.filename;
 											$(config.selectorInsertField).val(filename);
 										};
@@ -632,6 +675,52 @@ var mytool = function(){
 							var enhanceRequiredFields = function (selector, textToAdd){				
 										$("<span> "+textToAdd+"<span>").insertAfter(selector);
 							};
+							
+							
+								
+							var constrainUploadElements = function(event,ui){
+								var config={
+									
+									
+								}
+								
+								
+								
+							}	
+							
+							
+							var constraintsMainElements= function(event,ui){
+								var config={
+									insertButtonSelector:"div.ui-dialog-buttonset button:nth-child(1)", //the automatically genreated buttons don't have IDs so we select them via position.
+									mainInputFieldsSelector:"#wikieditor-toolbar-mytool-mainFields",
+									panelUploadSelector:"#wikieditor-toolbar-mytool-imageSources-uploadImage",
+									panelRecentSelector:"#wikieditor-toolbar-mytool-imageSources-recentimagesContainer",
+								}
+								
+								//disable fields
+								if(event.type==="mytool-upload-stashed"){
+									$(config.insertButtonSelector).button("disable");
+									$(config.mainInputFieldsSelector+" input").prop("disabled","true");
+								}
+								
+								//reEnableFields
+								if(event.type==="mytool-upload-complete"){
+									$(config.insertButtonSelector).button("enable");//this is a jqUI widget button, hence the method
+									$(config.mainInputFieldsSelector+" input").removeProp("disabled","true");
+								}
+								
+								if(event.type==="tabsselect"){ //tab changes
+									if(ui && $(ui.panel)[0] === $(config.panelUploadSelector)[0]){//if the upload panel is active //panel is depreciated and removed in JQUI 1.10 and renamed to newPanel
+										
+									}
+									
+									if(ui && $(ui.panel)[0] === $(config.panelRecentSelector)[0]){ //if the recent uploads panel is active //panel is depreciated and removed in JQUI 1.10 and renamed to newPanel
+										$(config.insertButtonSelector).button("enable") //this is a jqUI widget button, hence the method
+										$(config.mainInputFieldsSelector+" input").removeProp("disabled","true");
+									}
+									
+								}
+							}
 
 /*							
  *								
@@ -656,12 +745,18 @@ var mytool = function(){
 								//TODO: Put image link in the input field
 								}
 							});
-							enhanceRequiredFields("input[type=text][required]", "* &nbsp; "); //somehow this needs to be here as hidden elements are somehow not selected.
+							//events calling constraintElements()
+							$(document).on("mytool-upload-stashed",constraintsMainElements);
+							$(document).on("mytool-upload-complete",constraintsMainElements);
+							$( "#wikieditor-toolbar-mytool-imageSources" ).on("tabsselect", constraintsMainElements); //tabselect is depreciated and is removed in jQUI 1.10. In 1.10 it is renamed to tabsselect. tabsselect is a native jQ UI event for activating a new tab
+							
+							//enhanceRequiredFields("input[type=text][required]", "* &nbsp; "); //somehow this needs to be here as hidden elements are somehow not selected.
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
+							makeCollapse('h4','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme',{'disableRequired':false});
 							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.ownWorkLicenses);
-							uniqueFilenameCheck($('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]'),$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck'));
+							uniqueFilenameCheck({inputElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]'),messageElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck')});
 							uploadSetup({
 								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
 								selectorMetadataUpload:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata .wizardify-forward",
@@ -801,7 +896,6 @@ var mytool = function(){
 								
 								resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
 								createRecentImagesList(); //call recent images list
-
 
 								}//end open
 							}
