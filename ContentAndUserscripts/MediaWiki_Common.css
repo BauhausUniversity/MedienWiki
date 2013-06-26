@@ -1,37 +1,72 @@
 /* CSS placed here will be applied to all skins */
 /*to: /index.php/MediaWiki:Common.css */
 
-ul.wikieditor-toolbar-mytool-recentImagesList{
-margin-left:0;
+ul.wikieditor-toolbar-mytool-recentImagesList {
+	margin-left: 0;
 }
 
-ul.wikieditor-toolbar-mytool-recentImagesList li{
-list-style: none; 
+ul.wikieditor-toolbar-mytool-recentImagesList li {
+	list-style: none;
 }
 
-ul.wikieditor-toolbar-mytool-recentImagesList li img{
-margin: 0 10px 0 10px;
+ul.wikieditor-toolbar-mytool-recentImagesList li img {
+	margin: 0 10px 0 10px;
 }
 
-#wikieditor-toolbar-mytool-recentimagesContainer-helptext{
+#wikieditor-toolbar-mytool-recentimagesContainer-helptext {
+	font-weight: bold;
+}
+
+#wikieditor-toolbar-mytool-recentimagesContainer-helptext {
+	font-weight: bold;
+}
+
+#wikieditor-toolbar-mytool-imageSources-uploadImage button, #wikieditor-toolbar-mytool-imageSources-uploadImage select{
+	padding:3px 12px;
+	vertical-align: baseline; 
+}
+
+.wizardify-buttonset button{
 	font-weight:bold;
 }
 
+.wikieditor-toolbar-mytool-dialog h2{
+	font-size:145%;
+}
+
+.wikieditor-toolbar-mytool-dialog h3{
+	font-size:145%;
+	font-weight:normal;
+}
+
+.wikieditor-toolbar-mytool-dialog h4{
+	font-size:100%;
+	font-style:italic;
+}
+
+
+.wizardify-buttonset {
+	border-top:1px solid #AAA;
+	padding-top:0.3em;
+}
+
+
+
 .ui-widget-overlay {
-	opacity:0.5;
+	opacity: 0.5;
 }
 
-.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton{
-	color:blue;
-}
-.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton:hover{
-	text-decoration: underline; 
+.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton {
+	color: blue;
 }
 
+.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton:hover {
+	text-decoration: underline;
+}
 
-div#p-tb ul li#t-upload a{
-	display:inline-block;
-	width:8em;
+div#p-tb ul li#t-upload a {
+	display: inline-block;
+	width: 8em;
 	color: #000000;
 	padding: 6px 16px;
 	background: -moz-linear-gradient(
@@ -42,26 +77,21 @@ div#p-tb ul li#t-upload a{
 		linear, left top, left bottom, 
 		from(#ffffff),
 		to(#f5f5f5));
-         background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Noun_project_Upload.svg/16px-Noun_project_Upload.svg.png");
-    background-position: 90% center;
-    background-repeat: no-repeat;
-    background-size: 16px auto;
+	background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Noun_project_Upload.svg/16px-Noun_project_Upload.svg.png");
+	background-position: 90% center;
+	background-repeat: no-repeat;
+	background-size: 16px auto;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 4px;
 	border: 1px solid #8a8a8a;
-	-moz-box-shadow:
-		1px 1px 1px rgba(000,000,000,0),
+	-moz-box-shadow: 1px 1px 1px rgba(000,000,000,0),
 		inset -1px -1px 1px rgba(5,5,5,0.3);
-	-webkit-box-shadow:
-		1px 1px 1px rgba(000,000,000,0),
+	-webkit-box-shadow: 1px 1px 1px rgba(000,000,000,0),
 		inset -1px -1px 1px rgba(5,5,5,0.3);
-	box-shadow:
-		1px 1px 1px rgba(000,000,000,0),
+	box-shadow: 1px 1px 1px rgba(000,000,000,0),
 		inset -1px -1px 1px rgba(5,5,5,0.3);
-	text-shadow:
-		-1px -1px 0px rgba(255,255,255,0),
+	text-shadow: -1px -1px 0px rgba(255,255,255,0),
 		1px 1px 0px rgba(125,125,125,0);
-
-        margin-left:-18px;
+	margin-left: -18px;
 }

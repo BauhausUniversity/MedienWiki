@@ -49,12 +49,14 @@ var mytool = function(){
 									<!-- insert image goes here-->\
 								</div>\
 								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
-									<div>\
-										<h2>Choose a file!</h2>\
+									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile">\
+										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-instructions">this dialogue will guide you through the steps to upload an image</p>\
+										<h2>Step 1 of 4: Choose a file!</h2>\
 										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]" required/>\
 										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense">\
+										<h2>Step 2 of 4: select a License</h2>\
 										<h3><input id="selector-radio-license-byme" name="selector-radio-license" type="radio" required>I created this work</h3>\
 										<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme">\
 											<p>I, <input name="authorname" type="text" size="30" maxlength="30" placeholder="Your Name" pattern="..+" required>, want to release the file`s content under a\
@@ -84,12 +86,12 @@ var mytool = function(){
 										</div>\
 									</div><!--select License end--->\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata">\
-										<h2>Name the file</h2>\
+										<h2>Step 3 of 4: Name the file</h2>\
 										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
 										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
-										<h2>Use the file</h2>\
+										<h2>4: Final Step: Use the file</h2>\
 										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 										<!--<p>You can now use the file in your article by clicking on "insert</p>-->\
 									</div>\
@@ -179,14 +181,15 @@ var mytool = function(){
 								 * SHORTDESC: Creates a simple wizard. single steps are <div> nested in another div, which is the Root element
 								 */
 								var config= {
-									backbuttonText: parameters.backbuttonText||'back',
-									forwardbuttonText:parameters.forwardbuttonText || 'forward',
+									backbuttonText: parameters.backbuttonText||'< back',
+									forwardbuttonText:parameters.forwardbuttonText || 'forward >',
 									rootElement: parameters.rootElement,
 									endFunction:parameters.endFunction,
 									cssClassForwardButton:'wizardify-forward',
 									cssClassBackwardButton:'wizardify-backward',
-									forwardbuttonTexts: { //if the id matches the hash key of the current container, the forward button. If there is no such container in the html or later bing created, clean up the entry if you like
-												"wikieditor-toolbar-mytool-imageSources-uploadImage":"choose this file",
+									//currently disabled: 
+									forwardButtonTexts: { //if the id matches the hash key of the current container, the forward button. If there is no such container in the html or later bing created, clean up the entry if you like
+												"wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile":"choose this file",
 												
 										}
 									//checkingFunctions:parameters.checkingFunctions//the checking functions are functions that are executed before the page is turned. The array consists of subobject containing an ID-selector and a function. If that returns false the turn is not done.
@@ -218,7 +221,7 @@ var mytool = function(){
 											return foundCheckfunction;
 										}										
 									}*/
-										
+									var currentElementID = $(this).attr("id");	
 									
 									if(index>0){
 										$('<button/>',{
@@ -232,7 +235,7 @@ var mytool = function(){
 									}
 									if(index<wizardStepContainers.length-1){ //the last one gets a special button, so index-1
 										$('<button/>',{
-											'text':config.forwardbuttonText,
+											'text': config.forwardbuttonText, // config.forwardButtonTexts[currentElementID] ? config.forwardButtonTexts[currentElementID] : config.forwardbuttonText,
 											'class':config.cssClassForwardButton
 										}).click(function(){
 											/*if(currentCheckfunction||currentCheckfunction()!== false){ //if the function is existend and after executing it, it returns false, dont "turn the page""
@@ -243,10 +246,10 @@ var mytool = function(){
 										}).appendTo(wizardStepContainers.eq(index).children('.wizardify-buttonset'));
 									}
 									if(index===wizardStepContainers.length-1){
-										$('<button/>',{
+										/*$('<button/>',{
 											'text':config.forwardbuttonText,
 											'class':config.cssClassForwardButton
-										}).click(config.endFunction).appendTo(wizardStepContainers.eq(index).children('.wizardify-buttonset'));
+										}).click(config.endFunction).appendTo(wizardStepContainers.eq(index).children('.wizardify-buttonset'));*/
 									}
 								});
 							};
@@ -381,7 +384,7 @@ var mytool = function(){
 
 										if(data.query.pages['-2'] || data.query.pages['-1']){
 											filenameStatus = "new";
-											config.messageElement.text("the filename is o.k.");
+											config.messageElement.text(""); //putting text here is irritating cause one can get filename bad
 											config.filenameinputElement.addClass(config.validClass);
 											config.filenameinputElement.removeClass(config.invalidClass);
 											filenameinputElement.change(); //triggers check
@@ -425,68 +428,7 @@ var mytool = function(){
 								}
 								
 								config.filenameinputElement.on("keyup",autoComplete);
-								
-								
-								
-								
-//								
-//								config.filenameinputElement.on("keyup",function(){ //setup event on input element
-//										//clearTimeout(timeoutCode); //that stops the previous timeout for the function
-//										var proposedFilename = config.filenameinputElement.val();
-//										
-//										//timeoutCode = setTimeout(
-//										//function(){ //this starts a new timeout. It is is not interrupted, it is going to do an ajax request.									
-//											$.ajax({
-//												url: mw.util.wikiScript( 'api' ),
-//												type:'GET',
-//												data: {
-//													action:'query',
-//													titles:'File:'+proposedFilename,
-//													format:'json'
-//												},
-//
-//												success: function(data){
-//													var filenameStatus;
-//
-//													if(data.query.pages['-2'] || data.query.pages['-1']){
-//														filenameStatus = "new";
-//														config.messageElement.text("the filename is o.k.");
-//														config.filenameinputElement.addClass(config.validClass);
-//														config.filenameinputElement.removeClass(config.invalidClass);
-//														filenameinputElement.change(); //triggers check
-//														//add a  class to the element that signifies that is is o.k. 
-//														//remove a class from the element that signfies that the name is not o.k.
-//
-//													}  else{
-//														filenameStatus = "taken";
-//														config.messageElement.text("This filename is already used. Please choose another");
-//														config.filenameinputElement.addClass(config.invalidClass);
-//														config.filenameinputElement.removeClass(config.validClass);
-//														filenameinputElement.change(); //triggers check
-//														//remove a  class to the element that signifies that is is o.k. 
-//														//add a class from the element that signfies that the name is not o.k.
-//														//display message saying that the name is taken
-//													}
-//													else if(){
-//														filenameStatus = "invalid";
-//														config.messageElement.text("The wiki can't process the filename you entered. Did you use any special characters? (e.g. %&$³§ß\" usw.)");
-//														config.messageElement.addClass(config.invalidClass);
-//														config.messageElement.removeClass(config.validClass);
-//														
-//														//remove a  class to the element that signifies that is is o.k. 
-//														//add a class from the element that signfies that the name is not o.k.
-//														//display message saying that the name is invalid
-////													}
-//												},
-//												error: function(){
-//													console.log("An error ocurred when reaching the server");
-//												},
-//												dataType: "json"
-//											});//end Ajax
-//		
-//										//}config.timeToCheck);//set the time till the previously given function is executed
-//									});
-								
+						
 								
 							};
 							
@@ -545,12 +487,13 @@ var mytool = function(){
 									text: parameters.text,
 									fileDuplicatedText:"the content of the file already exists – in file",
 									fileNameExistsText:"the name of the file already exists:",
-									badFilenameText:"The filename is bad. Please choose another name. If this continues to come up, please do a re-upload",
+									badFilenameText:"The filename is bad. Did you include the end (.jpg, or .png etc). Please choose another name. If this continues to come up, please do a re-upload",
 									selectorDisplayHintsFile:"#wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status",
 									selectorDisplayHintsMetadata:"#wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints",
 									selectorInsertField:imageInsertConfig.inputID, //the the "insert to document button"
 									selectorInputFilename:'#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
-									
+									selectorForwardButtonFileUpload:'#wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile button.wizardify-forward',
+									disableInputFilename:true
 								};
 								
 								var fileParameters={};
@@ -571,6 +514,7 @@ var mytool = function(){
 									}
 									
 									uploadFile(fileParameters,"file",function(data){
+										fileParameters.successfullFinished = false;
 										fileParameters.filekey=data.upload.filekey;
 										
 										if(data.upload.warnings && data.upload.warnings.duplicate){
@@ -580,6 +524,10 @@ var mytool = function(){
 										}else{
 											$(config.selectorDisplayHintsFile).text("file sucessfully registered for upload");
 											$(config.selectorInsertField).val(data.upload.filename).change();
+											$(config.selectorForwardButtonFileUpload).click();
+											if(config.disableInputFilename){
+												$(config.selectorInsertField).prop('disabled','true');
+											}
 										}
 									},function(data){console.log("error",data)});
 								});
@@ -589,7 +537,7 @@ var mytool = function(){
 									fileParameters.filename = $(config.selectorInputFilename).val();
 									
 									uploadFile(fileParameters,"metadata",function(data){
-										if(data.error){
+										if(data.error && fileParameters.successfullFinished !== true){
 											console.log("Error"+data.error.info);
 											$(config.selectorDisplayHintsMetadata).text("OMG:"+data.error.info);
 											return; 	
@@ -603,6 +551,11 @@ var mytool = function(){
 											$(config.selectorDisplayHintsMetadata).text(config.fileNameExistsText+data.upload.warnings.exists+"please Change the name")
 										}else if(data.upload.filename){
 											$(config.selectorDisplayHintsMetadata).text("Image was sucessfully uploaded. You can now use the file in your article by clicking on insert"); 
+											fileParameters.successfullFinished=true;
+											
+											if(config.disableInputFilename){
+												$(config.selectorInsertField).removeProp('disabled');
+											}
 											var filename=data.upload.filename;
 											$(config.selectorInsertField).val(filename);
 										};
@@ -679,8 +632,7 @@ var mytool = function(){
 							var enhanceRequiredFields = function (selector, textToAdd){				
 										$("<span> "+textToAdd+"<span>").insertAfter(selector);
 							};
-							
-							
+
 /*							
  *								
  *var config={
@@ -704,7 +656,7 @@ var mytool = function(){
 								//TODO: Put image link in the input field
 								}
 							});
-							//enhanceRequiredFields("input[type=text][required]", "* &nbsp; "); //somehow this needs to be here as hidden elements are somehow not selected.
+							enhanceRequiredFields("input[type=text][required]", "* &nbsp; "); //somehow this needs to be here as hidden elements are somehow not selected.
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
 							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
 							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
@@ -727,6 +679,12 @@ var mytool = function(){
 									'text':'insert', 
 									'click':function () {
 									var fileUse = $(this).find('#wikieditor-toolbar-mytool-inputFilename').val();
+									
+									if(fileUse===""){
+										$('<div>Please specify an exisitng filename, an existing file or use the upload wizard</div>').dialog({appendTo:'#wikieditor-toolbar-mytool-imageSources-uploadImage'});		
+										return;
+									}
+									
 									$( this ).dialog( 'close' );
 									$.wikiEditor.modules.toolbar.fn.doAction(
 											$( this ).data( 'context' ),
@@ -734,7 +692,7 @@ var mytool = function(){
 												type: 'replace',
 												options: {
 													pre: '[[',
-													peri: fileUse,
+													peri: "File:"+fileUse,
 													post: ']]',
 													ownline: true
 												}
@@ -771,6 +729,8 @@ var mytool = function(){
 										$(this).val("").change();
 										$(this).removeClass("valid");
 									});//each end
+									
+									$('#wikieditor-toolbar-mytool-dialog fieldset input').val(""); //reset filename etc.
 									
 									container.find('	.wikieditor-toolbar-mytool-statusmessage').text(""); //find all dynamic hints
 									//set wizard container to first element
