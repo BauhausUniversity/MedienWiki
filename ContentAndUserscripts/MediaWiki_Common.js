@@ -64,7 +64,7 @@ var mytool = function(){
 											</select>\
 											license.\
 											</p>\
-											<p id="myMe-licenseDescriptor" class="wikieditor-toolbar-mytool-statusmessage"></p>\
+											<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme-licenseDescription" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 											<div>\
 												<h4><input type="checkbox" \> I want to provide another license</h4>\
 												<div>\
@@ -77,6 +77,7 @@ var mytool = function(){
 											I may use this file from the source  <input name="source" type="text" size="30" maxlength="30" placeholder="where did you find the file?" pattern="...+" required> by the author <input name="authorname" type="text" size="30" maxlength="30" placeholder="The authors name">, because it is \
 											<select name="license" id="bySomeone-license">\
 											</select>\
+											<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother-licenseDescription" class="wikieditor-toolbar-mytool-statusmessage"></p>\
 											<br>\
 											Or an other reason: <input name="customlicense" type="text" size="30" maxlength="30" placeholder="provide reason here">\
 											<h4>Please note: </h4>\
@@ -201,7 +202,7 @@ var mytool = function(){
 											$(element).css("display","none");
 										}
 										
-									})
+									});
 
 								}//function reset Upload end	
 								
@@ -445,7 +446,7 @@ var mytool = function(){
 								}); //each end
 							};
 							
-							var generateSelects = function (domElement,content, descriptionElement, selectCallback){
+							var generateSelects = function (domElement,content, descriptionElement){
 								// Generates the selects based on a 
 								
 								//domElement: The select element that should get the options
@@ -467,7 +468,7 @@ var mytool = function(){
 								if(descriptionElement){
 									domElement.change(function(evt){
 										var selectedLicense = $(domElement).children("option:selected").attr("value");
-										$(descriptionElement).html(content[selectedLicense].longdesc);
+										descriptionElement.html(content[selectedLicense].longdesc);
 									});
 										
 								}
@@ -868,8 +869,8 @@ var mytool = function(){
 							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
 							makeCollapse('h4','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme',{'disableRequired':false});
 							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
-							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses);
-							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.ownWorkLicenses);
+							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses,$('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme-licenseDescription'));
+							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.othersWorkReasons,$('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother-licenseDescription'));
 							uniqueFilenameCheck({inputElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]'),messageElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck')});
 							uploadSetup({
 								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
