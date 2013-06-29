@@ -368,7 +368,7 @@ var mytool = function(){
 											relatedContainer.css("display","block");
 											$(elementsToCollapse[0]).children('input').prop('checked',true).change();
 										}
-									})
+									});
 								}else{
 									elementsToCollapse.each(function(index){
 										var relatedContainer=$(this).next('div'); //selects the following element
@@ -429,7 +429,7 @@ var mytool = function(){
 								var config={
 									customInvalidClass:imageInsertConfig.notValidClass||"invalid",
 									customValidClass:imageInsertConfig.validClass||"valid"
-								}
+								};
 								$(formcontainerSelector).each(function(index,element){
 									$(element).find("input,select").on("change keyup", validation);
 									var button = $(element).find('.wizardify-forward'); 
@@ -445,18 +445,32 @@ var mytool = function(){
 								}); //each end
 							};
 							
-							var generateSelects = function (domElement,content){
+							var generateSelects = function (domElement,content, descriptionElement, selectCallback){
+								// Generates the selects based on a 
+								
 								//domElement: The select element that should get the options
 								//content: a JSON with sub-object each provinding a short and long description and possibly a link to the original licencse text
-
+								//desdescriptionElement: a jquery DOM Element
+								
 								//TODO sanitize: is domElement a jquery object?
 
 								var fragment = document.createDocumentFragment();
 
 								jQuery.each(content,function(key,value){
-									$("<option/>",{"text":value.shortdesc,"value":key}).appendTo(fragment);
+									
+									var optionElement= $("<option/>",{"text":value.shortdesc,"value":key}).appendTo(fragment);
 								});
+								
 								domElement.append(fragment);
+								
+								//if descrdescriptionElement is defined we want to change the html of this element accordingly to display some help about the selected option
+								if(descriptionElement){
+									domElement.change(function(evt){
+										var selectedLicense = $(domElement).children("option:selected").attr("value");
+										$(descriptionElement).html(content[selectedLicense].longdesc);
+									});
+										
+								}
 							};
 							
 							var uniqueFilenameCheck = function(arguments){
@@ -476,8 +490,8 @@ var mytool = function(){
 								};
 								//var timeoutCode;
 								
-								var timeoutId
-								var counter = 0
+								var timeoutId;
+								var counter = 0;
 								function autoComplete() //http://stackoverflow.com/questions/6378696/use-settimeout-to-periodically-make-autocomplete-ajax-calls?answertab=votes#tab-top
 								{	
 									//define function to be called on success: 
@@ -503,11 +517,11 @@ var mytool = function(){
 											//add a class from the element that signfies that the name is not o.k.
 											//display message saying that the name is taken
 										}
-									}
+									};
 									
 									//actual function
-									counter++
-									var thisCounter = counter
+									counter++;
+									var thisCounter = counter;
 									clearTimeout(timeoutId)
 									timeoutId = setTimeout(function () {
 										var q = config.filenameinputElement.val();// get the q ... NOW //original:  var q = getQ() // get the q ... NOW
@@ -521,7 +535,7 @@ var mytool = function(){
 												},
 												success: function (data) {
 													if (counter == thisCounter) {
-													   succ.apply(this,[data]) //was succ.apply(this, arguments)
+													   succ.apply(this,[data]); //was succ.apply(this, arguments)
 													}
 												}
 											});
@@ -955,5 +969,5 @@ var mytool = function(){
 				
 				window.setTimeout(changeToolbar, 500); //change toolbar after button has been inserted
 
-}) //for production
+}); //for production
 //})(); //for brief try via console
