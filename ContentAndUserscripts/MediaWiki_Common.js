@@ -21,50 +21,50 @@ mw.loader.load( 'jquery.ui.tabs' );
 
 
 function changeToolbar(){
-	/*if($('#wikiEditor-ui-toolbar [title="mytool"]') && $('#wikiEditor-ui-toolbar [title="Embedded file"]')){//if mytool is activated
+	/*if($('#wikiEditor-ui-toolbar [title="visualUploaderTool"]') && $('#wikiEditor-ui-toolbar [title="Embedded file"]')){//if visualUploaderTool is activated
 		$('#wikiEditor-ui-toolbar [title="Embedded file"]').hide();//hide the normal embed image button
 	} //probably not needed because  $( '#wpTextbox1' ).wikiEditor( 'removeFromToolbar', { */
-	if(!$.wikiEditor.modules.dialogs.modules.mytool){ //that should be not needed anymore since we use  mw.loader.using( ['ext.wikiEditor.dialogs'],function(){  But I am a bit FUD about it. 
-		$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
+	if(!$.wikiEditor.modules.dialogs.modules.visualUploaderTool){ //that should be not needed anymore since we use  mw.loader.using( ['ext.wikiEditor.dialogs'],function(){  But I am a bit FUD about it. 
+		$( '#wpTextbox1' ).wikiEditor( 'addModule', visualUploaderTool());
 		console.log("oha. postLoad of module was needed!");
 	}
 }
 
 
 
-var mytool = function(){
+var visualUploaderTool = function(){
 				
 				return { dialogs:{
-					mytool:{
-						titleMsg: 'wikieditor-toolbar-tool-mytool-title',
-						id: 'wikieditor-toolbar-mytool-dialog',
+					visualUploaderTool:{
+						titleMsg: 'wikieditor-toolbar-tool-visualUploaderTool-title',
+						id: 'wikieditor-toolbar-visualUploaderTool-dialog',
 						html:'\
-							<div id="wikieditor-toolbar-mytool-imageSources">\
+							<div id="wikieditor-toolbar-visualUploaderTool-imageSources">\
 								<ul>\
-									<li id="wikieditor-toolbar-mytool--imageSources-recentimagesContainer-tab"><a href="#wikieditor-toolbar-mytool-imageSources-recentimagesContainer">Recent Uploads</a></li>\
-									<li id="wikieditor-toolbar-mytool-imageSources-uploadImage-tab"><a href="#wikieditor-toolbar-mytool-imageSources-uploadImage">Upload new Image</a></li>\
+									<li id="wikieditor-toolbar-visualUploaderTool--imageSources-recentimagesContainer-tab"><a href="#wikieditor-toolbar-visualUploaderTool-imageSources-recentimagesContainer">Recent Uploads</a></li>\
+									<li id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-tab"><a href="#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage">Upload new Image</a></li>\
 								</ul>\
-								<div id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer">\
-									<p id="wikieditor-toolbar-mytool-imageSources-recentimagesContainer-helptext">Your recent uploads</p>\
+								<div id="wikieditor-toolbar-visualUploaderTool-imageSources-recentimagesContainer">\
+									<p id="wikieditor-toolbar-visualUploaderTool-imageSources-recentimagesContainer-helptext">Your recent uploads</p>\
 									<!-- insert image goes here-->\
 								</div>\
-								<div id="wikieditor-toolbar-mytool-imageSources-uploadImage">\
-									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile">\
-										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-instructions">this dialogue will guide you through the steps to upload an image</p>\
+								<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage">\
+									<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectFile">\
+										<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-uploadImage-instructions">this dialogue will guide you through the steps to upload an image</p>\
 										<h2>Step 1 of 4: Choose a file!</h2>\
-										<input type="file" id="wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect" name="files[]" required/>\
-										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status" class="wikieditor-toolbar-mytool-statusmessage"></p>\
+										<input type="file" id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-fileselect" name="files[]" required/>\
+										<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-uploadImage-status" class="wikieditor-toolbar-visualUploaderTool-statusmessage"></p>\
 									</div>\
-									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense">\
+									<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense">\
 										<h2>Step 2 of 4: select a License</h2>\
 										<h3><input id="selector-radio-license-byme" name="selector-radio-license" type="radio" required>I created this work</h3>\
-										<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme">\
+										<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byme">\
 											<p>I, <input name="authorname" type="text" size="30" maxlength="30" placeholder="Your Name" pattern="..+" required>, want to release the file`s content under a\
 											<select name="license" id="byMe-license">\
 											</select>\
 											license.\
 											</p>\
-											<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme-licenseDescription" class="wikieditor-toolbar-mytool-statusmessage"></p>\
+											<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byme-licenseDescription" class="wikieditor-toolbar-visualUploaderTool-statusmessage"></p>\
 											<div>\
 												<h4><input type="checkbox" \> I want to provide another license</h4>\
 												<div>\
@@ -73,11 +73,11 @@ var mytool = function(){
 											</div>\
 										</div>\
 										<h3> <input id="selector-radio-license-byother" name="selector-radio-license" type="radio" required>Someone else created this work</h3>\
-										<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother">\
+										<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byother">\
 											I may use this file from the source  <input name="source" type="text" size="30" maxlength="30" placeholder="where did you find the file?" pattern="...+" required> by the author <input name="authorname" type="text" size="30" maxlength="30" placeholder="The authors name">, because it is \
 											<select name="license" id="bySomeone-license">\
 											</select>\
-											<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother-licenseDescription" class="wikieditor-toolbar-mytool-statusmessage"></p>\
+											<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byother-licenseDescription" class="wikieditor-toolbar-visualUploaderTool-statusmessage"></p>\
 											<br>\
 											Or an other reason: <input name="customlicense" type="text" size="30" maxlength="30" placeholder="provide reason here">\
 											<h4>Please note: </h4>\
@@ -86,24 +86,24 @@ var mytool = function(){
 											Furthermore if you just took it without being allowed, the author might sue you (Which can cost <em>a lot</em>. Take. It. Serious. We are not kidding.)</p>\
 										</div>\
 									</div><!--select License end--->\
-									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata">\
+									<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filemetadata">\
 										<h2>Step 3 of 4: Name the file</h2>\
 										<input name="filename" type="text" size="30" maxlength="30" placeholder="what should the name of the file be?">\
-										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck" class="wikieditor-toolbar-mytool-statusmessage"></p>\
+										<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filemetadata-filenamecheck" class="wikieditor-toolbar-visualUploaderTool-statusmessage"></p>\
 									</div>\
-									<div id="wikieditor-toolbar-mytool-imageSources-uploadImage-usefile">\
+									<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-usefile">\
 										<h2>4: Final Step: Use the file</h2>\
-										<p id="wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints" class="wikieditor-toolbar-mytool-statusmessage"></p>\
+										<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-finished-hints" class="wikieditor-toolbar-visualUploaderTool-statusmessage"></p>\
 										<!--<p>You can now use the file in your article by clicking on "insert</p>-->\
 									</div>\
-								</div><!--END: wikieditor-toolbar-mytool-imageSources-uploadImage -->\
+								</div><!--END: wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage -->\
 							</div>\
 							\
-							<fieldset id="wikieditor-toolbar-mytool-mainFields">\
-								<label id="wikieditor-toolbar-mytool-lableFilename"for="filename">Filename</label>\
-								<input type="text" id="wikieditor-toolbar-mytool-inputFilename" name="filename">\
-								<label id="wikieditor-toolbar-mytool-lableCaption"for="caption">Caption</label>\
-								<input type="text" id="wikieditor-toolbar-mytool-inputCaption" name="caption">\
+							<fieldset id="wikieditor-toolbar-visualUploaderTool-mainFields">\
+								<label id="wikieditor-toolbar-visualUploaderTool-lableFilename"for="filename">Filename</label>\
+								<input type="text" id="wikieditor-toolbar-visualUploaderTool-inputFilename" name="filename">\
+								<label id="wikieditor-toolbar-visualUploaderTool-lableCaption"for="caption">Caption</label>\
+								<input type="text" id="wikieditor-toolbar-visualUploaderTool-inputCaption" name="caption">\
 							</fieldset>\
 						',
 						init: function () {
@@ -115,14 +115,14 @@ var mytool = function(){
 							
 							
 							//Setup tabs for recent uploads and upload image							
-							$( "#wikieditor-toolbar-mytool-imageSources" ).tabs();
+							$( "#wikieditor-toolbar-visualUploaderTool-imageSources" ).tabs();
 			
 							//start highlight upload button
 											
 							//CONFIG START
 							var imageInsertConfig = {
 								ailimit:5, //how many items shell be retrieved from the api?
-								inputID: '#wikieditor-toolbar-mytool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
+								inputID: '#wikieditor-toolbar-visualUploaderTool-inputFilename', //id of the input field that gets the image name, preceeded by a '#'
 								thumbWidth: 32, //width of the image preview thumbnails ,
 								notValidClass:"invalid",
 								validClass:"valid",
@@ -191,9 +191,10 @@ var mytool = function(){
 										$(this).removeClass("valid");
 									});//each end
 									
-									$('#wikieditor-toolbar-mytool-dialog fieldset input').val(""); //reset filename etc.
+									$('#wikieditor-toolbar-visualUploaderTool-dialog fieldset input').val(""); //reset filename etc.
 									
-									container.find('	.wikieditor-toolbar-mytool-statusmessage').text(""); //find all dynamic hints
+									container.find('	.wikieditor-toolbar-visualUploaderTool-statusmessage').text(""); //find all dynamic hints
+									
 									//set wizard container to first element
 									container.children("div").each(function(index,element){
 										if(index===0){
@@ -203,6 +204,9 @@ var mytool = function(){
 										}
 										
 									});
+									
+									//if the button was disabled in constraintsUploadElements()…
+									$("wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-usefile .wizardify-backward").removeProp('disabled');
 
 								}//function reset Upload end	
 								
@@ -228,10 +232,10 @@ var mytool = function(){
 							var generateList= function (images){
 									/*generates several List points*/
 									//remove current list
-									$('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').children('ul').remove();
+									$('#wikieditor-toolbar-visualUploaderTool-imageSources-recentimagesContainer').children('ul').remove();
 									//initialize variables for image ist generation
 									var imageArray = images.query.allimages; 
-									var domList = $('<ul class="wikieditor-toolbar-mytool-recentImagesList">');
+									var domList = $('<ul class="wikieditor-toolbar-visualUploaderTool-recentImagesList">');
 									var li;
 									var imageTitle='';
 									var thumbLink ='';
@@ -254,7 +258,7 @@ var mytool = function(){
 											.prependTo(li);
 										$(li).appendTo(domList);
 									}//END for
-									$(domList).appendTo('#wikieditor-toolbar-mytool-imageSources-recentimagesContainer').addClass("recentImagesList");//append the list of images to the dialog-box 
+									$(domList).appendTo('#wikieditor-toolbar-visualUploaderTool-imageSources-recentimagesContainer').addClass("recentImagesList");//append the list of images to the dialog-box 
 								}//end generateList()
 							}//end createRecentImagesList()	
 							
@@ -272,7 +276,7 @@ var mytool = function(){
 									cssClassBackwardButton:'wizardify-backward',
 									//currently disabled: 
 									forwardButtonTexts: { //if the id matches the hash key of the current container, the forward button. If there is no such container in the html or later bing created, clean up the entry if you like
-												"wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile":"choose this file",							
+												"wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectFile":"choose this file",							
 										}
 									//checkingFunctions:parameters.checkingFunctions//the checking functions are functions that are executed before the page is turned. The array consists of subobject containing an ID-selector and a function. If that returns false the turn is not done.
 								};
@@ -605,20 +609,24 @@ var mytool = function(){
 									fileDuplicatedText:"the content of the file already exists – in file",
 									fileNameExistsText:"the name of the file already exists:",
 									badFilenameText:"The filename is bad. Did you include the end (.jpg, or .png etc). Please choose another name. If this continues to come up, please do a re-upload",
-									selectorDisplayHintsFile:"#wikieditor-toolbar-mytool-imageSources-uploadImage-uploadImage-status",
-									selectorDisplayHintsMetadata:"#wikieditor-toolbar-mytool-imageSources-uploadImage-finished-hints",
+									selectorDisplayHintsFile:"#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-uploadImage-status",
+									selectorDisplayHintsMetadata:"#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-finished-hints",
 									selectorInsertField:imageInsertConfig.inputID, //the the "insert to document button"
-									selectorInputFilename:'#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
-									selectorForwardButtonFileUpload:'#wikieditor-toolbar-mytool-imageSources-uploadImage-selectFile button.wizardify-forward',
+									selectorInputFilename:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
+									selectorForwardButtonFileUpload:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectFile button.wizardify-forward',
 									disableInputFilename:true, //disable the input for filename during the uploadProcess
-									eventUploadStashed:"mytool-upload-stashed", //event name for stashing the file
-									eventUploadComplete:"mytool-upload-complete" //event name when file is complete
+									eventUploadStashed:"visualUploaderTool-upload-stashed", //event name for stashing the file
+									eventUploadComplete:"visualUploaderTool-upload-complete" //event name when file is complete
 								};
 								
 								var fileParameters={};
 								
+								//TODO: Drag and Drop
+								//-> what is now in "change" needs to go in own function, so it can be accessed by the "change" and a "drop" event. 
 								$(config.selectorFileinput).change(function(evt){
-									if(evt.target.files.length===0){return}; //if "change" was triggeed but not file uploaded
+									if(evt.target.files.length===0){
+										return;
+									}; //if "change" was triggeed but not file uploaded
 									
 									fileParameters.file=evt.target.files[0],
 									fileParameters.filename=evt.target.files[0].name;
@@ -627,10 +635,11 @@ var mytool = function(){
 									
 									
 									var errorfunction = function(data){
-										if(data.filekey)
-										{fileParameters.filekey=data.upload.filekey}//WTF TODO It always calls the error function...
+										if(data.filekey){
+											fileParameters.filekey=data.upload.filekey;
+										};//WTF TODO It always calls the error function...
 										//$(config.selectorFileinput).(selectorDisplayHints).text("there was a problem when uploading your file. You might wnat to try the old uploader (in the sidebar, \"upload file\" ");
-									}
+									};
 									
 									uploadFile(fileParameters,"file",function(data){
 										fileParameters.successfullFinished = false;
@@ -666,7 +675,7 @@ var mytool = function(){
 								});
 								
 								$(config.selectorMetadataUpload).click(function(){
-									fileParameters.text = generateWikitext($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme'),$('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
+									fileParameters.text = generateWikitext($('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byme'),$('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byother'),$('input#selector-radio-license-byme').prop('checked'), imageInsertConfig.ownWorkLicenses, imageInsertConfig.ownWorkLicenses);
 									fileParameters.filename = $(config.selectorInputFilename).val();
 									
 									uploadFile(fileParameters,"metadata",function(data){
@@ -675,7 +684,7 @@ var mytool = function(){
 											$(config.selectorDisplayHintsMetadata).text("OMG:"+data.error.info);
 											return; 	
 										}else if(data.upload.warnings && data.upload.warnings.duplicate){
-											console.log("Warning"+data.upload.warnings.duplicate);
+											//console.log("Warning"+data.upload.warnings.duplicate);
 											$(config.selectorDisplayHintsMetadata).text(config.fileDuplicatedText+data.upload.warnings.duplicate[0]); //[0] because obviously it is deliverd as array: like:  'duplicates':["myimage"]
 											return;
 										}else if(data.upload.warnings && data.upload.warnings.badfilename){
@@ -707,7 +716,7 @@ var mytool = function(){
 									
 										//fileParameters.filekey=data.upload.filekey;
 										//$(selectorDisplayHints).text("filefunctionfunction sucessfully uploaded");
-									},function(data){console.log("error",data)}); //,function(data){console.log(data)},function(xhr,status, error){console.log(error)} 
+									},function(data){console.log("error",data);}); //,function(data){console.log(data)},function(xhr,status, error){console.log(error)} 
 								});
 								
 								
@@ -768,39 +777,38 @@ var mytool = function(){
 								//https://en.wikipedia.org/w/api.php?action=upload&filename=Test.txt&file=file_contents_here&token=+\		
 							};
 							
-							var enhanceRequiredFields = function (selector, textToAdd){				
+							var enhanceRequiredFields = function (selector, textToAdd){
+							//adds the textToAdd (usually a "*") behind the selected (by selector) elements (usually ones with the attribute "required")
 										$("<span> "+textToAdd+"<span>").insertAfter(selector);
 							};
 							
-							
-								
-							var constrainUploadElements = function(event,ui){
+							var constraintsUploadElements= function(event,ui){
 								var config={
-									
-									
+									laststepSelector:"#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-usefile",
+									cssClassBackwardButton:'wizardify-backward',
+								};
+								
+								if(event.type==="visualUploaderTool-upload-complete"){ //disable the back-button, as the file is uploaded now anyway, no need to go back
+									$(config.laststepSelector).children(config.cssClassBackwardButton).prop('disabled');
 								}
-								
-								
-								
-							}	
-							
+							};
 							
 							var constraintsMainElements= function(event,ui){
 								var config={
 									insertButtonSelector:"div.ui-dialog-buttonset button:nth-child(1)", //the automatically genreated buttons don't have IDs so we select them via position.
-									mainInputFieldsSelector:"#wikieditor-toolbar-mytool-mainFields",
-									panelUploadSelector:"#wikieditor-toolbar-mytool-imageSources-uploadImage",
-									panelRecentSelector:"#wikieditor-toolbar-mytool-imageSources-recentimagesContainer",
-								}
+									mainInputFieldsSelector:"#wikieditor-toolbar-visualUploaderTool-mainFields",
+									panelUploadSelector:"#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage",
+									panelRecentSelector:"#wikieditor-toolbar-visualUploaderTool-imageSources-recentimagesContainer",
+								};
 								
 								//disable fields
-								if(event.type==="mytool-upload-stashed"){
+								if(event.type==="visualUploaderTool-upload-stashed"){
 									$(config.insertButtonSelector).button("disable");
 									$(config.mainInputFieldsSelector+" input").prop("disabled","true");
 								}
 								
 								//reEnableFields
-								if(event.type==="mytool-upload-complete"){
+								if(event.type==="visualUploaderTool-upload-complete"){
 									$(config.insertButtonSelector).button("enable");//this is a jqUI widget button, hence the method
 									$(config.mainInputFieldsSelector+" input").removeProp("disabled","true");
 								}
@@ -811,12 +819,12 @@ var mytool = function(){
 									}
 									
 									if(ui && $(ui.panel)[0] === $(config.panelRecentSelector)[0]){ //if the recent uploads panel is active //panel is depreciated and removed in JQUI 1.10 and renamed to newPanel
-										$(config.insertButtonSelector).button("enable") //this is a jqUI widget button, hence the method
+										$(config.insertButtonSelector).button("enable"); //this is a jqUI widget button, hence the method
 										$(config.mainInputFieldsSelector+" input").removeProp("disabled","true");
 									}
 									
 								}
-							}
+							};
 
 /*							
  *								
@@ -835,46 +843,43 @@ var mytool = function(){
 							
 							
 							wizardify({
-								rootElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage'),
-								endFunction:function(){console.log("end")
-									$(imageInsertConfig.inputID).val()
+								rootElement:$('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage'),
+								endFunction:function(){console.log("end");
+									$(imageInsertConfig.inputID).val();
 								//TODO: Put image link in the input field
 								}
 							});
 							
 							
 							$(this).on("dialogopen", function( event, ui ) {
-								resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
-								createRecentImagesList(); //call recent images list
-							} );
-							
-							$(this).on("dialogopen", function( event, ui ) {
-								resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
+								resetUploadForm($('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage'));
 								createRecentImagesList(); //call recent images list
 							} );
 							
 							
-							if( !FormData || !FileReader){
-								$("#wikieditor-toolbar-mytool-imageSources-uploadImage").html("You browser does not support the HTML5 File API. If you can, get a more recent browser")
-								return
+							
+							if( !window.FormData || !window.File || !window.FileReader){
+								$("#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage").html("You browser does not support the HTML5 File API. If you can, get a more recent browser");
+								return;
 							}
 							
 							//events calling constraintElements()
-							$(document).on("mytool-upload-stashed",constraintsMainElements);
-							$(document).on("mytool-upload-complete",constraintsMainElements);
-							$( "#wikieditor-toolbar-mytool-imageSources" ).on("tabsselect", constraintsMainElements); //tabselect is depreciated and is removed in jQUI 1.10. In 1.10 it is renamed to tabsselect. tabsselect is a native jQ UI event for activating a new tab
+							$(document).on("visualUploaderTool-upload-stashed",constraintsMainElements);
+							$(document).on("visualUploaderTool-upload-complete",constraintsMainElements);
+							$(document).on("visualUploaderTool-upload-complete",constraintsMainElements);
+							$( "#wikieditor-toolbar-visualUploaderTool-imageSources" ).on("tabsselect", constraintsMainElements); //tabselect is depreciated and is removed in jQUI 1.10. In 1.10 it is renamed to tabsselect. tabsselect is a native jQ UI event for activating a new tab
 							
 							//General Upload Setup
 							//enhanceRequiredFields("input[type=text][required]", "* &nbsp; "); //somehow this needs to be here as hidden elements are somehow not selected.
-							makeCollapse('h3','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
-							makeCollapse('h4','#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme',{'disableRequired':false});
-							validateFormPart(".wizardify-forward","#wikieditor-toolbar-mytool-imageSources-uploadImage>div");
-							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses,$('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byme-licenseDescription'));
-							generateSelects($('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.othersWorkReasons,$('#wikieditor-toolbar-mytool-imageSources-uploadImage-selectLicense-byother-licenseDescription'));
-							uniqueFilenameCheck({inputElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata input[name="filename"]'),messageElement:$('#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata-filenamecheck')});
+							makeCollapse('h3','#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense',{'disableRequired':true});
+							makeCollapse('h4','#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byme',{'disableRequired':false});
+							validateFormPart(".wizardify-forward","#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage>div");
+							generateSelects($('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byme select[name="license"]'),imageInsertConfig.ownWorkLicenses,$('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byme-licenseDescription'));
+							generateSelects($('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byother select[name="license"]'),imageInsertConfig.othersWorkReasons,$('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense-byother-licenseDescription'));
+							uniqueFilenameCheck({inputElement:$('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filemetadata input[name="filename"]'),messageElement:$('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filemetadata-filenamecheck')});
 							uploadSetup({
-								selectorFileinput:"#wikieditor-toolbar-mytool-imageSources-uploadImage-fileselect",
-								selectorMetadataUpload:"#wikieditor-toolbar-mytool-imageSources-uploadImage-filemetadata .wizardify-forward",
+								selectorFileinput:"#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-fileselect",
+								selectorMetadataUpload:"#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filemetadata .wizardify-forward",
 							});
 							
 							
@@ -890,10 +895,10 @@ var mytool = function(){
 								{
 									'text':'insert', 
 									'click':function () {
-									var fileUse = $(this).find('#wikieditor-toolbar-mytool-inputFilename').val();
+									var fileUse = $(this).find('#wikieditor-toolbar-visualUploaderTool-inputFilename').val();
 									
 									if(fileUse===""){
-										$('<div>Please specify an exisitng filename, an existing file or use the upload wizard</div>').dialog({appendTo:'#wikieditor-toolbar-mytool-imageSources-uploadImage'});		
+										$('<div>Please specify an exisitng filename, an existing file or use the upload wizard</div>').dialog({appendTo:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage'});		
 										return;
 									}
 									
@@ -927,34 +932,34 @@ var mytool = function(){
 								
 								
 								
-								//resetUploadForm($('#wikieditor-toolbar-mytool-imageSources-uploadImage'));
+								//resetUploadForm($('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage'));
 								//createRecentImagesList(); //call recent images list
 
 								}//end open
 							}
-						}//end mytool
+						}//end visualUploaderTool
 					}//end dialogs
 					};//end return object
-				};//modules mytool def
+				};//modules visualUploaderTool def
 				
 				
 				//FIXME: If the button appears but there is no function on clicking 
-				//you can reexecute `$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());` 
-				//whereas mytool is a function which returns a module object. 
+				//you can reexecute `$( '#wpTextbox1' ).wikiEditor( 'addModule', visualUploaderTool());` 
+				//whereas visualUploaderTool is a function which returns a module object. 
 				
 				mw.loader.using( ['ext.wikiEditor.dialogs'],function(){ //the usual dialogs sould be initialized first
-					$( '#wpTextbox1' ).wikiEditor( 'addModule', mytool());
+					$( '#wpTextbox1' ).wikiEditor( 'addModule', visualUploaderTool());
 					$('#wpTextbox1').wikiEditor( 'addToToolbar', {
 				'section': 'main',
 				'group': 'insert',
 				'tools': {
-						 'mytool': {
+						 'visualUploaderTool': {
 								 'label': 'insert Image', // or use labelMsg for a localized label, see above
 								 'type': 'button',
 								 'icon': 'customInsertImage.png', 
 								 'action': {
 										 'type': 'dialog',
-										 'module':'mytool'
+										 'module':'visualUploaderTool'
 									 }
 						 }
 				 }
