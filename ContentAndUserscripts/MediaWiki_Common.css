@@ -1,6 +1,20 @@
 /* CSS placed here will be applied to all skins */
 /*to: /index.php/MediaWiki:Common.css */
 
+
+/* todo: 
+ * input:required {border-radius:2px} //nicer required warning border
+ * select{vertical-align:center}
+ * input type text{height:1.7em}
+ * forward-backwardbutton: height 2.2em, width:7em
+ * p,h3,4h {adjust margin top, margin bottom so it structures well}
+ * wizardify.forward{margin-left:5em;}
+ * h4: no bold, text decoration underline
+ *
+ * <div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview"></div>\
+ * should be displayed even when outer container is not; small-size thumb, upper left corner. 
+ * /
+
 ul.wikieditor-toolbar-mytool-recentImagesList {
 	margin-left: 0;
 }
@@ -22,7 +36,7 @@ ul.wikieditor-toolbar-mytool-recentImagesList li img {
 }
 
 #wikieditor-toolbar-mytool-imageSources-uploadImage button, #wikieditor-toolbar-mytool-imageSources-uploadImage select{
-	padding:3px 12px;
+	padding:1px 12px;
 	vertical-align: baseline; 
 }
 
@@ -65,6 +79,7 @@ wikieditor-toolbar-mytool-imageSources h4{
 	text-decoration: underline;
 }
 
+//the button pointing to the upload form
 div#p-tb ul li#t-upload a {
 	display: inline-block;
 	width: 8em;

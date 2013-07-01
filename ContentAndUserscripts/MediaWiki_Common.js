@@ -50,9 +50,9 @@ var visualUploaderTool = function(){
 								</div>\
 								<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage">\
 									<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectFile">\
-										<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-uploadImage-instructions">this dialogue will guide you through the steps to upload an image</p>\
 										<h2>Step 1 of 4: Choose a file!</h2>\
 										<input type="file" id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-fileselect" name="files[]" required/>\
+										<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview"></div>\
 										<p id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-uploadImage-status" class="wikieditor-toolbar-visualUploaderTool-statusmessage"></p>\
 									</div>\
 									<div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectLicense">\
@@ -207,6 +207,9 @@ var visualUploaderTool = function(){
 									
 									//if the button was disabled in constraintsUploadElements()…
 									$("wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-usefile .wizardify-backward").removeProp('disabled');
+									
+									//remove previewImage
+									$('#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview').html("");
 
 								}//function reset Upload end	
 								
@@ -662,6 +665,20 @@ var visualUploaderTool = function(){
 											$(config.selectorInsertField).val(data.upload.filename).change();
 											//$(config.selectorForwardButtonFileUpload).click(); if that is activated it automatically jumps forward after successful upload
 											
+											//display the file
+											var reader = new FileReader();
+											reader.onload = function(event) {
+												var contents = event.target.result;
+												$("#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview").html('<img src="'+event.target.result+'" />');
+											};
+											reader.onerror = function(event) {
+												console.error("File could not be read! Code " + event.target.error.code);
+											};
+
+											reader.readAsDataURL(fileParameters.file);
+											
+											
+											//trigger success event
 											$.event.trigger({
 												type:config.eventUploadStashed ,
 												event: {
@@ -785,11 +802,11 @@ var visualUploaderTool = function(){
 							var constraintsUploadElements= function(event,ui){
 								var config={
 									laststepSelector:"#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-usefile",
-									cssClassBackwardButton:'wizardify-backward',
+									cssClassBackwardButton:'.wizardify-backward',
 								};
 								
 								if(event.type==="visualUploaderTool-upload-complete"){ //disable the back-button, as the file is uploaded now anyway, no need to go back
-									$(config.laststepSelector).children(config.cssClassBackwardButton).prop('disabled');
+									$(config.laststepSelector).find(config.cssClassBackwardButton).prop("disabled","true");
 								}
 							};
 							
@@ -866,7 +883,7 @@ var visualUploaderTool = function(){
 							//events calling constraintElements()
 							$(document).on("visualUploaderTool-upload-stashed",constraintsMainElements);
 							$(document).on("visualUploaderTool-upload-complete",constraintsMainElements);
-							$(document).on("visualUploaderTool-upload-complete",constraintsMainElements);
+							$(document).on("visualUploaderTool-upload-complete",constraintsUploadElements);
 							$( "#wikieditor-toolbar-visualUploaderTool-imageSources" ).on("tabsselect", constraintsMainElements); //tabselect is depreciated and is removed in jQUI 1.10. In 1.10 it is renamed to tabsselect. tabsselect is a native jQ UI event for activating a new tab
 							
 							//General Upload Setup
