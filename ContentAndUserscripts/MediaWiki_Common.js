@@ -100,10 +100,22 @@ var visualUploaderTool = function(){
 							</div>\
 							\
 							<fieldset id="wikieditor-toolbar-visualUploaderTool-mainFields">\
-								<label id="wikieditor-toolbar-visualUploaderTool-lableFilename"for="filename">Filename</label>\
+								<div>\
+								<label id="wikieditor-toolbar-visualUploaderTool-lableFilename"for="filename">Filename</label><br>\
 								<input type="text" id="wikieditor-toolbar-visualUploaderTool-inputFilename" name="filename">\
-								<label id="wikieditor-toolbar-visualUploaderTool-lableCaption"for="caption">Caption</label>\
+								</div>\
+								<div>\
+								<label id="wikieditor-toolbar-visualUploaderTool-lableCaption"for="caption">Caption</label><br>\
 								<input type="text" id="wikieditor-toolbar-visualUploaderTool-inputCaption" name="caption">\
+								</div>\
+								<div>\
+								<label id="wikieditor-toolbar-visualUploaderTool-lableSize" for="size">Size (in pixels)</label><br>\
+								<input type="text" id="wikieditor-toolbar-visualUploaderTool-inputSize" name="size">\
+								</div>\
+								<div>\
+								Show as thumbnail?\
+								<input type="checkbox" id="wikieditor-toolbar-visualUploaderTool-inputThumb" name="thumb" value="thumb">\
+								</div>\
 							</fieldset>\
 						',
 						init: function () {
@@ -617,9 +629,11 @@ var visualUploaderTool = function(){
 									selectorInsertField:imageInsertConfig.inputID, //the the "insert to document button"
 									selectorInputFilename:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filemetadata input[name="filename"]',//the filed for defining the filename
 									selectorForwardButtonFileUpload:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-selectFile button.wizardify-forward',
+									selectorUploadContainer:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage',
 									disableInputFilename:true, //disable the input for filename during the uploadProcess
 									eventUploadStashed:"visualUploaderTool-upload-stashed", //event name for stashing the file
 									eventUploadComplete:"visualUploaderTool-upload-complete" //event name when file is complete
+									
 								};
 								
 								var fileParameters={};
@@ -640,7 +654,7 @@ var visualUploaderTool = function(){
 									var errorfunction = function(data){
 										if(data.filekey){
 											fileParameters.filekey=data.upload.filekey;
-										};//WTF TODO It always calls the error function...
+										};
 										//$(config.selectorFileinput).(selectorDisplayHints).text("there was a problem when uploading your file. You might wnat to try the old uploader (in the sidebar, \"upload file\" ");
 									};
 									
@@ -665,18 +679,31 @@ var visualUploaderTool = function(){
 											$(config.selectorInsertField).val(data.upload.filename).change();
 											//$(config.selectorForwardButtonFileUpload).click(); if that is activated it automatically jumps forward after successful upload
 											
-											//display the file
 											var reader = new FileReader();
-											reader.onload = function(event) {
-												var contents = event.target.result;
-												$("#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview").html('<img src="'+event.target.result+'" />');
+											reader.onload = function(readEvent) {
+												//$("#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview").html('<img src="'+readEvent.target.result+'">');
+												
+												
+												var dataUri = readEvent.target.result
+												//	img     = document.createElement("img");
+												//img.src = dataUri;
+												
+												$(config.selectorUploadContainer).css({
+													'background-image':'url('+dataUri+')',
+													'background-repeat':'no-repeat',
+													'background-position':'90% 5px',
+													'background-size':'40px auto'
+												})
+												//document.body.appendChild(img);
 											};
+
 											reader.onerror = function(event) {
 												console.error("File could not be read! Code " + event.target.error.code);
 											};
 
 											reader.readAsDataURL(fileParameters.file);
 											
+
 											
 											//trigger success event
 											$.event.trigger({
@@ -915,9 +942,20 @@ var visualUploaderTool = function(){
 									var fileUse = $(this).find('#wikieditor-toolbar-visualUploaderTool-inputFilename').val();
 									
 									if(fileUse===""){
-										$('<div>Please specify an exisitng filename, an existing file or use the upload wizard</div>').dialog({appendTo:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage'});		
+										$('<div>Please specify an existing filename or use the upload wizard</div>').dialog({appendTo:'#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage'});		
 										return;
 									}
+									
+									var imageSize=$(this).find('#wikieditor-toolbar-visualUploaderTool-inputSize').val();
+									var imageThumb= $(this).find('#wikieditor-toolbar-visualUploaderTool-inputThumb').prop("checked");
+									var imageCaption = $(this).find('#wikieditor-toolbar-visualUploaderTool-inputCaption').val();
+									var imageInsert = [
+										"File:",
+										fileUse,
+										imageThumb ? "| thumb":"", //if it is true, give the string the value "|thumb"
+										imageSize!=="" ? "|"+imageSize+"px" : "",//if imageSize not empty, give it the value "|12345px" (number arbitrary)
+										imageCaption!=="" ? "|"+imageCaption : ""
+									].join("");
 									
 									$( this ).dialog( 'close' );
 									$.wikiEditor.modules.toolbar.fn.doAction(
@@ -926,7 +964,7 @@ var visualUploaderTool = function(){
 												type: 'replace',
 												options: {
 													pre: '[[',
-													peri: "File:"+fileUse,
+													peri: imageInsert,
 													post: ']]',
 													ownline: true
 												}

@@ -13,54 +13,76 @@
  *
  * <div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview"></div>\
  * should be displayed even when outer container is not; small-size thumb, upper left corner. 
- * /
+ */ 
+ 
 
-ul.wikieditor-toolbar-mytool-recentImagesList {
+
+#wikieditor-toolbar-visualUploaderTool-dialog ul.wikieditor-toolbar-visualUploaderTool-recentImagesList {
 	margin-left: 0;
 }
 
-ul.wikieditor-toolbar-mytool-recentImagesList li {
+#wikieditor-toolbar-visualUploaderTool-dialog ul.wikieditor-toolbar-visualUploaderTool-recentImagesList li {
 	list-style: none;
 }
 
-ul.wikieditor-toolbar-mytool-recentImagesList li img {
+#wikieditor-toolbar-visualUploaderTool-dialog ul.wikieditor-toolbar-visualUploaderTool-recentImagesList li img {
 	margin: 0 10px 0 10px;
 }
 
-#wikieditor-toolbar-mytool-recentimagesContainer-helptext {
+/*#wikieditor-toolbar-visualUploaderTool-recentimagesContainer-helptext {
 	font-weight: bold;
+}*/
+
+
+#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage p button, #wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage p select{
+	padding:0px 0px;
+	vertical-align: baseline;
 }
 
-#wikieditor-toolbar-mytool-recentimagesContainer-helptext {
-	font-weight: bold;
-}
-
-#wikieditor-toolbar-mytool-imageSources-uploadImage button, #wikieditor-toolbar-mytool-imageSources-uploadImage select{
-	padding:1px 12px;
-	vertical-align: baseline; 
-}
-
-.wizardify-buttonset button{
+#wikieditor-toolbar-visualUploaderTool-dialog .wizardify-buttonset button{
 	font-weight:bold;
+	height:2.4em;
+	min-width: 8em;	
 }
 
-#wikieditor-toolbar-mytool-imageSources h2{
+#wikieditor-toolbar-visualUploaderTool-dialog .wizardify-buttonset button.wizardify-backward{
+	margin-right:5em;
+}
+
+#wikieditor-toolbar-visualUploaderTool-dialog :required{
+	border-radius: 2px; /*so that the required-boxe’s corners don’t clash with the rounded corners of the button*/
+	
+}
+
+
+
+#wikieditor-toolbar-visualUploaderTool-imageSources h2{
 	font-size:145%;
 	font-weight:bold;
+	margin-right:40px;
 }
 
-#wikieditor-toolbar-mytool-imageSources h3{
+#wikieditor-toolbar-visualUploaderTool-imageSources h3{
 	font-size:145%;
 	font-weight:normal;
 }
 
-wikieditor-toolbar-mytool-imageSources h4{
-	font-size:100%;
+#wikieditor-toolbar-visualUploaderTool-imageSources h4{
+	font-size:130%;
 	font-style:italic;
+	font-weight: normal;
+}
+
+#wikieditor-toolbar-visualUploaderTool-mainFields div{
+	display:inline-block;
+	margin-right:2em;
+}
+#wikieditor-toolbar-visualUploaderTool-mainFields div input[type="checkbox"]{
+	vertical-align: bottom;
 }
 
 
-.wizardify-buttonset {
+#wikieditor-toolbar-visualUploaderTool-dialog .wizardify-buttonset {
 	border-top:1px solid #AAA;
 	padding-top:0.3em;
 }
@@ -71,15 +93,21 @@ wikieditor-toolbar-mytool-imageSources h4{
 	opacity: 0.5;
 }
 
-.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton {
+.ui-widget-content span.wikieditor-toolbar-visualUploaderTool-highlightUploadButton {
 	color: blue;
 }
 
-.ui-widget-content span.wikieditor-toolbar-mytool-highlightUploadButton:hover {
+.ui-widget-content span.wikieditor-toolbar-visualUploaderTool-highlightUploadButton:hover {
 	text-decoration: underline;
 }
 
-//the button pointing to the upload form
+#wikieditor-toolbar-visualUploaderTool-mainFields{
+	padding-left:23px !important;
+	
+}
+
+/*the button pointing to the upload form*/
+
 div#p-tb ul li#t-upload a {
 	display: inline-block;
 	width: 8em;
