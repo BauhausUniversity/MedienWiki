@@ -76,6 +76,7 @@
 #wikieditor-toolbar-visualUploaderTool-mainFields div{
 	display:inline-block;
 	margin-right:2em;
+	margin-top:4px;
 }
 #wikieditor-toolbar-visualUploaderTool-mainFields div input[type="checkbox"]{
 	vertical-align: bottom;
