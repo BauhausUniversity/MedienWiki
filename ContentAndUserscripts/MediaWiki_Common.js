@@ -105,7 +105,7 @@ var visualUploaderTool = function(){
 								<input type="text" id="wikieditor-toolbar-visualUploaderTool-inputFilename" name="filename">\
 								</div>\
 								<div>\
-								<label id="wikieditor-toolbar-visualUploaderTool-lableCaption"for="caption">Caption</label><br>\
+								<label id="wikieditor-toolbar-visualUploaderTool-lableCaption"for="caption">Text below Image</label><br>\
 								<input type="text" id="wikieditor-toolbar-visualUploaderTool-inputCaption" name="caption">\
 								</div>\
 								<div>\
