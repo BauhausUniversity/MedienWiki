@@ -168,7 +168,7 @@ $wgUpgradeKey = "";										# +++++ defined in Private Settings
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
-$wgDefaultSkin = "vector";
+$wgDefaultSkin = "bwtest";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
