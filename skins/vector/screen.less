@@ -55,11 +55,14 @@ div#content {
 	background-position: bottom left;
 	background-repeat: repeat-x;
 	border-top: 1.8em solid gray;
+	
 }
 #mw-head-base {
 	margin-top: -7em;
+	margin-right: 1em;
 	margin-left: 10em;
-	height: 7em;
+	height: 4.5em;
+	border-bottom: 2.5em solid #b71a49;
 }
 div#mw-head {
 	position: absolute;
@@ -149,12 +152,13 @@ div.vectorTabs ul {
 div.vectorTabs ul li {
 	/* @noflip */
 	float: left;
-	line-height: 1.125em;
+	/*line-height: 1.125em;*/
+	line-height: 0.7em; //moves it topward. from 0.6 on I get glitches	
 	display: inline-block;
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	background-color: #f3f3f3;
+	/*background-color: #f3f3f3;*/
 	/*.background-image('images/tab-normal-fade.png');*/
 	background-position: bottom left;
 	background-repeat: repeat-x;
@@ -174,7 +178,8 @@ div.vectorTabs li a {
 	height: 1.9em;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
-	color: @menu-link-color;
+	/*color: @menu-link-color;*/
+	color: white;
 	cursor: pointer;
 	font-size: 0.8em;
 }
@@ -210,7 +215,8 @@ div.vectorTabs li.selected a:visited{
 }
 div.vectorTabs li.new a,
 div.vectorTabs li.new a:visited{
-	color: #a55858;
+	/*color: #a55858;*/
+	color:lightgray;/*as the background is red already, the red link is hard to see otherwise*/
 }
 /* Variants and Actions */
 div.vectorMenu {
@@ -225,6 +231,7 @@ div.vectorMenu {
 	background-position: 100% 60%;
 	background-repeat: no-repeat;
 	cursor: pointer;
+	background-color: white;
 }
 div.vectorMenuFocus {
 	/* SVG support using a transparent gradient to guarantee cross-browser
@@ -244,6 +251,7 @@ div#mw-head div.vectorMenu h3 {
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	margin-left: -1px;
+	background-color: transparent; /*otherwhise the down arrow of the menu is hidden*/
 }
 /* IGNORED BY IE6 */
 div#mw-head div.vectorMenu > h3 {
@@ -447,7 +455,7 @@ div#simpleSearch button#searchButton > img {
 div#mw-panel {
 	font-size: @menu-main-font-size;
 	position: absolute;
-	top: 160px;
+	top: 50px;
 	padding-top: 1em;
 	width: 10em;
 	left: 0;
@@ -539,7 +547,7 @@ div#footer #footer-places li {
 /* Logo */
 #p-logo {
 	position: absolute;
-	top: -160px;
+	top: -50px;
 	left: 0;
 	/*width: 10em;*/
 	height: 23px;
@@ -803,6 +811,10 @@ body.vector-animateLayout {
 	top:0.1em;
 }
 
-#p-personal a.new{
-	color:#d9a8b7;
+#p-personal a.new, #pt-userpage a.new{
+	color:#d9a8b7 !important;/*without !important the link to a uncreated userpage remains in a darker red in firefox (v28)*/
+}
+
+#p-cactions-label, #ca-watch{
+	background-color: white;
 }
