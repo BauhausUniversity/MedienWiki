@@ -24,7 +24,6 @@ body {
 }
 body {
 	background-color: #f6f6f6;
-	background-image: url("images/bg-grid.png");
 	font-size: @body-font-size;
 }
 /* Content */
@@ -33,11 +32,10 @@ div#content {
 	margin-left: 10em;
 	padding: @content-padding;
 	/* Border on top, left, and bottom side */
-	border: 1px solid #ccc;
+	border: 1px solid #a7d7f9;
 	border-right-width: 0;
 	/* Merge the border with tabs' one (in their background image) */
 	margin-top: -1px;
-	margin-right: 1em;
 	background-color: white;
 	color: @content-font-color;
 	direction: ltr;
@@ -49,20 +47,16 @@ div#content {
 }
 /* Head */
 #mw-page-base {
-	height: 5.2em;//consider the outer height (height+border+padding)!
-	/*background-color: white;*/
-	/*.background-image('images/page-fade.png');*/
+	height: 5em;
+	background-color: white;
+	.background-image('images/page-fade.png');
 	background-position: bottom left;
-	background-repeat: repeat-x;
-	border-top: 1.8em solid gray;
-	
+	background-repeat: repeat-x;	
 }
 #mw-head-base {
-	margin-top: -7em;
-	margin-right: 1em;
+	margin-top: -5em;
 	margin-left: 10em;
-	height: 4.5em;
-	border-bottom: 2.5em solid #b71a49;
+	height: 5em;
 }
 div#mw-head {
 	position: absolute;
@@ -108,19 +102,19 @@ div.emptyPortlet {
 #left-navigation {
 	float: left;
 	margin-left: 10em;
-	margin-top: 4.5em;
+	margin-top: 2.5em;
 	/* When right nav would overlap left nav, it's placed below it
 	   (normal CSS floats behavior). This rule ensures that no empty space
 	   is shown between them due to right nav's margin-top. Page layout
 	   is still broken, but at least the nav overlaps only the page title
 	   instead of half the content. */
-	margin-bottom: -4.5em; //janchange: was 2.5
+	margin-bottom: -2.5em;
 	/* IE 6 double-margin bug fix */
 	display: inline;
 }
 #right-navigation {
 	float: right;
-	margin-top: 4.5em;
+	margin-top: 2.5em;
 }
 /* Navigation Labels */
 div.vectorTabs h3,
@@ -152,14 +146,13 @@ div.vectorTabs ul {
 div.vectorTabs ul li {
 	/* @noflip */
 	float: left;
-	/*line-height: 1.125em;*/
-	line-height: 0.7em; //moves it topward. from 0.6 on I get glitches	
+	line-height: 1.125em;
 	display: inline-block;
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	/*background-color: #f3f3f3;*/
-	/*.background-image('images/tab-normal-fade.png');*/
+	background-color: #f3f3f3;
+	.background-image('images/tab-normal-fade.png');
 	background-position: bottom left;
 	background-repeat: repeat-x;
 	white-space: nowrap;
@@ -169,8 +162,7 @@ div.vectorTabs ul > li {
 	display: block;
 }
 div.vectorTabs li.selected {
-	/*.background-image('images/tab-current-fade.png');*/
-	background-color: white; 
+	.background-image('images/tab-current-fade.png');
 }
 /* OVERRIDDEN BY COMPLIANT BROWSERS */
 div.vectorTabs li a {
@@ -178,8 +170,7 @@ div.vectorTabs li a {
 	height: 1.9em;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
-	/*color: @menu-link-color;*/
-	color: white;
+	color: @menu-link-color;
 	cursor: pointer;
 	font-size: 0.8em;
 }
@@ -204,7 +195,7 @@ div.vectorTabs span > a {
 }
 div.vectorTabs span {
 	display: inline-block;
-	/*.background-image('images/tab-break.png');*/
+	.background-image('images/tab-break.png');
 	background-position: bottom right;
 	background-repeat: no-repeat;
 }
@@ -215,8 +206,7 @@ div.vectorTabs li.selected a:visited{
 }
 div.vectorTabs li.new a,
 div.vectorTabs li.new a:visited{
-	/*color: #a55858;*/
-	color:lightgray;/*as the background is red already, the red link is hard to see otherwise*/
+	color: #a55858;
 }
 /* Variants and Actions */
 div.vectorMenu {
@@ -231,7 +221,6 @@ div.vectorMenu {
 	background-position: 100% 60%;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	background-color: white;
 }
 div.vectorMenuFocus {
 	/* SVG support using a transparent gradient to guarantee cross-browser
@@ -251,7 +240,6 @@ div#mw-head div.vectorMenu h3 {
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	margin-left: -1px;
-	background-color: transparent; /*otherwhise the down arrow of the menu is hidden*/
 }
 /* IGNORED BY IE6 */
 div#mw-head div.vectorMenu > h3 {
@@ -455,7 +443,7 @@ div#simpleSearch button#searchButton > img {
 div#mw-panel {
 	font-size: @menu-main-font-size;
 	position: absolute;
-	top: 50px;
+	top: 160px;
 	padding-top: 1em;
 	width: 10em;
 	left: 0;
@@ -547,17 +535,18 @@ div#footer #footer-places li {
 /* Logo */
 #p-logo {
 	position: absolute;
-	top: -50px;
+	top: -160px;
 	left: 0;
-	/*width: 10em;*/
-	height: 23px;
+	width: 10em;
+	height: 160px;
 }
 #p-logo a {
 	display: block;
-	width: 8em;
-	height: 23px;
+	width: 10em;
+	height: 160px;
 	background-repeat: no-repeat;
 	background-position: center center;
+	background-color: @buwMaincolor;
 	text-decoration: none;
 }
 
@@ -716,7 +705,7 @@ pre, .mw-code {
 	background-color: #fff;
 	background-color: rgba(255, 255, 255, 0.93);
 	padding: 0.75em 1.5em;
-	border: solid 1px #ccc;
+	border: solid 1px #a7d7f9;
 	border-radius: 0.75em;
 	-webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.125);
 	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.125);
@@ -802,19 +791,415 @@ body.vector-animateLayout {
 	}
 }
 
-/*jans files*/
+//Jans Changes: 
+/*variables*/
+@buwMaincolor:#006b94;
+@buwMaincolor-light:hsl(hue(@buwMaincolor),35%,80%); 
+@buwLightgray:#eaeaea;
+@buwGray:gray;
+@buwDarkgray:#333;
+
+@buwLinkcolor:@buwMaincolor;
+@buwLinkcolor-error: #b71a49;
+
+@menu-link-color: @buwMaincolor;
+@menu-main-body-link-color: @buwMaincolor;
+@menu-main-body-link-visited-color:darken(@buwMaincolor,10%);
+@collapsible-nav-heading-collapsed-color: lighten(@buwMaincolor,10%);
+
+
+
+
+
+//general elements
+a{
+	color:@buwLinkcolor;
+}
+
+a.new{
+	color: @buwLinkcolor-error
+}
+
+body {
+	background-color: @buwLightgray ;
+	background-image: url("images/bg-grid.png");
+	font-size: @body-font-size;
+}
+
+
+
+#mw-page-base {
+	height: 5.2em;
+	background-color: transparent;
+	.background-image(none);
+	background-position: bottom left;
+	background-repeat: repeat-x;
+	border-top: 1.8em solid gray;
+	
+}
+#mw-head-base {
+	margin-top: -7em;
+	margin-right: 1em;
+	height: 4.5em;
+	border-bottom: 2.5em solid @buwMaincolor;
+}
+
+
+#left-navigation {
+	margin-top: 4.5em;
+	margin-bottom: -4.5em; 
+}
+#right-navigation {
+	margin-top: 4.5em;
+}
+
+div.vectorTabs ul li {
+	line-height: 0.7em; /*moves it topward. from 0.6 on I get glitches	*/
+	background-color: transparent;
+	.background-image(none);
+}
+
+
+div.vectorTabs li.selected {
+	.background-image(none);
+	background-color: white; 
+}
+
+div.vectorTabs#p-namespaces li.selected{
+	border-top:3px solid @buwMaincolor;
+}
+
+div.vectorTabs li a {
+	color: white;
+}
+
+div.vectorTabs li:not(.selected) a{ //if the page is small a white link might be pushed into a wihte background area
+	text-shadow: 1px 1px 0px @buwMaincolor;
+}
+
+div.vectorTabs span {
+	.background-image(none);
+}
+div.vectorTabs li.selected a,
+div.vectorTabs li.selected a:visited{
+	color: @buwDarkgray;
+	text-decoration: none;
+}
+div.vectorTabs li.new a,
+div.vectorTabs li.new a:visited{
+	/*color: #a55858;*/
+	color:@buwLightgray;/*as the background is red already, the red link is hard to see otherwise*/
+}
+
+div.vectorTabs ul {
+	background-image: none;
+}
+
+div.vectorTabs{
+	background-image: none;
+	padding-left: 0;
+	font-weight: bold;
+}
+
+div.vectorTabs li.new.selected a{
+	color:@buwGray;
+}
+
+
+#p-namespaces.vectorTabs ul li a[href*="title=Talk:"]{ /*hide the article discussions which never happen anyway (In contrast to the user discussions, which still need to be shown*/
+	visibility:hidden; //hidden: no layout side effects compared to display: none; 
+}
+
+div.vectorMenu {
+	background-color: white;
+}
+
+
+
+#p-logo {
+	top: -71px;
+	width: auto;
+	height: 23px;
+}
+
+#p-logo a {
+	width: 8em;
+	height: 23px;
+}
+
+.skin-vector .mw-notification {
+	border-color: @buwLightgray;
+}
+
 #p-personal li a{
 	color:white; 
 
 }
+
+div#mw-head div.vectorMenu h3 {
+	background-color: transparent; /*otherwhise the down arrow of the menu is hidden*/
+}
+
 #p-personal {
 	top:0.1em;
 }
 
 #p-personal a.new, #pt-userpage a.new{
-	color:#d9a8b7 !important;/*without !important the link to a uncreated userpage remains in a darker red in firefox (v28)*/
+	color:lighten(@buwLinkcolor-error,35%) !important;/*without !important the link to a uncreated userpage remains in a darker red in firefox (v28)*/
 }
 
 #p-cactions-label, #ca-watch{
 	background-color: white;
+}
+
+/*panel*/
+div#mw-panel{
+	background: white;
+	top:71px;
+	padding-top:0.2em;
+	border-top: 3px solid #006B94
+}
+
+#mw-panel.collapsible-nav .portal {
+	background-image:none !important;
+}
+
+#mw-panel.collapsible-nav .portal .body{
+	margin-left: 0.5em; /*submenu inset*/
+}
+#mw-panel.collapsible-nav .portal .body ul li{
+	padding:0.4em;
+}
+
+#p-tb{
+		border-top: 1px gray dotted;
+}
+
+div#mw-panel div.portal div.body ul li{
+	font-size: 0.8em;
+}
+
+
+div#simpleSearch{
+	margin-top: 0.2em;
+	margin-right:1em;
+}
+
+div#simpleSearch button#searchButton {
+	top:-4px;
+}
+
+div#content{
+	border:1px solid white;//make border appear nonexistent (fades into white bg) 
+	margin-right: 1em;
+	
+}
+
+
+#right-navigation, #left-navigation{
+margin-top: 4.45em;
+}
+
+div#footer{
+	margin:0.75em 1em 0.75em 10em;
+	background: white;
+	padding: 0em 1em;
+}
+
+#footer ul#footer-info{
+	display:none; /*remove from template instead of hiding*/
+}
+
+
+/*Forms*/
+fieldset, ul#filetoc {
+	background-color:@buwLightgray;
+	border-width:0px;
+}
+
+fieldset legend{
+	background-color:@buwLightgray;
+	padding: 0em 0.5em 0.5em 0.5em;
+	font-size: 95%;
+	font-weight: bold;
+	color: #484848;
+}
+
+#preferences fieldset fieldset legend{
+	font-weight: normal;
+	color: black;
+}
+
+
+/*content*/
+h1,h2,h3,h4{
+	color:#484848;
+	border-bottom: none; //remove "underline"
+}
+
+#bodyContent p{
+	max-width: 70em;
+}
+
+#bodyContent{
+	a{color:@buwLinkcolor}
+	a:visited{color:@menu-main-body-link-visited-color}
+}
+
+/*content-tables*/
+
+#bodyContent table.wikitable > tr > th,table.wikitable > * > tr > th ,table.wikitable > tr > td, table.wikitable > * > tr > td{
+	background:@buwLightgray;
+}
+
+#bodyContent table.wikitable, #bodyContent table.wikitable > tr > th,table.wikitable > * > tr > th ,table.wikitable > tr > td, table.wikitable > * > tr > td{
+	border:2px solid white;
+}
+
+#bodyContent table.wikitable > tr > th, table.wikitable > * > tr > th {
+	background-color: lightgray;
+}
+
+/*content –images */
+div.thumbinner{
+	background:@buwLightgray;
+	border:0px solid gray;
+}
+
+html .thumbimage{
+	border:white 0px solid;
+	padding-bottom: 2px;
+	border-bottom:2px solid white
+}
+
+li.gallerybox{
+	background:@buwLightgray;
+	border:0px solid gray;
+}
+
+li.gallerybox div.thumb{
+	background:@buwLightgray;
+	border-width:0px;
+	border-bottom:2px solid white;
+}
+
+/*content-tocs*/
+
+#toc, .toc{
+	background-color:@buwLightgray;
+	border-width: 0px;
+	width:100%;
+	max-width:70em;
+	font-size: 100%;
+}
+#toc #toctitle{
+	text-align:left;
+}
+
+#toc.tochidden{
+	background-color: white;
+	border: dotted lightgray;
+	border-width:1px 0 1px 0;
+	transition: background-color 0.5s;
+}
+
+
+
+
+
+
+
+
+/*Settings */
+#preferences{
+	background-color: @buwLightgray;
+	border:0px solid gray;
+
+}
+
+#preftoc li.selected{
+	background-color: @buwLightgray;
+}
+
+#preftoc li.selected a{
+	font-weigth:bold;
+}
+
+#preftoc li{
+	border-right:1px dotted lightgray;
+}
+#preftoc li:first-child{
+	border-left:1px dotted lightgray;
+}
+
+
+#preftoc li, #preftoc, li.selected a, #preftoc li.selected a{
+	background-image: none;
+}
+
+
+
+/*specific usability/findability enhancements*/
+div#mw-panel div.portal div.body ul li#t-upload a{
+	border:1px solid #ededed;
+	border-radius: 1px;
+	background-color: #f5f5f5;
+	background-image: url(/mediawiki22/skins/vector/images/upload.png);	
+	background-repeat: no-repeat;
+	background-position: 90% 45%;
+	padding:3px;
+	width:100%;
+	margin-left:-3px;
+	display:inline-block;
+}
+div#mw-panel div.portal div.body ul li#t-upload a:hover{
+	background-color: #e5e5e5;
+	text-decoration: none;
+}
+
+
+/*these were not defined in the screen file, but were styled nevertheless.*/
+#mw-search-formheader{
+	background-color:@buwLightgray;
+	border-width:0px;
+}
+
+
+/*Experimental, prevents endless stretching on big-width displays*/
+div#mw-head,  div#content, div#footer, div#mw-head-base{
+	max-width:80rem;
+	box-sizing: border-box;
+}
+
+div#mw-head{
+	width:auto; /*was 100% but caused it not to be scales properly when viewport width was changed*/
+}
+
+div#mw-head-base{
+	box-sizing:content-box;
+}
+
+div#left-navigation{
+	margin-left:0rem;
+}
+
+div#mw-head{
+	left:0;
+	margin-left:11em;
+}
+
+/*For Upload-Dialog. To be moved out to another file*/
+button.wizardify-forward:enabled{
+	font-weight: bold;
+	color:darkgreen;
+}
+
+
+
+.ui-dialog fieldset{
+	background-color: transparent;
+}
+.ui-dialog fieldset label{
+	width: 10em;
+	display: inline-block;
 }
