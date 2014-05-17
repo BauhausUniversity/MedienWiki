@@ -1,0 +1,142 @@
+/* CSS placed here will be applied to all skins */
+/*to: /index.php/MediaWiki:Common.css */
+
+
+/* todo: 
+ * input:required {border-radius:2px} //nicer required warning border
+ * select{vertical-align:center}
+ * input type text{height:1.7em}
+ * forward-backwardbutton: height 2.2em, width:7em
+ * p,h3,4h {adjust margin top, margin bottom so it structures well}
+ * wizardify.forward{margin-left:5em;}
+ * h4: no bold, text decoration underline
+ *
+ * <div id="wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage-filePreview"></div>\
+ * should be displayed even when outer container is not; small-size thumb, upper left corner. 
+ */ 
+ 
+
+
+#wikieditor-toolbar-visualUploaderTool-dialog ul.wikieditor-toolbar-visualUploaderTool-recentImagesList {
+	margin-left: 0;
+}
+
+#wikieditor-toolbar-visualUploaderTool-dialog ul.wikieditor-toolbar-visualUploaderTool-recentImagesList li {
+	list-style: none;
+}
+
+#wikieditor-toolbar-visualUploaderTool-dialog ul.wikieditor-toolbar-visualUploaderTool-recentImagesList li img {
+	margin: 0 10px 0 10px;
+}
+
+/*#wikieditor-toolbar-visualUploaderTool-recentimagesContainer-helptext {
+	font-weight: bold;
+}*/
+
+
+#wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage p button, #wikieditor-toolbar-visualUploaderTool-imageSources-uploadImage p select{
+	padding:0px 0px;
+	vertical-align: baseline;
+}
+
+#wikieditor-toolbar-visualUploaderTool-dialog .wizardify-buttonset button{
+	font-weight:bold;
+	height:2.4em;
+	min-width: 8em;	
+}
+
+#wikieditor-toolbar-visualUploaderTool-dialog .wizardify-buttonset button.wizardify-backward{
+	margin-right:5em;
+}
+
+#wikieditor-toolbar-visualUploaderTool-dialog :required{
+	border-radius: 2px; /*so that the required-boxe’s corners don’t clash with the rounded corners of the button*/
+	
+}
+
+
+
+#wikieditor-toolbar-visualUploaderTool-imageSources h2{
+	font-size:145%;
+	font-weight:bold;
+	margin-right:40px;
+}
+
+#wikieditor-toolbar-visualUploaderTool-imageSources h3{
+	font-size:145%;
+	font-weight:normal;
+}
+
+#wikieditor-toolbar-visualUploaderTool-imageSources h4{
+	font-size:130%;
+	font-style:italic;
+	font-weight: normal;
+}
+
+#wikieditor-toolbar-visualUploaderTool-mainFields div{
+	display:inline-block;
+	margin-right:2em;
+	margin-top:4px;
+}
+#wikieditor-toolbar-visualUploaderTool-mainFields div input[type="checkbox"]{
+	vertical-align: bottom;
+}
+
+
+#wikieditor-toolbar-visualUploaderTool-dialog .wizardify-buttonset {
+	border-top:1px solid #AAA;
+	padding-top:0.3em;
+}
+
+
+
+.ui-widget-overlay {
+	opacity: 0.5;
+}
+
+.ui-widget-content span.wikieditor-toolbar-visualUploaderTool-highlightUploadButton {
+	color: blue;
+}
+
+.ui-widget-content span.wikieditor-toolbar-visualUploaderTool-highlightUploadButton:hover {
+	text-decoration: underline;
+}
+
+#wikieditor-toolbar-visualUploaderTool-mainFields{
+	padding-left:23px !important;
+	
+}
+
+/*the button pointing to the upload form*/
+
+div#p-tb ul li#t-upload a {
+	display: inline-block;
+	width: 8em;
+	color: #000000;
+	padding: 6px 16px;
+	background: -moz-linear-gradient(
+		top,
+		#ffffff 0%,
+		#f5f5f5);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#ffffff),
+		to(#f5f5f5));
+	background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Noun_project_Upload.svg/16px-Noun_project_Upload.svg.png");
+	background-position: 90% center;
+	background-repeat: no-repeat;
+	background-size: 16px auto;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 4px;
+	border: 1px solid #8a8a8a;
+	-moz-box-shadow: 1px 1px 1px rgba(000,000,000,0),
+		inset -1px -1px 1px rgba(5,5,5,0.3);
+	-webkit-box-shadow: 1px 1px 1px rgba(000,000,000,0),
+		inset -1px -1px 1px rgba(5,5,5,0.3);
+	box-shadow: 1px 1px 1px rgba(000,000,000,0),
+		inset -1px -1px 1px rgba(5,5,5,0.3);
+	text-shadow: -1px -1px 0px rgba(255,255,255,0),
+		1px 1px 0px rgba(125,125,125,0);
+	margin-left: -18px;
+}
